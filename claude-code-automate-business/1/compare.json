@@ -1,0 +1,10 @@
+{
+    "title": "Where Claude Sits",
+    "description": "A 2x2 quadrant diagram with 'Ease of Setup' on the x-axis and 'Autonomy' on the y-axis. n8n/Zapier sits in the upper-left (high autonomy, hard to set up). ChatGPT sits in the lower-right (easy to set up, low autonomy). Claude Code sits in the upper-right (high autonomy, easy to set up), highlighted as the outlier that doesn't make you choose.",
+    "parts": [
+        {
+            "title": "Autonomy vs. Ease of Setup",
+            "description": "A 2x2 quadrant diagram with 'Ease of Setup' on the x-axis and 'Autonomy' on the y-axis. n8n/Zapier sits in the upper-left (high autonomy, hard to set up). ChatGPT sits in the lower-right (easy to set up, low autonomy). Claude Code sits in the upper-right (high autonomy, easy to set up), highlighted as the outlier that doesn't make you choose."
+        }
+    ]
+}

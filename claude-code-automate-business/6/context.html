@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Layer 02: Context — Claude Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --color-bg-base: #0A0A0A;
+            --color-bg-surface: #111111;
+            --color-bg-elevated: #1A1A1A;
+            --color-bg-border: #222222;
+            --color-accent-primary: #CC785C;
+            --color-text-primary: #F0EDE8;
+            --color-text-secondary: #A09A92;
+            --color-text-tertiary: #5A554F;
+            --color-code-bg: #141414;
+            --color-code-text: #A8C090;
+            --color-layer-model: #CC785C;
+            --color-layer-context: #7B9E87;
+            --color-layer-tools: #6B8CAE;
+            --color-layer-skills: #9B7BB8;
+            --color-layer-agents: #C4A44A;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg-base);
+            color: var(--color-text-primary);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .glow-tl {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(123, 158, 135, 0.07) 0%, transparent 70%);
+            top: -100px;
+            left: -100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-br {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(123, 158, 135, 0.04) 0%, transparent 70%);
+            bottom: -80px;
+            right: -80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Layout: left strip | right 5-panel grid ── */
+        .stage {
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+        }
+
+        /* ── Left ── */
+        .left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 52px 36px 100px 52px;
+            border-right: 1px solid var(--color-bg-border);
+        }
+
+        .layer-tag {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--color-layer-context);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 150ms forwards;
+        }
+
+        .layer-number {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(3.8rem, 5.5vw, 6rem);
+            font-weight: 300;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            color: var(--color-layer-context);
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards;
+        }
+
+        .layer-name {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 340ms forwards;
+        }
+
+        .layer-desc {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 420ms forwards;
+        }
+
+        /* Mini pyramid */
+        .mini-pyramid {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            opacity: 0;
+            animation: fadeIn 700ms cubic-bezier(0.16, 1, 0.3, 1) 520ms forwards;
+        }
+
+        .mini-tier {
+            height: 16px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-tertiary);
+            opacity: 0.35;
+        }
+
+        .mini-tier.active {
+            opacity: 1;
+        }
+
+        .mini-tier-agents {
+            width: 60%;
+            background: rgba(196, 164, 74, 0.07);
+            border: 1px solid rgba(196, 164, 74, 0.12);
+            align-self: center;
+        }
+
+        .mini-tier-skills {
+            width: 72%;
+            background: rgba(155, 123, 184, 0.07);
+            border: 1px solid rgba(155, 123, 184, 0.12);
+            align-self: center;
+        }
+
+        .mini-tier-tools {
+            width: 84%;
+            background: rgba(107, 140, 174, 0.07);
+            border: 1px solid rgba(107, 140, 174, 0.12);
+            align-self: center;
+        }
+
+        .mini-tier-context {
+            width: 92%;
+            background: rgba(123, 158, 135, 0.12);
+            border: 1px solid rgba(123, 158, 135, 0.35);
+            align-self: center;
+            color: var(--color-layer-context);
+        }
+
+        .mini-tier-model {
+            width: 100%;
+            background: rgba(204, 120, 92, 0.07);
+            border: 1px solid rgba(204, 120, 92, 0.12);
+            align-self: center;
+        }
+
+        /* ── Right: 5-panel grid ── */
+        .right {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 0;
+        }
+
+        .panel {
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--color-bg-border);
+            border-right: 1px solid var(--color-bg-border);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            opacity: 0;
+            overflow: hidden;
+            transition: background 250ms ease;
+            position: relative;
+        }
+
+        .panel:hover {
+            background: rgba(255, 255, 255, 0.012);
+        }
+
+        /* Top-left accent bar per panel */
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--color-layer-context);
+            opacity: 0.35;
+        }
+
+        /* Grid placement */
+        .panel-prompts {
+            grid-column: 1;
+            grid-row: 1;
+            animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 580ms forwards;
+        }
+
+        .panel-projects {
+            grid-column: 2;
+            grid-row: 1;
+            animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 680ms forwards;
+        }
+
+        .panel-claudemd {
+            grid-column: 3;
+            grid-row: 1;
+            border-right: none;
+            animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 780ms forwards;
+        }
+
+        .panel-memory {
+            grid-column: 1 / 3;
+            grid-row: 2;
+            border-bottom: none;
+            animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 880ms forwards;
+        }
+
+        .panel-context {
+            grid-column: 3;
+            grid-row: 2;
+            border-right: none;
+            border-bottom: none;
+            animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 980ms forwards;
+        }
+
+        .panel-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--color-layer-context);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .panel-title {
+            font-family: 'Fraunces', serif;
+            font-size: 1.05rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            line-height: 1.15;
+            flex-shrink: 0;
+        }
+
+        /* ── Panel: Prompts ── */
+        .prompt-split {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            align-items: stretch;
+        }
+
+        .prompt-box {
+            flex: 1;
+            border-radius: 7px;
+            padding: 10px 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .prompt-box-plain {
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-bg-border);
+        }
+
+        .prompt-box-system {
+            background: rgba(123, 158, 135, 0.07);
+            border: 1px solid rgba(123, 158, 135, 0.25);
+        }
+
+        .prompt-box-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .prompt-box-plain .prompt-box-tag {
+            color: var(--color-text-tertiary);
+        }
+
+        .prompt-box-system .prompt-box-tag {
+            color: var(--color-layer-context);
+        }
+
+        .prompt-line {
+            height: 4px;
+            border-radius: 2px;
+            background: var(--color-bg-border);
+            margin-top: 2px;
+        }
+
+        .prompt-line.short {
+            width: 55%;
+        }
+
+        .prompt-line.med {
+            width: 80%;
+        }
+
+        .prompt-line.long {
+            width: 100%;
+        }
+
+        .prompt-line.system {
+            background: rgba(123, 158, 135, 0.3);
+        }
+
+        .prompt-arrow {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+
+        .prompt-arrow-shaft {
+            width: 1px;
+            height: 20px;
+            background: var(--color-bg-border);
+        }
+
+        .prompt-arrow-head {
+            width: 0;
+            height: 0;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-top: 5px solid var(--color-layer-context);
+        }
+
+        .prompt-arrow-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.48rem;
+            color: var(--color-layer-context);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        /* ── Panel: Projects ── */
+        .project-box {
+            border: 1px solid rgba(123, 158, 135, 0.25);
+            border-radius: 8px;
+            padding: 10px 12px;
+            background: rgba(123, 158, 135, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .project-box-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--color-layer-context);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 8px;
+            border-radius: 5px;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-bg-border);
+        }
+
+        .project-item svg {
+            width: 11px;
+            height: 11px;
+            stroke: var(--color-layer-context);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .project-item-name {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--color-text-secondary);
+        }
+
+        .project-rag {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .rag-line {
+            flex: 1;
+            height: 1px;
+            background: var(--color-bg-border);
+        }
+
+        .rag-badge {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--color-layer-context);
+            background: rgba(123, 158, 135, 0.12);
+            border: 1px solid rgba(123, 158, 135, 0.25);
+            border-radius: 4px;
+            padding: 2px 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .rag-line-arrow {
+            flex: 1;
+            height: 1px;
+            background: rgba(123, 158, 135, 0.3);
+            position: relative;
+        }
+
+        .rag-line-arrow::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -3px;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+            border-left: 5px solid rgba(123, 158, 135, 0.5);
+        }
+
+        .rag-dest {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ── Panel: CLAUDE.md ── */
+        .md-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .md-card {
+            border-radius: 7px;
+            padding: 9px 11px;
+            border: 1px solid rgba(123, 158, 135, 0.2);
+            background: rgba(123, 158, 135, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .md-card-path {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--color-layer-context);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .md-card-scope {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            color: var(--color-text-tertiary);
+        }
+
+        .md-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin-top: 3px;
+        }
+
+        .md-line {
+            height: 3px;
+            border-radius: 1px;
+            background: rgba(123, 158, 135, 0.2);
+        }
+
+        .md-line.short {
+            width: 50%;
+        }
+
+        .md-line.med {
+            width: 75%;
+        }
+
+        .md-line.long {
+            width: 100%;
+        }
+
+        .md-shortcut {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--color-text-tertiary);
+            border-left: 2px solid rgba(123, 158, 135, 0.3);
+            padding-left: 8px;
+            margin-top: 2px;
+        }
+
+        .md-shortcut span {
+            color: var(--color-layer-context);
+        }
+
+        /* ── Panel: Memory ── */
+        .memory-layout {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            align-items: center;
+        }
+
+        .memory-loop {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: center;
+            flex: 1;
+        }
+
+        .memory-session {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .session-block {
+            border-radius: 7px;
+            padding: 8px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+        }
+
+        .session-active {
+            background: rgba(123, 158, 135, 0.08);
+            border: 1px solid rgba(123, 158, 135, 0.25);
+        }
+
+        .session-next {
+            background: rgba(123, 158, 135, 0.04);
+            border: 1px dashed rgba(123, 158, 135, 0.2);
+        }
+
+        .session-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-layer-context);
+        }
+
+        .session-desc {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.68rem;
+            color: var(--color-text-tertiary);
+        }
+
+        .loop-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .loop-arrow-down {
+            width: 1px;
+            height: 14px;
+            background: rgba(123, 158, 135, 0.35);
+        }
+
+        .loop-file {
+            border-radius: 5px;
+            padding: 5px 10px;
+            background: rgba(123, 158, 135, 0.1);
+            border: 1px solid rgba(123, 158, 135, 0.3);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--color-layer-context);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            white-space: nowrap;
+        }
+
+        .loop-arrow-up {
+            width: 1px;
+            height: 14px;
+            background: rgba(123, 158, 135, 0.35);
+        }
+
+        .loop-arrow-head-up {
+            width: 0;
+            height: 0;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-bottom: 5px solid rgba(123, 158, 135, 0.5);
+        }
+
+        .memory-cmd {
+            flex-shrink: 0;
+            border-radius: 7px;
+            padding: 10px 12px;
+            background: var(--color-code-bg);
+            border: 1px solid var(--color-bg-border);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 160px;
+        }
+
+        .memory-cmd-line {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--color-code-text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .memory-cmd-line::before {
+            content: '·';
+            color: var(--color-layer-context);
+            font-size: 0.7rem;
+        }
+
+        .memory-cmd-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+        }
+
+        /* ── Panel: /context ── */
+        .context-window {
+            border-radius: 7px;
+            overflow: hidden;
+            border: 1px solid var(--color-bg-border);
+            background: var(--color-code-bg);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ctx-header {
+            background: var(--color-bg-elevated);
+            padding: 7px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--color-bg-border);
+        }
+
+        .ctx-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .ctx-dot-r {
+            background: #5A3030;
+        }
+
+        .ctx-dot-y {
+            background: #5A4A20;
+        }
+
+        .ctx-dot-g {
+            background: #2A4A30;
+        }
+
+        .ctx-cmd {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            color: var(--color-layer-context);
+            margin-left: 4px;
+        }
+
+        .ctx-body {
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            flex: 1;
+        }
+
+        .ctx-section {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .ctx-section-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1px;
+        }
+
+        .ctx-entry {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            color: var(--color-text-tertiary);
+            padding-left: 8px;
+            border-left: 1px solid var(--color-bg-border);
+            line-height: 1.5;
+        }
+
+        .ctx-section-files .ctx-section-label {
+            color: #C4A44A;
+        }
+
+        .ctx-section-files .ctx-entry {
+            border-color: rgba(196, 164, 74, 0.2);
+        }
+
+        .ctx-section-memory .ctx-section-label {
+            color: var(--color-layer-context);
+        }
+
+        .ctx-section-memory .ctx-entry {
+            border-color: rgba(123, 158, 135, 0.2);
+        }
+
+        .ctx-section-turns .ctx-section-label {
+            color: var(--color-layer-tools);
+        }
+
+        .ctx-section-turns .ctx-entry {
+            border-color: rgba(107, 140, 174, 0.2);
+        }
+
+        .ctx-section-prompt .ctx-section-label {
+            color: var(--color-accent-primary);
+        }
+
+        .ctx-section-prompt .ctx-entry {
+            border-color: rgba(204, 120, 92, 0.2);
+        }
+
+        .ctx-note {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--color-text-tertiary);
+            margin-top: 2px;
+            font-style: italic;
+        }
+
+        /* ── Footer ── */
+        .presenter {
+            position: fixed;
+            bottom: 40px;
+            left: 56px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 1200ms forwards;
+        }
+
+        .presenter-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .presenter-divider {
+            width: 1px;
+            height: 12px;
+            background: var(--color-bg-border);
+        }
+
+        .presenter-handle {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--color-text-tertiary);
+        }
+
+        .section-counter {
+            position: fixed;
+            bottom: 40px;
+            right: 56px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--color-text-tertiary);
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 1200ms forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ── Copyable snippets — Section 05 Consistency ── */
+        .copyable-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            width: fit-content;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--color-bg-border);
+            border-radius: 4px;
+            padding: 4px;
+            color: var(--color-text-tertiary);
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+            margin-top: -1px;
+        }
+
+        .copyable-wrapper:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            color: var(--color-text-primary);
+            border-color: var(--color-text-secondary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .copy-btn svg {
+            width: 11px;
+            height: 11px;
+            stroke-width: 2.2;
+        }
+
+        .copy-btn.copied {
+            color: var(--color-layer-context);
+            border-color: var(--color-layer-context);
+            background: rgba(123, 158, 135, 0.1);
+        }
+
+        .copy-feedback {
+            position: absolute;
+            top: -22px;
+            left: 50%;
+            transform: translateX(-50%) translateY(4px);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            color: var(--color-layer-context);
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-bg-border);
+            padding: 2px 6px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-tl"></div>
+    <div class="glow-br"></div>
+
+    <div class="stage">
+
+        <!-- LEFT -->
+        <div class="left">
+            <div class="layer-tag">
+                <div class="eyebrow">Section 06 &nbsp;·&nbsp; The Architecture Stack</div>
+                <div class="layer-number">02</div>
+                <div class="layer-name">Context</div>
+                <div class="layer-desc">What Claude knows before it acts. Prompts, projects, memory, and files —
+                    everything that shapes how Claude behaves.</div>
+            </div>
+            <div class="mini-pyramid">
+                <div class="mini-tier mini-tier-agents">Agents</div>
+                <div class="mini-tier mini-tier-skills">Skills</div>
+                <div class="mini-tier mini-tier-tools">Tools</div>
+                <div class="mini-tier mini-tier-context active">Context</div>
+                <div class="mini-tier mini-tier-model">Model</div>
+            </div>
+        </div>
+
+        <!-- RIGHT: 5 panels -->
+        <div class="right">
+
+            <!-- Prompts -->
+            <div class="panel panel-prompts">
+                <div class="panel-label">01 &nbsp;·&nbsp; Prompts</div>
+                <div class="panel-title">System prompts</div>
+                <div class="prompt-split">
+                    <div class="prompt-box prompt-box-plain">
+                        <div class="prompt-box-tag">Generic</div>
+                        <div class="prompt-line long"></div>
+                        <div class="prompt-line med"></div>
+                        <div class="prompt-line short"></div>
+                    </div>
+                    <div class="prompt-arrow">
+                        <div class="prompt-arrow-label">Prompt</div>
+                        <div class="prompt-arrow-shaft"></div>
+                        <div class="prompt-arrow-head"></div>
+                    </div>
+                    <div class="prompt-box prompt-box-system">
+                        <div class="prompt-box-tag">Purpose-built</div>
+                        <div class="prompt-line long system"></div>
+                        <div class="prompt-line med system"></div>
+                        <div class="prompt-line short system"></div>
+                    </div>
+                </div>
+                <div
+                    style="font-family:'DM Sans',sans-serif;font-size:0.72rem;color:var(--color-text-tertiary);line-height:1.5;">
+                    Set personas, enforce formats, inject business rules.</div>
+            </div>
+
+            <!-- Projects -->
+            <div class="panel panel-projects">
+                <div class="panel-label">02 &nbsp;·&nbsp; Projects</div>
+                <div class="panel-title">Persistent context</div>
+                <div class="project-box">
+                    <div class="project-box-label">Project</div>
+                    <div class="project-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        </svg>
+                        <span class="project-item-name">Conversation History</span>
+                    </div>
+                    <div class="project-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                        </svg>
+                        <span class="project-item-name">CLAUDE.md</span>
+                    </div>
+                    <div class="project-item">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                        </svg>
+                        <span class="project-item-name">Knowledge Files</span>
+                    </div>
+                    <div class="project-rag">
+                        <div class="rag-line"></div>
+                        <div class="rag-badge">RAG</div>
+                        <div class="rag-line-arrow"></div>
+                        <div class="rag-dest">Context</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLAUDE.md -->
+            <div class="panel panel-claudemd">
+                <div class="panel-label">03 &nbsp;·&nbsp; CLAUDE.md</div>
+                <div class="panel-title">Living instructions</div>
+                <div class="md-cards">
+                    <div class="md-card">
+                        <div class="md-card-path">CLAUDE.md</div>
+                        <div class="md-card-scope">Project scope — repo conventions, arch decisions, task defaults</div>
+                        <div class="md-lines">
+                            <div class="md-line long"></div>
+                            <div class="md-line med"></div>
+                            <div class="md-line short"></div>
+                        </div>
+                    </div>
+                    <div class="md-card">
+                        <div class="md-card-path">~/.claude/CLAUDE.md</div>
+                        <div class="md-card-scope">User scope — stack, tone, review style, shortcuts</div>
+                        <div class="md-lines">
+                            <div class="md-line med"></div>
+                            <div class="md-line long"></div>
+                            <div class="md-line short"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-shortcut">Edit mid-session with <span>#</span></div>
+            </div>
+
+            <!-- Memory -->
+            <div class="panel panel-memory">
+                <div class="panel-label">04 &nbsp;·&nbsp; Auto Memory</div>
+                <div class="panel-title">/memory &nbsp;— every session starts smarter</div>
+                <div class="memory-layout">
+                    <div class="memory-loop">
+                        <div class="memory-session">
+                            <div class="session-block session-active">
+                                <div class="session-label">Session A</div>
+                                <div class="session-desc">Claude writes observations → memory file</div>
+                            </div>
+                        </div>
+                        <div class="loop-arrow">
+                            <div class="loop-arrow-down"></div>
+                            <div class="loop-file">memory.md</div>
+                            <div class="loop-arrow-up"></div>
+                            <div class="loop-arrow-head-up"></div>
+                        </div>
+                        <div class="memory-session">
+                            <div class="session-block session-next">
+                                <div class="session-label">Session B</div>
+                                <div class="session-desc">Memory loaded → context already set</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="memory-cmd">
+                        <div class="copyable-wrapper" data-copy="/memory">
+                            <div class="memory-cmd-label" style="cursor: pointer; margin-bottom: 0;" title="Click to copy">/memory</div>
+                            <button class="copy-btn" title="Copy snippet">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <span class="copy-feedback">Copied!</span>
+                        </div>
+                        <div class="memory-cmd-line">prefers DM Mono for code</div>
+                        <div class="memory-cmd-line">uses Terraform on AWS</div>
+                        <div class="memory-cmd-line">review style: direct</div>
+                        <div class="memory-cmd-line">default branch: main</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /context -->
+            <div class="panel panel-context">
+                <div class="panel-label">05 &nbsp;·&nbsp; /context</div>
+                <div class="panel-title">See what Claude knows</div>
+                <div class="context-window">
+                    <div class="ctx-header">
+                        <div class="ctx-dot ctx-dot-r"></div>
+                        <div class="ctx-dot ctx-dot-y"></div>
+                        <div class="ctx-dot ctx-dot-g"></div>
+                        <div class="copyable-wrapper" data-copy="/context" style="margin-left: 8px;">
+                            <span class="ctx-cmd" style="cursor: pointer; margin-left: 0;" title="Click to copy">/context</span>
+                            <button class="copy-btn" title="Copy snippet">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            </button>
+                            <span class="copy-feedback">Copied!</span>
+                        </div>
+                    </div>
+                    <div class="ctx-body">
+                        <div class="ctx-section ctx-section-files">
+                            <div class="ctx-section-label">Files</div>
+                            <div class="ctx-entry">CLAUDE.md · schema.ts · api.ts</div>
+                        </div>
+                        <div class="ctx-section ctx-section-memory">
+                            <div class="ctx-section-label">Memory</div>
+                            <div class="ctx-entry">4 entries loaded</div>
+                        </div>
+                        <div class="ctx-section ctx-section-turns">
+                            <div class="ctx-section-label">Conversation</div>
+                            <div class="ctx-entry">12 turns · ~3.2k tokens</div>
+                        </div>
+                        <div class="ctx-section ctx-section-prompt">
+                            <div class="ctx-section-label">System Prompt</div>
+                            <div class="ctx-entry">deploy-agent · 480 tokens</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ctx-note">Trim or add before a long task.</div>
+            </div>
+
+        </div><!-- /right -->
+    </div><!-- /stage -->
+
+    <div class="presenter">
+        <span class="presenter-name">Shawn</span>
+        <div class="presenter-divider"></div>
+        <span class="presenter-handle">@shawnbuildsai</span>
+    </div>
+    <div class="section-counter">06 / 11</div>
+
+
+    <script>
+        document.querySelectorAll('.copyable-wrapper').forEach(wrapper => {
+            const btn = wrapper.querySelector('.copy-btn');
+            const cmd = wrapper.querySelector('.memory-cmd-label, .ctx-cmd');
+            const feedback = wrapper.querySelector('.copy-feedback');
+            const textToCopy = wrapper.dataset.copy;
+
+            const handleCopy = () => {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    btn.classList.add('copied');
+                    feedback.classList.add('show');
+                    
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        feedback.classList.remove('show');
+                    }, 2000);
+                });
+            };
+
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                handleCopy();
+            });
+            
+            cmd.addEventListener('click', handleCopy);
+        });
+    </script>
+</body>
+
+</html>

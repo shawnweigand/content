@@ -1,0 +1,10 @@
+{
+    "title": "Three Ways to Run Claude Code",
+    "description": "A horizontal three-column comparison layout progressing left to right from least to most powerful. Each column represents one interface — Web, Desktop, Terminal — with an icon, a capability list, and a label indicating its power level. A directional arrow or gradient runs across the bottom reinforcing 'the further right, the more Claude can do.'",
+    "parts": [
+        {
+            "title": "Web vs. Desktop vs. Terminal",
+            "description": "Three side-by-side cards labeled Web, Desktop, and Terminal. Web card: zero setup, no filesystem access, browser icon. Desktop card: faster, better persistence, still limited, desktop app icon. Terminal card: full agentic power, filesystem, bash, MCP, subagents, terminal icon. A left-to-right arrow beneath all three cards labeled 'More Power →'."
+        }
+    ]
+}

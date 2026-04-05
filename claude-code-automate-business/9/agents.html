@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Layer 05: Agents — Claude Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --color-bg-base: #0A0A0A;
+            --color-bg-surface: #111111;
+            --color-bg-elevated: #1A1A1A;
+            --color-bg-border: #222222;
+            --color-accent-primary: #CC785C;
+            --color-text-primary: #F0EDE8;
+            --color-text-secondary: #A09A92;
+            --color-text-tertiary: #5A554F;
+            --color-code-bg: #141414;
+            --color-code-text: #A8C090;
+            --color-layer-model: #CC785C;
+            --color-layer-context: #7B9E87;
+            --color-layer-tools: #6B8CAE;
+            --color-layer-skills: #9B7BB8;
+            --color-layer-agents: #C4A44A;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg-base);
+            color: var(--color-text-primary);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .glow-tl {
+            position: fixed;
+            width: 520px;
+            height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(196, 164, 74, 0.07) 0%, transparent 70%);
+            top: -120px;
+            left: -80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-br {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(196, 164, 74, 0.04) 0%, transparent 70%);
+            bottom: -80px;
+            right: -80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Layout ── */
+        .stage {
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+        }
+
+        /* ── Left strip ── */
+        .left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 52px 36px 180px 52px;
+            border-right: 1px solid var(--color-bg-border);
+        }
+
+        .layer-tag {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--color-layer-agents);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 150ms forwards;
+        }
+
+        .layer-number {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(3.8rem, 5.5vw, 6rem);
+            font-weight: 300;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            color: var(--color-layer-agents);
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 250ms forwards;
+        }
+
+        .layer-name {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 340ms forwards;
+        }
+
+        .layer-desc {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 420ms forwards;
+        }
+
+        .mini-pyramid {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            opacity: 0;
+            animation: fadeIn 700ms cubic-bezier(0.16, 1, 0.3, 1) 520ms forwards;
+        }
+
+        .mini-tier {
+            height: 16px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-tertiary);
+            opacity: 0.35;
+        }
+
+        .mini-tier.active {
+            opacity: 1;
+        }
+
+        .mini-tier-agents {
+            width: 60%;
+            background: rgba(196, 164, 74, 0.12);
+            border: 1px solid rgba(196, 164, 74, 0.35);
+            align-self: center;
+            color: var(--color-layer-agents);
+        }
+
+        .mini-tier-skills {
+            width: 72%;
+            background: rgba(155, 123, 184, 0.07);
+            border: 1px solid rgba(155, 123, 184, 0.12);
+            align-self: center;
+        }
+
+        .mini-tier-tools {
+            width: 84%;
+            background: rgba(107, 140, 174, 0.07);
+            border: 1px solid rgba(107, 140, 174, 0.12);
+            align-self: center;
+        }
+
+        .mini-tier-context {
+            width: 92%;
+            background: rgba(123, 158, 135, 0.07);
+            border: 1px solid rgba(123, 158, 135, 0.12);
+            align-self: center;
+        }
+
+        .mini-tier-model {
+            width: 100%;
+            background: rgba(204, 120, 92, 0.07);
+            border: 1px solid rgba(204, 120, 92, 0.12);
+            align-self: center;
+        }
+
+        /* ── Right: two stacked panels ── */
+        .right {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .panel {
+            padding: 36px 48px;
+            border-bottom: 1px solid var(--color-bg-border);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            overflow: hidden;
+            position: relative;
+            transition: background 250ms ease;
+        }
+
+        .panel:last-child {
+            border-bottom: none;
+        }
+
+        .panel:hover {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--color-layer-agents);
+            opacity: 0.3;
+        }
+
+        .panel-subagents {
+            animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 580ms forwards;
+        }
+
+        .panel-teams {
+            animation: fadeUp 500ms cubic-bezier(0.16, 1, 0.3, 1) 740ms forwards;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .panel-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--color-layer-agents);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .panel-title {
+            font-family: 'Fraunces', serif;
+            font-size: 1.15rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        .panel-caption {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--color-text-tertiary);
+            font-style: italic;
+            border-left: 2px solid rgba(196, 164, 74, 0.3);
+            padding-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .panel-caption em {
+            color: var(--color-layer-agents);
+            font-style: normal;
+        }
+
+        /* ════════════════════════════════
+     PANEL 1: Subagents tree diagram
+     ════════════════════════════════ */
+        .subagent-diagram {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            position: relative;
+        }
+
+        /* Orchestrator node */
+        .orchestrator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        .orch-node {
+            padding: 10px 28px;
+            border-radius: 10px;
+            background: rgba(196, 164, 74, 0.1);
+            border: 1px solid rgba(196, 164, 74, 0.4);
+            box-shadow: 0 0 24px rgba(196, 164, 74, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .orch-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            color: rgba(196, 164, 74, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .orch-name {
+            font-family: 'Fraunces', serif;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--color-layer-agents);
+            letter-spacing: -0.01em;
+        }
+
+        /* SVG tree connector */
+        .tree-svg {
+            width: 100%;
+            height: 52px;
+            flex-shrink: 0;
+            overflow: visible;
+        }
+
+        /* Subagent row */
+        .subagent-row {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .subagent-node {
+            flex: 1;
+            max-width: 200px;
+            border-radius: 9px;
+            padding: 10px 14px;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-bg-border);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+            cursor: default;
+            opacity: 0;
+        }
+
+        .subagent-node:hover {
+            border-color: rgba(196, 164, 74, 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(196, 164, 74, 0.07);
+        }
+
+        .subagent-node:nth-child(1) {
+            animation: nodeDropIn 450ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
+        }
+
+        .subagent-node:nth-child(2) {
+            animation: nodeDropIn 450ms cubic-bezier(0.16, 1, 0.3, 1) 1020ms forwards;
+        }
+
+        .subagent-node:nth-child(3) {
+            animation: nodeDropIn 450ms cubic-bezier(0.16, 1, 0.3, 1) 1140ms forwards;
+        }
+
+        .subagent-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.5rem;
+            color: var(--color-text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .subagent-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--color-text-primary);
+            font-weight: 400;
+        }
+
+        .subagent-task {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            color: var(--color-text-tertiary);
+            margin-top: 2px;
+        }
+
+        /* Status dots */
+        .subagent-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 4px;
+        }
+
+        .status-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--color-layer-agents);
+            animation: statusPulse 2s ease-in-out infinite;
+            box-shadow: 0 0 6px rgba(196, 164, 74, 0.5);
+        }
+
+        .subagent-node:nth-child(2) .status-dot {
+            animation-delay: 0.4s;
+        }
+
+        .subagent-node:nth-child(3) .status-dot {
+            animation-delay: 0.8s;
+        }
+
+        .status-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            color: var(--color-layer-agents);
+        }
+
+        @keyframes statusPulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(0.9);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Return arrows up to orchestrator */
+        .return-svg {
+            width: 100%;
+            height: 36px;
+            flex-shrink: 0;
+            overflow: visible;
+        }
+
+        .return-label-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .return-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            color: rgba(196, 164, 74, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: rgba(196, 164, 74, 0.06);
+            border: 1px solid rgba(196, 164, 74, 0.15);
+            border-radius: 4px;
+            padding: 2px 10px;
+        }
+
+        /* ════════════════════════════════
+     PANEL 2: Agent Teams pipeline
+     ════════════════════════════════ */
+        .teams-layout {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Orchestrator mini (Panel 2) */
+        .orch-mini {
+            display: flex;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .orch-mini-node {
+            padding: 6px 20px;
+            border-radius: 8px;
+            background: rgba(196, 164, 74, 0.1);
+            border: 1px solid rgba(196, 164, 74, 0.4);
+            box-shadow: 0 0 18px rgba(196, 164, 74, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeUp 450ms cubic-bezier(0.16, 1, 0.3, 1) 800ms forwards;
+        }
+
+        .orch-mini-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.48rem;
+            color: rgba(196, 164, 74, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .orch-mini-name {
+            font-family: 'Fraunces', serif;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--color-layer-agents);
+        }
+
+        /* Connector from orchestrator to task list */
+        .teams-connector {
+            display: flex;
+            justify-content: center;
+            flex-shrink: 0;
+            opacity: 0;
+            animation: fadeIn 400ms cubic-bezier(0.16, 1, 0.3, 1) 850ms forwards;
+        }
+
+        .teams-connector-line {
+            width: 1px;
+            height: 14px;
+            background: rgba(196, 164, 74, 0.3);
+        }
+
+        /* Shared task list */
+        .shared-task-list {
+            display: flex;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .task-list-node {
+            padding: 8px 22px;
+            border-radius: 8px;
+            background: var(--color-bg-elevated);
+            border: 1px solid rgba(196, 164, 74, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeUp 450ms cubic-bezier(0.16, 1, 0.3, 1) 880ms forwards;
+        }
+
+        .task-list-node svg {
+            width: 13px;
+            height: 13px;
+            stroke: var(--color-layer-agents);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .task-list-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--color-layer-agents);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .pipeline {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        .agent-card {
+            flex: 1;
+            border-radius: 10px;
+            padding: 16px 18px;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-bg-border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            transition: border-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+            cursor: default;
+            opacity: 0;
+        }
+
+        .agent-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+        }
+
+        .agent-card:nth-child(1) {
+            animation: cardRise 450ms cubic-bezier(0.16, 1, 0.3, 1) 960ms forwards;
+        }
+
+        .agent-card:nth-child(3) {
+            animation: cardRise 450ms cubic-bezier(0.16, 1, 0.3, 1) 1060ms forwards;
+        }
+
+        .agent-card:nth-child(5) {
+            animation: cardRise 450ms cubic-bezier(0.16, 1, 0.3, 1) 1160ms forwards;
+        }
+
+        .agent-card:nth-child(7) {
+            animation: cardRise 450ms cubic-bezier(0.16, 1, 0.3, 1) 1260ms forwards;
+        }
+
+        /* Role-specific left borders */
+        .agent-planner {
+            border-left: 2px solid rgba(107, 140, 174, 0.6);
+        }
+
+        .agent-planner:hover {
+            border-color: rgba(107, 140, 174, 0.6);
+            box-shadow: 0 10px 28px rgba(107, 140, 174, 0.07);
+        }
+
+        .agent-coder {
+            border-left: 2px solid rgba(168, 192, 144, 0.6);
+        }
+
+        .agent-coder:hover {
+            border-color: rgba(168, 192, 144, 0.5);
+            box-shadow: 0 10px 28px rgba(168, 192, 144, 0.07);
+        }
+
+        .agent-reviewer {
+            border-left: 2px solid rgba(155, 123, 184, 0.6);
+        }
+
+        .agent-reviewer:hover {
+            border-color: rgba(155, 123, 184, 0.5);
+            box-shadow: 0 10px 28px rgba(155, 123, 184, 0.07);
+        }
+
+        .agent-deployer {
+            border-left: 2px solid rgba(196, 164, 74, 0.6);
+        }
+
+        .agent-deployer:hover {
+            border-color: rgba(196, 164, 74, 0.5);
+            box-shadow: 0 10px 28px rgba(196, 164, 74, 0.07);
+        }
+
+        .agent-role-tag {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.52rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+        }
+
+        .agent-planner .agent-role-tag {
+            color: #6B8CAE;
+        }
+
+        .agent-coder .agent-role-tag {
+            color: var(--color-code-text);
+        }
+
+        .agent-reviewer .agent-role-tag {
+            color: var(--color-layer-skills);
+        }
+
+        .agent-deployer .agent-role-tag {
+            color: var(--color-layer-agents);
+        }
+
+        .agent-role-name {
+            font-family: 'Fraunces', serif;
+            font-size: 1.05rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            line-height: 1;
+        }
+
+        .agent-attrs {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .agent-attr {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            color: var(--color-text-tertiary);
+        }
+
+        .agent-attr svg {
+            width: 11px;
+            height: 11px;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .agent-planner .agent-attr svg {
+            stroke: #6B8CAE;
+        }
+
+        .agent-coder .agent-attr svg {
+            stroke: var(--color-code-text);
+        }
+
+        .agent-reviewer .agent-attr svg {
+            stroke: var(--color-layer-skills);
+        }
+
+        .agent-deployer .agent-attr svg {
+            stroke: var(--color-layer-agents);
+        }
+
+        /* Bidirectional arrow between cards */
+        .pipeline-arrow {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            padding: 0 4px;
+            opacity: 0;
+            animation: fadeIn 400ms cubic-bezier(0.16, 1, 0.3, 1) 1400ms forwards;
+        }
+
+        .pipe-head-left {
+            width: 0;
+            height: 0;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+            border-right: 5px solid rgba(196, 164, 74, 0.35);
+        }
+
+        .pipe-line {
+            width: 12px;
+            height: 1px;
+            background: rgba(196, 164, 74, 0.25);
+        }
+
+        .pipe-head-right {
+            width: 0;
+            height: 0;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+            border-left: 5px solid rgba(196, 164, 74, 0.35);
+        }
+
+        /* ── Footer ── */
+        .presenter {
+            position: fixed;
+            bottom: 140px;
+            left: 56px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 1600ms forwards;
+        }
+
+        .presenter-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .presenter-divider {
+            width: 1px;
+            height: 12px;
+            background: var(--color-bg-border);
+        }
+
+        .presenter-handle {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--color-text-tertiary);
+        }
+
+        .section-counter {
+            position: fixed;
+            bottom: 140px;
+            right: 56px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--color-text-tertiary);
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 1600ms forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes nodeDropIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardRise {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-tl"></div>
+    <div class="glow-br"></div>
+
+    <div class="stage">
+
+        <!-- LEFT -->
+        <div class="left">
+            <div class="layer-tag">
+                <div class="eyebrow">Section 09 &nbsp;·&nbsp; The Architecture Stack</div>
+                <div class="layer-number">05</div>
+                <div class="layer-name">Agents</div>
+                <div class="layer-desc">Claude instances that spawn, delegate, run in parallel, and synthesize results.
+                    Complex jobs with zero human handoff.</div>
+            </div>
+            <div class="mini-pyramid">
+                <div class="mini-tier mini-tier-agents active">Agents</div>
+                <div class="mini-tier mini-tier-skills">Skills</div>
+                <div class="mini-tier mini-tier-tools">Tools</div>
+                <div class="mini-tier mini-tier-context">Context</div>
+                <div class="mini-tier mini-tier-model">Model</div>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right">
+
+            <!-- Panel 1: Subagents -->
+            <div class="panel panel-subagents">
+                <div class="panel-header">
+                    <div class="panel-label">01 &nbsp;·&nbsp; Subagents</div>
+                    <div class="panel-title">Orchestrate &amp; parallelize</div>
+                </div>
+
+                <div class="subagent-diagram">
+
+                    <!-- Orchestrator -->
+                    <div class="orchestrator">
+                        <div class="orch-node">
+                            <div class="orch-tag">Orchestrator</div>
+                            <div class="orch-name">Claude</div>
+                        </div>
+                    </div>
+
+                    <!-- Branching lines down -->
+                    <svg class="tree-svg" viewBox="0 0 600 52" preserveAspectRatio="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <!-- vertical stem down from orchestrator -->
+                        <line x1="300" y1="0" x2="300" y2="26" stroke="rgba(196,164,74,0.3)" stroke-width="1"
+                            stroke-dasharray="4 3" />
+                        <!-- horizontal bar -->
+                        <line x1="100" y1="26" x2="500" y2="26" stroke="rgba(196,164,74,0.3)" stroke-width="1"
+                            stroke-dasharray="4 3" />
+                        <!-- drops to each subagent -->
+                        <line x1="100" y1="26" x2="100" y2="52" stroke="rgba(196,164,74,0.3)" stroke-width="1"
+                            stroke-dasharray="4 3" />
+                        <line x1="300" y1="26" x2="300" y2="52" stroke="rgba(196,164,74,0.3)" stroke-width="1"
+                            stroke-dasharray="4 3" />
+                        <line x1="500" y1="26" x2="500" y2="52" stroke="rgba(196,164,74,0.3)" stroke-width="1"
+                            stroke-dasharray="4 3" />
+                    </svg>
+
+                    <!-- Three subagents -->
+                    <div class="subagent-row">
+                        <div class="subagent-node">
+                            <div class="subagent-tag">Subagent A</div>
+                            <div class="subagent-name">Research</div>
+                            <div class="subagent-task">Scrape &amp; summarize docs</div>
+                            <div class="subagent-status">
+                                <div class="status-dot"></div>
+                                <span class="status-label">running</span>
+                            </div>
+                        </div>
+                        <div class="subagent-node">
+                            <div class="subagent-tag">Subagent B</div>
+                            <div class="subagent-name">Code</div>
+                            <div class="subagent-task">Write implementation</div>
+                            <div class="subagent-status">
+                                <div class="status-dot"></div>
+                                <span class="status-label">running</span>
+                            </div>
+                        </div>
+                        <div class="subagent-node">
+                            <div class="subagent-tag">Subagent C</div>
+                            <div class="subagent-name">Test</div>
+                            <div class="subagent-task">Run &amp; validate suite</div>
+                            <div class="subagent-status">
+                                <div class="status-dot"></div>
+                                <span class="status-label">running</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Return arrows up -->
+                    <svg class="return-svg" viewBox="0 0 600 36" preserveAspectRatio="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <line x1="100" y1="0" x2="100" y2="18" stroke="rgba(196,164,74,0.2)" stroke-width="1" />
+                        <line x1="300" y1="0" x2="300" y2="18" stroke="rgba(196,164,74,0.2)" stroke-width="1" />
+                        <line x1="500" y1="0" x2="500" y2="18" stroke="rgba(196,164,74,0.2)" stroke-width="1" />
+                        <line x1="100" y1="18" x2="500" y2="18" stroke="rgba(196,164,74,0.2)" stroke-width="1" />
+                        <line x1="300" y1="18" x2="300" y2="36" stroke="rgba(196,164,74,0.2)" stroke-width="1" />
+                        <!-- Arrow head pointing up toward orchestrator -->
+                        <polygon points="296,0 304,0 300,8" fill="rgba(196,164,74,0.35)" />
+                    </svg>
+
+                    <div class="return-label-row">
+                        <div class="return-label">Results synthesized → Orchestrator</div>
+                    </div>
+
+                </div>
+
+                <div class="panel-caption">Complex jobs run concurrently — <em>faster, fully autonomous.</em></div>
+            </div>
+
+            <!-- Panel 2: Agent Teams -->
+            <div class="panel panel-teams">
+                <div class="panel-header">
+                    <div class="panel-label">02 &nbsp;·&nbsp; Agent Teams</div>
+                    <div class="panel-title">Purpose-built roles, end-to-end</div>
+                </div>
+
+                <div class="teams-layout">
+
+                    <!-- Orchestrator -->
+                    <div class="orch-mini">
+                        <div class="orch-mini-node">
+                            <div class="orch-mini-tag">Orchestrator</div>
+                            <div class="orch-mini-name">Claude</div>
+                        </div>
+                    </div>
+
+                    <!-- Connector -->
+                    <div class="teams-connector">
+                        <div class="teams-connector-line"></div>
+                    </div>
+
+                    <!-- Shared Task List -->
+                    <div class="shared-task-list">
+                        <div class="task-list-node">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 10 8 9" />
+                            </svg>
+                            <span class="task-list-label">Shared Task List</span>
+                        </div>
+                    </div>
+
+                    <!-- Connector -->
+                    <div class="teams-connector">
+                        <div class="teams-connector-line"></div>
+                    </div>
+
+                    <!-- Role cards with bidirectional arrows -->
+                    <div class="pipeline">
+
+                        <!-- Planner -->
+                        <div class="agent-card agent-planner">
+                            <div class="agent-role-tag">Role 01</div>
+                            <div class="agent-role-name">Planner</div>
+                            <div class="agent-attrs">
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    </svg>
+                                    System prompt
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                    </svg>
+                                    Brief · CLAUDE.md
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="8" x2="12" y2="12" />
+                                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                                    </svg>
+                                    Decompose tasks
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            <div class="pipe-head-left"></div>
+                            <div class="pipe-line"></div>
+                            <div class="pipe-head-right"></div>
+                        </div>
+
+                        <!-- Coder -->
+                        <div class="agent-card agent-coder">
+                            <div class="agent-role-tag">Role 02</div>
+                            <div class="agent-role-name">Coder</div>
+                            <div class="agent-attrs">
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <polyline points="4 17 10 11 4 5" />
+                                        <line x1="12" y1="19" x2="20" y2="19" />
+                                    </svg>
+                                    Bash · File system
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                    </svg>
+                                    build.SKILL.md
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <polyline points="16 18 22 12 16 6" />
+                                        <polyline points="8 6 2 12 8 18" />
+                                    </svg>
+                                    Write implementation
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            <div class="pipe-head-left"></div>
+                            <div class="pipe-line"></div>
+                            <div class="pipe-head-right"></div>
+                        </div>
+
+                        <!-- Reviewer -->
+                        <div class="agent-card agent-reviewer">
+                            <div class="agent-role-tag">Role 03</div>
+                            <div class="agent-role-name">Reviewer</div>
+                            <div class="agent-attrs">
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                                    </svg>
+                                    GitHub MCP
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                    </svg>
+                                    review.SKILL.md
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                    PR comments · QA
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pipeline-arrow">
+                            <div class="pipe-head-left"></div>
+                            <div class="pipe-line"></div>
+                            <div class="pipe-head-right"></div>
+                        </div>
+
+                        <!-- Deployer -->
+                        <div class="agent-card agent-deployer">
+                            <div class="agent-role-tag">Role 04</div>
+                            <div class="agent-role-name">Deployer</div>
+                            <div class="agent-attrs">
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <polyline points="4 17 10 11 4 5" />
+                                        <line x1="12" y1="19" x2="20" y2="19" />
+                                    </svg>
+                                    CLI · Bash
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                    </svg>
+                                    deploy.SKILL.md
+                                </div>
+                                <div class="agent-attr">
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                        <polyline points="22 4 12 14.01 9 11.01" />
+                                    </svg>
+                                    Ship to production
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="panel-caption">Agents coordinate through a shared task list — <em>each role talks to every other.</em></div>
+            </div>
+
+        </div><!-- /right -->
+    </div><!-- /stage -->
+
+    <div class="presenter">
+        <span class="presenter-name">Shawn</span>
+        <div class="presenter-divider"></div>
+        <span class="presenter-handle">@shawnbuildsai</span>
+    </div>
+    <div class="section-counter">09 / 11</div>
+
+</body>
+
+</html>

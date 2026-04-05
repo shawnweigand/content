@@ -1,0 +1,26 @@
+{
+    "title": "Layer: Context",
+    "description": "A slide introducing the Context layer. The pyramid is shown with the Context tier highlighted. Five sub-concepts are presented as distinct visual components: system prompts, Projects, CLAUDE.md, auto memory, and the /context command.",
+    "parts": [
+        {
+            "title": "Prompts",
+            "description": "A split layout: on the left, a raw chat interface showing a generic Claude response. On the right, the same interface with a system prompt injected — Claude now responds as a purpose-built internal tool with a defined persona and constrained output format. An arrow between the two sides is labeled 'System Prompt applied.'"
+        },
+        {
+            "title": "Projects",
+            "description": "A container diagram showing a Project as a box holding three components: Conversation History, CLAUDE.md, and Knowledge Files. An arrow from Knowledge Files points to a 'RAG' label, which then feeds into Claude's context window. The visual communicates that Claude always has the right context without manual re-pasting."
+        },
+        {
+            "title": "CLAUDE.md",
+            "description": "Two stacked file cards side by side. Left card: project-scoped CLAUDE.md listing repo conventions, architecture decisions, and task defaults. Right card: user-scoped ~/.claude/CLAUDE.md listing global preferences — stack, tone, code review style, shortcuts. A monospace annotation shows the # edit shortcut for mid-session updates."
+        },
+        {
+            "title": "Auto Memory — /memory",
+            "description": "A timeline or loop diagram showing Claude writing observations back to a memory file during a session, and that memory file being loaded at the start of the next session. A /memory command callout shows a sample list of stored preferences. The visual conveys a feedback loop that makes each session smarter."
+        },
+        {
+            "title": "/context",
+            "description": "A terminal-style window displaying the output of /context — a structured list of what is currently loaded: files, memory entries, conversation turns, and the system prompt. Sections are color-coded. A caption reads: 'See exactly what Claude knows. Trim or add before a long task.'"
+        }
+    ]
+}

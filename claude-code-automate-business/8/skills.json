@@ -1,0 +1,18 @@
+{
+    "title": "Layer: Skills",
+    "description": "A slide introducing the Skills layer. The pyramid is shown with the Skills tier highlighted. Three sub-concepts are presented: SKILL.md files, the Skill Creator meta-skill, and Hooks.",
+    "parts": [
+        {
+            "title": "SKILL.md",
+            "description": "A file card representing a SKILL.md document with a title, a short description of the task domain, and a list of numbered instruction steps. An arrow shows Claude reading the file before taking action. A row of tags at the bottom reads: Consistent · Auditable · Version-controlled."
+        },
+        {
+            "title": "Skill Creator",
+            "description": "A three-step horizontal flow: (1) Describe the Workflow — a plain-language input box. (2) Claude Produces the SKILL.md — a generated file card appears. (3) Refine with Evals — a feedback loop icon with a checkmark indicating the skill has been tested and approved. Labels reinforce that skills are engineered, not just prompted."
+        },
+        {
+            "title": "Hooks",
+            "description": "An event-trigger diagram showing three hook moments: Before Task Starts, After File Written, When Test Fails. Each event has an arrow pointing to a Skill icon, indicating automatic execution. A label reads: 'Skills run in response to events, not just explicit commands.'"
+        }
+    ]
+}

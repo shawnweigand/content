@@ -1,0 +1,18 @@
+{
+    "title": "Example 1: Frontend Design",
+    "description": "A three-step walkthrough showing how the frontend-design plugin works end to end — from install command to production UI output. Each step is a distinct visual panel.",
+    "parts": [
+        {
+            "title": "Install the Plugin",
+            "description": "A terminal window showing the install command: claude plugin add anthropics/claude-plugins-official frontend-design. Below the command, a file tree expands showing three new items dropped into the project: CLAUDE.md (design conventions), frontend-design SKILL.md, and a Figma MCP server config file."
+        },
+        {
+            "title": "The Skill Runs",
+            "description": "A split panel: on the left, the frontend-design SKILL.md file open showing design system rules, component structure guidelines, and styling conventions. On the right, Claude reading the file before writing any code — represented by an eye icon scanning the document. Annotations highlight: No ad hoc decisions · No style drift."
+        },
+        {
+            "title": "The Output",
+            "description": "A rendered UI component preview showing a clean, production-grade card or form element with correct structure, consistent styling, and accessible markup. A label beneath reads: 'Built in one pass.' Two attribution tags: 'The skill did the thinking. Claude did the work.'"
+        }
+    ]
+}

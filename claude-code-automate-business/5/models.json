@@ -1,0 +1,18 @@
+{
+    "title": "Layer: Model",
+    "description": "A slide introducing the Model layer of the architecture stack. The pyramid is shown in the corner with the Model tier highlighted. Three sub-concepts are presented: model selection (Haiku/Sonnet/Opus), extended thinking, and effort controls.",
+    "parts": [
+        {
+            "title": "Haiku vs. Sonnet vs. Opus",
+            "description": "Three vertically stacked or side-by-side cards, one per model. Haiku: fastest, cheapest, best for repetitive tasks — light color. Sonnet: balanced workhorse, default for agentic work — medium color. Opus: most capable, complex reasoning, high-stakes outputs — richest color. Each card has the model name large, a speed/power indicator, and a use-case label."
+        },
+        {
+            "title": "Extended Thinking",
+            "description": "A two-phase diagram showing Claude's process: a 'Thinking' phase (internal reasoning, shown as a looping chain of thought steps) followed by an 'Output' phase (the final response). An annotation highlights that the thinking phase is invisible to the user but dramatically improves accuracy on hard problems."
+        },
+        {
+            "title": "/effort and Ultrathink",
+            "description": "A horizontal slider or dial graphic with three stops: Low, Medium, High for /effort. Below it, a separate callout block for Ultrathink labeled as maximum reasoning depth. A tooltip or annotation reads: 'Use when the answer really matters.' Clean, minimal layout with the command names shown in monospace."
+        }
+    ]
+}

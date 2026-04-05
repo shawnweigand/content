@@ -1,0 +1,18 @@
+{
+    "title": "Layer: Tools",
+    "description": "A slide introducing the Tools layer. The pyramid is shown with the Tools tier highlighted. Three sub-concepts are presented: what tools are, MCP servers, and the CLI.",
+    "parts": [
+        {
+            "title": "Tools",
+            "description": "A before/after split. Left side labeled 'Without Tools': Claude inside a chat bubble, isolated, no connections. Right side labeled 'With Tools': Claude at the center of a spoke diagram with lines reaching out to file systems, APIs, browsers, and databases. Caption: 'Without tools, Claude can only talk. With tools, it can do.'"
+        },
+        {
+            "title": "MCP Servers",
+            "description": "A hub-and-spoke diagram with Claude at the center and MCP server icons radiating outward — Notion, Slack, GitHub, a database, and a generic internal API. Each spoke is labeled with the service name. A caption reads: 'If it has an API, Claude can use it.' The spokes are styled as clean connector lines with service logos at the ends."
+        },
+        {
+            "title": "CLI",
+            "description": "A looping flowchart showing the CLI execution cycle: Run Command → Read Output → React to Errors → Retry / Patch / Rerun. The loop is styled as a terminal window with each step shown as a command line entry. A label reads: 'Works the way a real engineer would.'"
+        }
+    ]
+}

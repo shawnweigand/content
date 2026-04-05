@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Three Ways to Run Claude Code</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --color-bg-base: #0A0A0A;
+            --color-bg-surface: #111111;
+            --color-bg-elevated: #1A1A1A;
+            --color-bg-border: #222222;
+            --color-accent-primary: #CC785C;
+            --color-accent-soft: #E8956D;
+            --color-accent-muted: #7A3F2A;
+            --color-text-primary: #F0EDE8;
+            --color-text-secondary: #A09A92;
+            --color-text-tertiary: #5A554F;
+            --color-code-bg: #141414;
+            --color-code-text: #A8C090;
+            --color-layer-model: #CC785C;
+            --color-layer-context: #7B9E87;
+            --color-layer-tools: #6B8CAE;
+            --color-layer-skills: #9B7BB8;
+            --color-layer-agents: #C4A44A;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg-base);
+            color: var(--color-text-primary);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .glow-left {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(204, 120, 92, 0.06) 0%, transparent 70%);
+            top: -80px;
+            left: -80px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-right {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 192, 144, 0.05) 0%, transparent 70%);
+            bottom: -100px;
+            right: -100px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── Stage: top header + bottom cards ── */
+        .stage {
+            position: relative;
+            z-index: 1;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            padding: 0;
+        }
+
+        /* ── Header ── */
+        .header {
+            padding: 56px 80px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border-bottom: 1px solid var(--color-bg-border);
+            padding-bottom: 40px;
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--color-accent-primary);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 150ms forwards;
+        }
+
+        .header-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .headline {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2.2rem, 3.5vw, 3.6rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -0.025em;
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 280ms forwards;
+        }
+
+        .headline em {
+            font-style: italic;
+            color: var(--color-accent-primary);
+        }
+
+        .subline {
+            max-width: 340px;
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            line-height: 1.65;
+            padding-bottom: 4px;
+            opacity: 0;
+            animation: fadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards;
+        }
+
+        /* ── Cards row ── */
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            padding: 0;
+            align-items: stretch;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            padding: 48px 52px 52px;
+            border-right: 1px solid var(--color-bg-border);
+            position: relative;
+            opacity: 0;
+            transition: background 300ms ease;
+        }
+
+        .card:last-child {
+            border-right: none;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.012);
+        }
+
+        /* Power bar top accent */
+        .card-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 0;
+        }
+
+        /* Card index label */
+        .card-index {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--color-text-tertiary);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        /* Icon */
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-bg-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            flex-shrink: 0;
+        }
+
+        .card-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .card-title {
+            font-family: 'Fraunces', serif;
+            font-size: 1.65rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .card-desc {
+            font-size: 0.875rem;
+            font-weight: 300;
+            color: var(--color-text-secondary);
+            line-height: 1.65;
+            margin-bottom: 32px;
+            flex: 1;
+        }
+
+        /* Capability chips */
+        .caps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .cap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+        }
+
+        .cap-icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cap-icon svg {
+            width: 12px;
+            height: 12px;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .cap.yes {
+            color: var(--color-text-secondary);
+        }
+
+        .cap.yes .cap-icon svg {
+            stroke: var(--color-code-text);
+        }
+
+        .cap.no {
+            color: var(--color-text-tertiary);
+        }
+
+        .cap.no .cap-icon svg {
+            stroke: var(--color-text-tertiary);
+        }
+
+        /* ── Card 1: Web ── */
+        .card-web {
+            animation: cardIn 500ms cubic-bezier(0.16, 1, 0.3, 1) 600ms forwards;
+        }
+
+        .card-web .card-bar {
+            background: var(--color-text-tertiary);
+            opacity: 0.4;
+        }
+
+        .card-web .card-icon {
+            border-color: rgba(160, 154, 146, 0.3);
+        }
+
+        .card-web .card-icon svg {
+            stroke: var(--color-text-secondary);
+        }
+
+        .card-web .card-title {
+            color: var(--color-text-secondary);
+        }
+
+        .card-web .card-subtitle {
+            color: var(--color-text-tertiary);
+        }
+
+        /* ── Card 2: Desktop ── */
+        .card-desktop {
+            animation: cardIn 500ms cubic-bezier(0.16, 1, 0.3, 1) 780ms forwards;
+        }
+
+        .card-desktop .card-bar {
+            background: var(--color-layer-tools);
+            opacity: 0.7;
+        }
+
+        .card-desktop .card-icon {
+            border-color: rgba(107, 140, 174, 0.35);
+        }
+
+        .card-desktop .card-icon svg {
+            stroke: #6B8CAE;
+        }
+
+        .card-desktop .card-title {
+            color: var(--color-text-primary);
+        }
+
+        .card-desktop .card-subtitle {
+            color: #6B8CAE;
+        }
+
+        /* ── Card 3: Terminal ── */
+        .card-terminal {
+            animation: cardIn 500ms cubic-bezier(0.16, 1, 0.3, 1) 960ms forwards;
+            background: rgba(168, 192, 144, 0.025);
+        }
+
+        .card-terminal .card-bar {
+            background: linear-gradient(90deg, var(--color-code-text), rgba(168, 192, 144, 0.4));
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(168, 192, 144, 0.15);
+        }
+
+        .card-terminal .card-icon {
+            border-color: rgba(168, 192, 144, 0.4);
+            background: rgba(168, 192, 144, 0.07);
+            box-shadow: 0 0 20px rgba(168, 192, 144, 0.08);
+        }
+
+        .card-terminal .card-icon svg {
+            stroke: var(--color-code-text);
+        }
+
+        .card-terminal .card-title {
+            color: var(--color-code-text);
+        }
+
+        .card-terminal .card-subtitle {
+            color: rgba(168, 192, 144, 0.7);
+        }
+
+        /* ── Power arrow bar ── */
+        .power-strip {
+            padding: 20px 80px 28px;
+            border-top: 1px solid var(--color-bg-border);
+            display: flex;
+            align-items: center;
+            gap: 0;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 1200ms forwards;
+        }
+
+        .power-label-left {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--color-text-tertiary);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            flex-shrink: 0;
+            width: calc(33.33% - 20px);
+        }
+
+        .power-track {
+            flex: 1;
+            position: relative;
+            height: 3px;
+            background: var(--color-bg-border);
+            border-radius: 2px;
+            margin: 0 20px;
+        }
+
+        .power-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg,
+                    var(--color-text-tertiary) 0%,
+                    var(--color-layer-tools) 40%,
+                    var(--color-code-text) 100%);
+        }
+
+        /* Arrow head */
+        .power-track::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: -4px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 7px solid var(--color-code-text);
+        }
+
+        /* Tick marks under the track */
+        .power-ticks {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 0;
+        }
+
+        .power-tick {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.58rem;
+            color: var(--color-text-tertiary);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .power-label-right {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.62rem;
+            color: var(--color-code-text);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            flex-shrink: 0;
+            text-align: right;
+            width: calc(33.33% - 20px);
+        }
+
+        /* ── Presenter ── */
+        .presenter {
+            position: fixed;
+            bottom: 16px;
+            left: 80px;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 1400ms forwards;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .presenter-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .presenter-divider {
+            width: 1px;
+            height: 12px;
+            background: var(--color-bg-border);
+        }
+
+        .presenter-handle {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--color-text-tertiary);
+        }
+
+        .section-counter {
+            position: fixed;
+            bottom: 16px;
+            right: 80px;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--color-text-tertiary);
+            letter-spacing: 0.1em;
+            opacity: 0;
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 1400ms forwards;
+        }
+
+        /* ── Animations ── */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow-left"></div>
+    <div class="glow-right"></div>
+
+    <div class="stage">
+
+        <!-- HEADER -->
+        <div class="header">
+            <div class="eyebrow">Section 03 &nbsp;·&nbsp; Three Ways to Run</div>
+            <div class="header-row">
+                <h1 class="headline">
+                    The further right<br />you go, the more<br />Claude can <em>do.</em>
+                </h1>
+                <p class="subline">
+                    Claude Code runs in three environments. Each unlocks more capability. Only one gives you the full
+                    picture.
+                </p>
+            </div>
+        </div>
+
+        <!-- CARDS -->
+        <div class="cards">
+
+            <!-- Card 1: Web -->
+            <div class="card card-web">
+                <div class="card-bar"></div>
+                <div class="card-index">01</div>
+                <div class="card-icon">
+                    <!-- Globe / browser icon -->
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="2" y1="12" x2="22" y2="12" />
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                </div>
+                <div class="card-title">Web</div>
+                <div class="card-subtitle">claude.ai</div>
+                <p class="card-desc">Zero setup. Open a browser and start. Best for quick tasks, one-off answers, and
+                    exploring what Claude can do — before committing to a workflow.</p>
+                <div class="caps">
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Zero setup required
+                    </div>
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Conversation history
+                    </div>
+                    <div class="cap no">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg></span>
+                        No filesystem access
+                    </div>
+                    <div class="cap no">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg></span>
+                        No MCP / tool calls
+                    </div>
+                    <div class="cap no">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg></span>
+                        No agentic execution
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Desktop -->
+            <div class="card card-desktop">
+                <div class="card-bar"></div>
+                <div class="card-index">02</div>
+                <div class="card-icon">
+                    <!-- Desktop app icon -->
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="3" width="20" height="14" rx="2" />
+                        <path d="M8 21h8M12 17v4" />
+                    </svg>
+                </div>
+                <div class="card-title">Desktop</div>
+                <div class="card-subtitle">Claude app</div>
+                <p class="card-desc">Faster, with better session persistence and a native feel. Supports Projects and
+                    CLAUDE.md. Still limited — no bash, no subagents, no real autonomy.</p>
+                <div class="caps">
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Projects &amp; CLAUDE.md
+                    </div>
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Better persistence
+                    </div>
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Native performance
+                    </div>
+                    <div class="cap no">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg></span>
+                        No bash / CLI execution
+                    </div>
+                    <div class="cap no">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg></span>
+                        No subagents
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Terminal -->
+            <div class="card card-terminal">
+                <div class="card-bar"></div>
+                <div class="card-index">03</div>
+                <div class="card-icon">
+                    <!-- Terminal icon -->
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="4 17 10 11 4 5" />
+                        <line x1="12" y1="19" x2="20" y2="19" />
+                    </svg>
+                </div>
+                <div class="card-title">Terminal</div>
+                <div class="card-subtitle">claude code CLI</div>
+                <p class="card-desc">Full agentic power. Filesystem, bash, MCP servers, SKILL.md, subagents, hooks.
+                    Claude works autonomously on your machine like a real engineer — in a loop, until the job is done.
+                </p>
+                <div class="caps">
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Full filesystem access
+                    </div>
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Bash &amp; CLI execution
+                    </div>
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        MCP servers &amp; tools
+                    </div>
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Subagents &amp; SKILL.md
+                    </div>
+                    <div class="cap yes">
+                        <span class="cap-icon"><svg viewBox="0 0 24 24">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg></span>
+                        Hooks &amp; autonomous loops
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /cards -->
+
+        <!-- POWER STRIP -->
+        <div class="power-strip">
+            <div class="power-label-left">Limited</div>
+            <div class="power-track">
+                <div class="power-fill"></div>
+                <div class="power-ticks">
+                    <span class="power-tick">Web</span>
+                    <span class="power-tick">Desktop</span>
+                    <span class="power-tick" style="color: var(--color-code-text);">Terminal</span>
+                </div>
+            </div>
+            <div class="power-label-right">Full agentic power →</div>
+        </div>
+
+    </div><!-- /stage -->
+
+    <div class="presenter">
+        <span class="presenter-name">Shawn</span>
+        <div class="presenter-divider"></div>
+        <span class="presenter-handle">@shawnbuildsai</span>
+    </div>
+    <div class="section-counter">03 / 11</div>
+
+</body>
+
+</html>

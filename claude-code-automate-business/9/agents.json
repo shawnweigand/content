@@ -1,0 +1,14 @@
+{
+    "title": "Layer: Agents",
+    "description": "A slide introducing the Agents layer at the top of the pyramid. The pyramid is shown with the Agents tier highlighted. Two sub-concepts are presented: subagents and agent teams.",
+    "parts": [
+        {
+            "title": "Subagents",
+            "description": "A tree diagram with a parent Orchestrator node at the top branching down into three Subagent nodes running in parallel. Each subagent has a label indicating its subtask. Arrows flow back up to the Orchestrator labeled 'Results Synthesized.' A caption reads: 'Complex jobs run concurrently — faster, fully autonomous.'"
+        },
+        {
+            "title": "Agent Teams",
+            "description": "A horizontal pipeline showing four agent role cards in sequence: Planner → Coder → Reviewer → Deployer. Each card lists its role name, a context icon, a tools icon, and a skills icon. A bold label beneath reads: 'Zero human handoff.' The pipeline is styled as a connected workflow with directional arrows between each card."
+        }
+    ]
+}

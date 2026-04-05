@@ -1,0 +1,10 @@
+{
+    "title": "The Architecture Stack",
+    "description": "A tall vertical pyramid divided into five labeled tiers from bottom to top: Model, Context, Tools, Skills, Agents. Each tier has a distinct color and a one-line descriptor. The pyramid conveys that each layer builds on the one below it, and together they form a complete autonomous system.",
+    "parts": [
+        {
+            "title": "The Five Layers",
+            "description": "A five-tier pyramid rendered top to bottom as: Agents (top), Skills, Tools, Context, Model (base). Each tier has a distinct background color, a bold layer name, and a short subtitle. A caption below reads: 'Each layer builds on the one below it. Together they form a complete autonomous business.'"
+        }
+    ]
+}

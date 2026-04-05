@@ -1,0 +1,10 @@
+{
+    "title": "Claude Code Connects Everything",
+    "description": "A bold centerpiece slide establishing Claude Code as the universal connector. Claude Code sits at the center of the visual as the hub of a modern business operating system.",
+    "parts": [
+        {
+            "title": "The Universal Connector",
+            "description": "A dark, high-contrast hub-and-spoke diagram with Claude Code as a glowing central node. Spokes radiate outward in all directions connecting to categorized clusters of tools and systems: Code & Dev (GitHub, CLI, terminal, file system), Knowledge & Docs (Notion, Google Drive, CLAUDE.md), Communication (Slack, Gmail, calendar), Data & APIs (databases, internal APIs, webhooks), and Design & Creative (Figma, browser, web). Each cluster is color-coded. Thin connector lines pulse outward from Claude Code. A single line of text beneath the diagram reads: 'One assistant. Every system. Fully autonomous.'"
+        }
+    ]
+}

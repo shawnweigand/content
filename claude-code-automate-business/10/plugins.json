@@ -1,0 +1,14 @@
+{
+    "title": "Plugins",
+    "description": "A slide introducing Plugins as the packaging layer that bundles the entire stack into a single installable unit. Two sub-concepts are presented: the plugin bundle structure and the plugin marketplace.",
+    "parts": [
+        {
+            "title": "Plugin Bundle",
+            "description": "A box diagram labeled 'Plugin' containing four nested component icons: Skills, Hooks, Agents, MCP Server Config. An arrow points from the box to a project directory, labeled with a single install command. A caption reads: 'The full stack in a box. One command drops a complete workflow into any project.'"
+        },
+        {
+            "title": "Marketplace",
+            "description": "A grid of plugin cards styled like an app store. Each card shows a plugin name, a category tag (Next.js, Notion, GitHub, Slack), a version number, and an install button. Two sections are visible: Community Plugins and Private Registry. A caption reads: 'Build once, share everywhere.'"
+        }
+    ]
+}
