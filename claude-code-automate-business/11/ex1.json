@@ -1,18 +1,18 @@
 {
-    "title": "Example 1: Frontend Design",
-    "description": "A three-step walkthrough showing how the frontend-design plugin works end to end — from install command to production UI output. Each step is a distinct visual panel.",
+    "title": "CC Discovery",
+    "description": "A slide introducing the CC Discovery skill — a structured business discovery session that interviews a business owner about their workflows, tools, and pain points, then generates a polished HTML opportunity map and opens it in the browser.",
     "parts": [
         {
-            "title": "Install the Plugin",
-            "description": "A terminal window showing the install command: claude plugin add anthropics/claude-plugins-official frontend-design. Below the command, a file tree expands showing three new items dropped into the project: CLAUDE.md (design conventions), frontend-design SKILL.md, and a Figma MCP server config file."
+            "title": "The Interview",
+            "description": "A four-turn conversational interview flow shown as a vertical sequence of exchange cards. Each card represents one turn: Turn 1 (Business Foundation), Turn 2 (Pain Points), Turn 3 (Current Automation), Turn 4 (Goals & Stakes). Each card shows 2-3 sample questions in DM Mono and a label indicating what Claude is listening for. An arrow connects each card to the next, conveying that this is a flowing conversation, not a form."
         },
         {
-            "title": "The Skill Runs",
-            "description": "A split panel: on the left, the frontend-design SKILL.md file open showing design system rules, component structure guidelines, and styling conventions. On the right, Claude reading the file before writing any code — represented by an eye icon scanning the document. Annotations highlight: No ad hoc decisions · No style drift."
+            "title": "The Analysis",
+            "description": "A silent scoring matrix shown as a grid. Rows are the discovered opportunities. Columns are Impact, Feasibility, and Speed — each with a 1-5 fill bar. A fourth column shows the assigned Architecture Layer (Model / Context / Tools / Skills / Agents) as a colored tag. A fifth column shows the Phase (1 / 2 / 3). A label reads: 'Claude scores every opportunity before writing a single line of the report.'"
         },
         {
-            "title": "The Output",
-            "description": "A rendered UI component preview showing a clean, production-grade card or form element with correct structure, consistent styling, and accessible markup. A label beneath reads: 'Built in one pass.' Two attribution tags: 'The skill did the thinking. Claude did the work.'"
+            "title": "The Dashboard",
+            "description": "A browser window mockup showing the generated HTML report: a dark hero with the business name and stat chips, a grid of scored opportunity cards with animated fill bars, a three-column phased roadmap, an MCP stack recommender, and a first-week action plan with a terminal block. A label beneath reads: 'Opens in the browser automatically. No copy-paste required.'"
         }
     ]
 }

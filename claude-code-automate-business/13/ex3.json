@@ -1,0 +1,18 @@
+{
+    "title": "Example 2: Skill Creator",
+    "description": "A three-step walkthrough showing how the skill-creator plugin works — from install to a fully engineered, tested, and shippable SKILL.md file.",
+    "parts": [
+        {
+            "title": "Install the Plugin",
+            "description": "A terminal window showing the install command: claude plugin add anthropics/claude-plugins-official skill-creator. Below, a file tree showing two new items added to the project: skill-creator SKILL.md and an eval-templates folder. A caption reads: 'Claude now knows how to build skills.'"
+        },
+        {
+            "title": "Describe the Workflow",
+            "description": "A plain-language input box at the top with example text describing a workflow in natural language. Below it, Claude processes the input using the skill-creator SKILL.md — shown as a document being read — and outputs a structured SKILL.md file card with title, description, inputs, outputs, and numbered steps."
+        },
+        {
+            "title": "Refine and Ship",
+            "description": "A three-step refinement loop: (1) Run Evals — Claude tests the skill against sample inputs. (2) Identify Gaps — a diff view shows patches applied to the SKILL.md. (3) Re-test — a green checkmark confirms the skill passes. A final label reads: 'Versioned, tested, and ready to ship.'"
+        }
+    ]
+}
