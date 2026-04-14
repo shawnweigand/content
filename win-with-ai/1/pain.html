@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Cost of Doing It Manually</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-text-muted: #7A7068;
+            --color-text-dim: #4A4540;
+            --color-accent: #C8744A;
+            --color-accent-dim: #3D2418;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            position: relative;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 55% 55% at 28% 48%, #C8744A07 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 56px 72px 56px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* accent rule */
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 24px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        /* headline */
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(32px, 3.6vw, 46px);
+            font-weight: 300;
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            margin-bottom: 36px;
+            opacity: 0;
+            transform: translateY(14px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 350ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── BAR SECTION ── */
+        .bar-section {
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 650ms forwards;
+        }
+
+        .bar-track {
+            width: 100%;
+            height: 10px;
+            border-radius: 2px;
+            background: var(--color-border);
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0;
+            border-radius: 2px;
+            background: var(--color-accent);
+            animation: barFill 700ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
+        }
+
+        @keyframes barFill {
+            from { width: 0; }
+            to { width: 95%; }
+        }
+
+        .bar-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+        }
+
+        .bar-label.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .bar-label strong {
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        /* ── OPPORTUNITY BLOCK (step 1) ── */
+        .opportunity-block {
+            margin-top: 36px;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 400ms ease-out, transform 400ms ease-out;
+            pointer-events: none;
+        }
+
+        .opportunity-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .rhetorical {
+            font-family: 'Fraunces', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(22px, 2.4vw, 30px);
+            font-weight: 300;
+            line-height: 1.25;
+            letter-spacing: -0.015em;
+            color: var(--color-text);
+            margin-bottom: 28px;
+        }
+
+        /* calculator rows */
+        .calc-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-bottom: 24px;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .calc-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .calc-row:last-child {
+            border-bottom: none;
+        }
+
+        .calc-row-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+        }
+
+        .calc-row-value {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .calc-currency {
+            font-family: 'DM Mono', monospace;
+            font-size: 16px;
+            color: var(--color-text-muted);
+        }
+
+        .calc-input {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--color-text);
+            background: transparent;
+            border: none;
+            outline: none;
+            text-align: right;
+            width: 80px;
+            caret-color: var(--color-accent);
+        }
+
+        .calc-input:focus {
+            color: var(--color-accent);
+        }
+
+        /* remove number arrows */
+        .calc-input::-webkit-outer-spin-button,
+        .calc-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        .calc-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* result area */
+        .result-area {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .result-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+        }
+
+        .result-number-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        .result-number {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(44px, 5vw, 60px);
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -0.025em;
+            color: var(--color-accent);
+            opacity: 0;
+            transition: opacity 200ms ease-out;
+        }
+
+        .result-number.visible {
+            opacity: 1;
+        }
+
+        .result-underline {
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            height: 1px;
+            width: 0;
+            background: var(--color-accent);
+            transition: width 400ms ease-out;
+        }
+
+        .result-underline.visible {
+            width: 100%;
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="accent-rule"></div>
+
+            <h1 class="headline">
+                You're spending time<br>you don't have on work<br>that doesn't scale.
+            </h1>
+
+            <!-- Bar -->
+            <div class="bar-section">
+                <div class="bar-track">
+                    <div class="bar-fill" id="barFill"></div>
+                </div>
+                <p class="bar-label">
+                    <strong>15+ hrs/week</strong> on tasks AI can handle —<br>
+                    follow-ups, reporting, scheduling, data entry
+                </p>
+            </div>
+
+            <!-- Opportunity block (step 1) -->
+            <div class="opportunity-block" id="opportunityBlock">
+
+                <p class="rhetorical">
+                    What if those 15 hours gave you<br>one more client a month?
+                </p>
+
+                <div class="calc-rows">
+                    <div class="calc-row">
+                        <span class="calc-row-label">Avg. client value / month</span>
+                        <div class="calc-row-value">
+                            <span class="calc-currency">$</span>
+                            <input class="calc-input" id="clientValue" type="number" value="2000" min="0" />
+                        </div>
+                    </div>
+                    <div class="calc-row">
+                        <span class="calc-row-label">Extra clients / month</span>
+                        <div class="calc-row-value">
+                            <input class="calc-input" id="extraClients" type="number" value="1" min="0"
+                                style="width:50px;" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-area">
+                    <span class="result-label">Potential extra revenue / year</span>
+                    <div class="result-number-wrap">
+                        <div class="result-number" id="resultNumber">$0</div>
+                        <div class="result-underline" id="resultUnderline"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        let step = 0;
+        let countUpRaf = null;
+        let currentDisplayed = 0;
+
+        // ── Calculate result ───────────────────────────────────────────────────────
+        function getResult() {
+            const val = parseFloat(document.getElementById('clientValue').value) || 0;
+            const clients = parseFloat(document.getElementById('extraClients').value) || 0;
+            return Math.round(val * clients * 12);
+        }
+
+        function formatDollars(n) {
+            return '$' + n.toLocaleString('en-US');
+        }
+
+        // ── Count-up animation ─────────────────────────────────────────────────────
+        function countUp(target, duration = 800) {
+            if (countUpRaf) cancelAnimationFrame(countUpRaf);
+            const el = document.getElementById('resultNumber');
+            const start = currentDisplayed;
+            const startTime = performance.now();
+
+            function tick(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // ease-out cubic
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.round(start + (target - start) * eased);
+                currentDisplayed = current;
+                el.textContent = formatDollars(current);
+                if (progress < 1) {
+                    countUpRaf = requestAnimationFrame(tick);
+                } else {
+                    currentDisplayed = target;
+                    el.textContent = formatDollars(target);
+                    // grow underline after counter finishes
+                    setTimeout(() => {
+                        document.getElementById('resultUnderline').classList.add('visible');
+                    }, 80);
+                }
+            }
+            countUpRaf = requestAnimationFrame(tick);
+        }
+
+        // ── Live recalc when inputs change ────────────────────────────────────────
+        function onInputChange() {
+            if (step < 2) return;
+            const target = getResult();
+            countUp(target, 500);
+        }
+
+        document.getElementById('clientValue').addEventListener('input', onInputChange);
+        document.getElementById('extraClients').addEventListener('input', onInputChange);
+
+        // ── Bar pulse ──────────────────────────────────────────────────────────────
+        function pulseBar() {
+            const fill = document.getElementById('barFill');
+            fill.style.transition = 'transform 200ms ease-out';
+            fill.style.transform = 'scaleY(1.4)';
+            setTimeout(() => { fill.style.transform = 'scaleY(1)'; }, 200);
+        }
+
+        // ── Spacebar ──────────────────────────────────────────────────────────────
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space') return;
+            e.preventDefault();
+
+            if (step === 0) {
+                // Step 1: Lower the bar and show label
+                step = 1;
+                const fill = document.getElementById('barFill');
+                fill.style.animation = 'none';
+                fill.style.width = '95%';
+                // force reflow
+                void fill.offsetWidth;
+                fill.style.transition = 'width 800ms cubic-bezier(0.16, 1, 0.3, 1)';
+                fill.style.width = '65%';
+                
+                document.querySelector('.bar-label').classList.add('visible');
+
+            } else if (step === 1) {
+                // Step 2: pulse bar, reveal opportunity block
+                step = 2;
+                pulseBar();
+                setTimeout(() => {
+                    document.getElementById('opportunityBlock').classList.add('visible');
+                }, 180);
+
+            } else if (step === 2) {
+                // Step 3: count up result
+                step = 3;
+                const el = document.getElementById('resultNumber');
+                el.classList.add('visible');
+                countUp(getResult(), 800);
+            }
+        });
+    </script>
+</body>
+
+</html>

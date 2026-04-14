@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How Small Businesses Win with Claude AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-text-muted: #7A7068;
+            --color-text-dim: #4A4540;
+            --color-accent: #C8744A;
+            --color-accent-dim: #3D2418;
+            --color-line: #C8744A33;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            position: relative;
+        }
+
+        /* subtle radial glow behind content */
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 60% 60% at 30% 50%, #C8744A08 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ── LEFT CONTENT REGION ── */
+        .content {
+            padding: 64px 72px 64px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── ACCENT RULE ── */
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 28px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        /* ── HEADLINE ── */
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(48px, 5.5vw, 76px);
+            font-weight: 300;
+            line-height: 1.08;
+            letter-spacing: -0.025em;
+            color: var(--color-text);
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 350ms forwards;
+        }
+
+        .headline em {
+            font-style: italic;
+            color: var(--color-accent);
+        }
+
+        /* ── SUBHEADLINE ── */
+        .subheadline {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--color-text-muted);
+            max-width: 46ch;
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 500ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── CHART WRAPPER ── */
+        .chart-wrap {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            opacity: 0;
+            animation: fadeUp 400ms ease-out 700ms forwards;
+        }
+
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* Draw-in animation for the line path */
+        #chart-line {
+            stroke-dasharray: var(--line-length, 1000);
+            stroke-dashoffset: var(--line-length, 1000);
+            animation: drawLine 900ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
+        }
+
+        #chart-area {
+            opacity: 0;
+            animation: areaFade 600ms ease-out 1600ms forwards;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes areaFade {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ── ANNOTATIONS ── */
+        .annotation {
+            opacity: 0;
+            transform-origin: center;
+            transform: scale(0.8);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+            pointer-events: none;
+        }
+
+        .annotation.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #annotation-high.visible {
+            transition-delay: 120ms;
+        }
+
+
+
+        /* ── RIGHT REGION (empty, presenter video) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="accent-rule"></div>
+
+            <h1 class="headline">
+                How Small<br>
+                Businesses<br>
+                <em>Win</em> with Claude AI
+            </h1>
+
+            <p class="subheadline">
+                The gap between where you are and where<br>
+                you could be has never been smaller.
+            </p>
+
+            <!-- Chart -->
+            <div class="chart-wrap">
+                <svg class="chart-svg" id="chartSvg" viewBox="0 0 640 160" preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#C8744A" stop-opacity="0.28" />
+                            <stop offset="100%" stop-color="#C8744A" stop-opacity="0" />
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- Area fill (fades in after line draws) -->
+                    <path id="chart-area" fill="url(#areaGrad)" />
+
+                    <!-- Line -->
+                    <path id="chart-line" fill="none" stroke="#C8744A" stroke-width="2.5" stroke-linecap="round"
+                        stroke-linejoin="round" filter="url(#glow)" />
+
+                    <!-- Annotation: YOU ARE HERE (low point, index 3) -->
+                    <g id="annotation-low" class="annotation">
+                        <!-- circle ring -->
+                        <circle id="circle-low" r="8" fill="transparent" stroke="#C8744A" stroke-width="2" />
+                        <!-- arrow line (angled, pointing down-right from upper-left) -->
+                        <line id="arrow-low-line" stroke="#F0EBE3" stroke-width="1.5" stroke-linecap="round" />
+                        <!-- arrowhead -->
+                        <polygon id="arrow-low-head" fill="#F0EBE3" />
+                        <!-- label -->
+                        <text id="label-low" font-family="'DM Mono', monospace" font-size="11" font-weight="500"
+                            fill="#F0EBE3" letter-spacing="0.08em" text-anchor="middle">YOU ARE HERE</text>
+                    </g>
+
+                    <!-- Annotation: AI-NATIVE (high point, index 7) -->
+                    <g id="annotation-high" class="annotation">
+                        <!-- filled circle -->
+                        <circle id="circle-high" r="8" fill="#C8744A" stroke="#C8744A" stroke-width="2" />
+                        <!-- arrow line (angled, pointing down-left from upper-right) -->
+                        <line id="arrow-high-line" stroke="#F0EBE3" stroke-width="1.5" stroke-linecap="round" />
+                        <!-- arrowhead -->
+                        <polygon id="arrow-high-head" fill="#F0EBE3" />
+                        <!-- label -->
+                        <text id="label-high" font-family="'DM Mono', monospace" font-size="11" font-weight="500"
+                            fill="#C8744A" letter-spacing="0.08em" text-anchor="middle">AI-NATIVE</text>
+                    </g>
+
+                </svg>
+            </div>
+
+
+
+        </div>
+
+        <!-- Right 4/12 — intentionally empty for presenter video -->
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        // ── Data & coordinate mapping ──────────────────────────────────────────────
+        const data = [0.55, 0.48, 0.52, 0.45, 0.50, 0.62, 0.75, 0.92];
+        const W = 640, H = 160;
+        const PAD = { top: 24, bottom: 24, left: 8, right: 8 };
+        const LOW_IDX = 3;  // "You Are Here"
+        const HIGH_IDX = 7;  // "AI-Native"
+
+        function xOf(i) {
+            return PAD.left + (i / (data.length - 1)) * (W - PAD.left - PAD.right);
+        }
+
+        function yOf(v) {
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+            const norm = (v - min) / (max - min);
+            return PAD.top + (1 - norm) * (H - PAD.top - PAD.bottom);
+        }
+
+        const pts = data.map((v, i) => ({ x: xOf(i), y: yOf(v) }));
+
+        // ── Build smooth cubic bezier path ────────────────────────────────────────
+        function buildPath(pts) {
+            let d = `M ${pts[0].x},${pts[0].y}`;
+            for (let i = 0; i < pts.length - 1; i++) {
+                const cp1x = pts[i].x + (pts[i + 1].x - pts[i].x) * 0.45;
+                const cp1y = pts[i].y;
+                const cp2x = pts[i + 1].x - (pts[i + 1].x - pts[i].x) * 0.45;
+                const cp2y = pts[i + 1].y;
+                d += ` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${pts[i + 1].x},${pts[i + 1].y}`;
+            }
+            return d;
+        }
+
+        function buildAreaPath(pts) {
+            const linePart = buildPath(pts);
+            return `${linePart} L ${pts[pts.length - 1].x},${H} L ${pts[0].x},${H} Z`;
+        }
+
+        const linePath = document.getElementById('chart-line');
+        const areaPath = document.getElementById('chart-area');
+        const pathD = buildPath(pts);
+        linePath.setAttribute('d', pathD);
+        areaPath.setAttribute('d', buildAreaPath(pts));
+
+        // Set dash length for draw-in animation
+        requestAnimationFrame(() => {
+            const len = linePath.getTotalLength();
+            linePath.style.setProperty('--line-length', len);
+            linePath.style.strokeDasharray = len;
+            linePath.style.strokeDashoffset = len;
+        });
+
+        // ── Position annotation elements ──────────────────────────────────────────
+        function positionAnnotations() {
+            const lowPt = pts[LOW_IDX];
+            const highPt = pts[HIGH_IDX];
+
+            // --- LOW annotation ---
+            const lx = lowPt.x, ly = lowPt.y;
+            const lArrowStartX = lx - 34, lArrowStartY = ly - 38;
+            const lArrowEndX = lx - 10, lArrowEndY = ly - 10;
+
+            document.getElementById('circle-low').setAttribute('cx', lx);
+            document.getElementById('circle-low').setAttribute('cy', ly);
+
+            document.getElementById('arrow-low-line').setAttribute('x1', lArrowStartX);
+            document.getElementById('arrow-low-line').setAttribute('y1', lArrowStartY);
+            document.getElementById('arrow-low-line').setAttribute('x2', lArrowEndX);
+            document.getElementById('arrow-low-line').setAttribute('y2', lArrowEndY);
+
+            // arrowhead pointing toward circle
+            const lAngle = Math.atan2(lArrowEndY - lArrowStartY, lArrowEndX - lArrowStartX);
+            const lHead = arrowhead(lArrowEndX, lArrowEndY, lAngle, 6);
+            document.getElementById('arrow-low-head').setAttribute('points', lHead);
+
+            document.getElementById('label-low').setAttribute('x', lArrowStartX - 2);
+            document.getElementById('label-low').setAttribute('y', lArrowStartY - 10);
+
+            // --- HIGH annotation ---
+            const hx = highPt.x, hy = highPt.y;
+            const hArrowStartX = hx + 36, hArrowStartY = hy - 36;
+            const hArrowEndX = hx + 10, hArrowEndY = hy - 10;
+
+            document.getElementById('circle-high').setAttribute('cx', hx);
+            document.getElementById('circle-high').setAttribute('cy', hy);
+
+            document.getElementById('arrow-high-line').setAttribute('x1', hArrowStartX);
+            document.getElementById('arrow-high-line').setAttribute('y1', hArrowStartY);
+            document.getElementById('arrow-high-line').setAttribute('x2', hArrowEndX);
+            document.getElementById('arrow-high-line').setAttribute('y2', hArrowEndY);
+
+            const hAngle = Math.atan2(hArrowEndY - hArrowStartY, hArrowEndX - hArrowStartX);
+            const hHead = arrowhead(hArrowEndX, hArrowEndY, hAngle, 6);
+            document.getElementById('arrow-high-head').setAttribute('points', hHead);
+
+            document.getElementById('label-high').setAttribute('x', hArrowStartX + 2);
+            document.getElementById('label-high').setAttribute('y', hArrowStartY - 10);
+        }
+
+        function arrowhead(tipX, tipY, angle, size) {
+            const a1 = angle + Math.PI * 0.75;
+            const a2 = angle - Math.PI * 0.75;
+            const p1x = tipX + size * Math.cos(a1);
+            const p1y = tipY + size * Math.sin(a1);
+            const p2x = tipX + size * Math.cos(a2);
+            const p2y = tipY + size * Math.sin(a2);
+            return `${tipX},${tipY} ${p1x},${p1y} ${p2x},${p2y}`;
+        }
+
+        positionAnnotations();
+
+        // ── Spacebar: reveal annotations ─────────────────────────────────────────
+        let annotationsShown = false;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (!annotationsShown) {
+                    annotationsShown = true;
+                    document.getElementById('annotation-low').classList.add('visible');
+                    document.getElementById('annotation-high').classList.add('visible');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

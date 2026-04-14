@@ -1,0 +1,121 @@
+{
+    "slides": [
+        {
+            "id": "slide-01-cover",
+            "type": "cover",
+            "title": "How Small Businesses Win with Claude AI",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — leave this region completely empty, no background elements or text bleed into it"
+            },
+            "content": {
+                "eyebrow": null,
+                "headline": "How Small\nBusinesses Win\nwith Claude AI",
+                "subheadline": "The gap between where you are and where you could be has never been smaller.",
+                "date": null,
+                "chart": {
+                    "type": "line",
+                    "position": "below-subheadline",
+                    "width": "100%",
+                    "height": "160px",
+                    "data_points": [
+                        0.55,
+                        0.48,
+                        0.52,
+                        0.45,
+                        0.5,
+                        0.62,
+                        0.75,
+                        0.92
+                    ],
+                    "data_description": "8-point upward-trending curve. Starts mid-low, dips slightly to its lowest point at index 3 (the 'You Are Here' marker), then climbs with accelerating momentum to a high point at index 7 (the 'AI-Native' marker).",
+                    "annotations": {
+                        "trigger": "keydown:Space",
+                        "trigger_note": "Both annotations appear simultaneously on first spacebar press. A second spacebar press advances to the next slide (standard deck navigation).",
+                        "low_point_index": 3,
+                        "high_point_index": 7,
+                        "annotation_low": {
+                            "label": "You Are Here",
+                            "circle": {
+                                "radius": 8,
+                                "stroke": "#C8744A",
+                                "stroke_width": 2,
+                                "fill": "transparent"
+                            },
+                            "arrow": {
+                                "direction": "pointing down-right toward circle from upper-left",
+                                "color": "#F0EBE3",
+                                "length": "40px"
+                            },
+                            "label_style": {
+                                "font": "DM Mono",
+                                "size": "12px",
+                                "weight": "500",
+                                "color": "#F0EBE3",
+                                "transform": "uppercase",
+                                "tracking": "+0.06em"
+                            },
+                            "entrance": "fade-in + scale from 0.8, 300ms ease-out"
+                        },
+                        "annotation_high": {
+                            "label": "AI-Native",
+                            "circle": {
+                                "radius": 8,
+                                "stroke": "#C8744A",
+                                "stroke_width": 2,
+                                "fill": "#C8744A"
+                            },
+                            "arrow": {
+                                "direction": "pointing down-left toward circle from upper-right",
+                                "color": "#F0EBE3",
+                                "length": "40px"
+                            },
+                            "label_style": {
+                                "font": "DM Mono",
+                                "size": "12px",
+                                "weight": "500",
+                                "color": "#C8744A",
+                                "transform": "uppercase",
+                                "tracking": "+0.06em"
+                            },
+                            "entrance": "fade-in + scale from 0.8, 300ms ease-out, delay: 120ms"
+                        }
+                    },
+                    "style": {
+                        "line_color": "#C8744A",
+                        "line_width": 2.5,
+                        "area_fill": "#C8744A22",
+                        "area_gradient": "top: #C8744A44 → bottom: transparent",
+                        "axis": "none",
+                        "grid": "none",
+                        "tooltip": false,
+                        "animation": "draw-in left-to-right, 800ms ease-out"
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "var(--color-bg)",
+                "text_primary": "var(--color-text)",
+                "text_muted": "var(--color-text-muted)",
+                "accent": "var(--color-accent)",
+                "font_headline": "Canela (fallback: Fraunces), 64px, weight 300, line-height 1.1",
+                "font_subheadline": "DM Sans, 16px, weight 400, line-height 1.7"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_subheadline_gap": "24px",
+                "subheadline_to_chart_gap": "40px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "var(--color-accent)",
+                    "position": "above headline"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. The slide is divided into two columns: LEFT 8/12 holds all content, RIGHT 4/12 is completely empty — no backgrounds, borders, or elements of any kind (reserved for presenter video overlay). In the left region, render from top: a thin 120px terracotta rule line (#C8744A), then a large display headline in Fraunces weight-300 reading 'How Small Businesses Win with Claude AI' (break after 'Small' and 'Businesses'), then a subtitle in DM Sans reading 'The gap between where you are and where you could be has never been smaller.', then below that a 160px tall SVG line chart. The chart has 8 data points: [0.55, 0.48, 0.52, 0.45, 0.50, 0.62, 0.75, 0.92] — the lowest point is index 3 and the highest is index 7. Render the chart with a smooth cubic bezier curve in #C8744A (2.5px stroke), soft orange area fill with a gradient from #C8744A44 to transparent, no axes, no grid, no labels. Animate the line drawing left-to-right on page load over 800ms ease-out. On the first spacebar keypress, simultaneously reveal two annotations over the chart: (1) At the index-3 low point — an open circle ring (8px radius, #C8744A stroke, transparent fill), a short angled arrow pointing down-right toward the circle from upper-left, and the label 'YOU ARE HERE' in DM Mono 12px uppercase #F0EBE3 above the arrow. (2) At the index-7 high point — a filled circle (8px radius, #C8744A fill), a short angled arrow pointing down-left toward the circle from upper-right, and the label 'AI-NATIVE' in DM Mono 12px uppercase #C8744A above the arrow. Both annotations fade in and scale from 0.8 to 1 over 300ms ease-out; the high-point annotation has a 120ms delay. Background is #0E0D0C. All tokens and spacing follow DESIGN.md exactly."
+        }
+    ]
+}
