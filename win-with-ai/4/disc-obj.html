@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discovery — Understanding the Objective</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-accent-dim: #3D2418;
+            --color-red: #C0392B;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            position: relative;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 55% at 25% 52%, #C0392B06 0%, transparent 68%);
+            pointer-events: none;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 64px 72px 56px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* accent rule */
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 20px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        /* eyebrow */
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-red);
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        /* headline */
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(28px, 3.2vw, 42px);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            margin-bottom: 44px;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── DIAGRAM WRAP ── */
+        .diagram-wrap {
+            position: relative;
+            width: 100%;
+            opacity: 0;
+            animation: fadeUp 400ms ease-out 800ms forwards;
+        }
+
+        .diagram-svg {
+            width: 100%;
+            overflow: visible;
+            display: block;
+        }
+
+        /* ── SVG ELEMENT VISIBILITY ── */
+        .scene-el {
+            opacity: 0;
+            transition: opacity 350ms ease-out;
+        }
+
+        .scene-el.visible {
+            opacity: 1;
+        }
+
+        /* diagram labels */
+        .diagram-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            fill: var(--color-muted);
+        }
+
+        .diagram-label.accent {
+            fill: var(--color-accent);
+        }
+
+        /* bridge draw-in */
+        #bridge-path {
+            stroke-dasharray: 600;
+            stroke-dashoffset: 600;
+            transition: stroke-dashoffset 600ms ease-out;
+        }
+
+        #bridge-path.drawn {
+            stroke-dashoffset: 0;
+        }
+
+        #bridge-support-l,
+        #bridge-support-r {
+            stroke-dasharray: 30;
+            stroke-dashoffset: 30;
+            transition: stroke-dashoffset 300ms ease-out 400ms;
+        }
+
+        #bridge-support-l.drawn,
+        #bridge-support-r.drawn {
+            stroke-dashoffset: 0;
+        }
+
+        /* flame flicker */
+        @keyframes flicker1 {
+
+            0%,
+            100% {
+                opacity: 0.9;
+                transform: scaleY(1) translateX(0);
+            }
+
+            33% {
+                opacity: 0.6;
+                transform: scaleY(0.88) translateX(1px);
+            }
+
+            66% {
+                opacity: 1.0;
+                transform: scaleY(1.05) translateX(-1px);
+            }
+        }
+
+        @keyframes flicker2 {
+
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scaleY(0.92) translateX(0);
+            }
+
+            40% {
+                opacity: 1.0;
+                transform: scaleY(1.08) translateX(-1px);
+            }
+
+            70% {
+                opacity: 0.5;
+                transform: scaleY(0.85) translateX(1px);
+            }
+        }
+
+        @keyframes flicker3 {
+
+            0%,
+            100% {
+                opacity: 1.0;
+                transform: scaleY(1.0) translateX(0);
+            }
+
+            50% {
+                opacity: 0.55;
+                transform: scaleY(0.9) translateX(0);
+            }
+        }
+
+        #flame-1 {
+            transform-origin: 50% 100%;
+            animation: flicker1 1.3s ease-in-out infinite;
+        }
+
+        #flame-2 {
+            transform-origin: 50% 100%;
+            animation: flicker2 1.7s ease-in-out infinite;
+        }
+
+        #flame-3 {
+            transform-origin: 50% 100%;
+            animation: flicker3 1.1s ease-in-out infinite;
+        }
+
+        /* coin animation */
+        .coin {
+            opacity: 0;
+        }
+
+        @keyframes coinFly {
+            0%   { opacity: 0; transform: translate(0, 0) scale(0.4); }
+            15%  { opacity: 1; transform: translate(var(--tx), var(--ty-mid)) scale(1); }
+            100% { opacity: 1; transform: translate(var(--tx), var(--ty)) scale(1); }
+        }
+
+        .coin.flying {
+            animation: coinFly var(--dur, 900ms) cubic-bezier(0.2, 0.8, 0.4, 1) var(--delay, 0ms) forwards;
+        }
+
+        /* chest lid open */
+        #chest-lid-open {
+            transform-origin: 530px 112px;
+            transform: rotate(0deg);
+            transition: transform 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        #chest-lid-open.opened {
+            transform: rotate(-55deg);
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="accent-rule"></div>
+            <div class="eyebrow">01 — Discovery</div>
+
+            <h1 class="headline">
+                Before we build anything,<br>
+                we need to understand<br>
+                the objective.
+            </h1>
+
+            <div class="diagram-wrap">
+                <!--
+        SVG coordinate space: 640 × 200
+        Ground baseline: y = 138
+        Sections:
+          Stick figure center: x = 60
+          Gap: x = 240 – 400
+          Treasure chest center: x = 560
+          Fire: x = 320 center of gap
+          Bridge: x = 240 → 400 at y = 138
+      -->
+                <svg class="diagram-svg" viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg">
+
+                    <!-- ── GROUND BASELINE (always visible) ── -->
+                    <!-- Left segment: 0→236 -->
+                    <line id="ground-left" x1="0" y1="138" x2="236" y2="138" stroke="#2A2724" stroke-width="1.5" />
+                    <!-- Right segment: 404→640 -->
+                    <line id="ground-right" x1="404" y1="138" x2="640" y2="138" stroke="#2A2724" stroke-width="1.5" />
+                    <!-- Center segment (hidden when gap appears) -->
+                    <line id="ground-center" x1="236" y1="138" x2="404" y2="138" stroke="#2A2724" stroke-width="1.5" />
+
+                    <!-- ═══════════════════════════════════════ -->
+                    <!-- PRESS 1 — STICK FIGURE                  -->
+                    <!-- ═══════════════════════════════════════ -->
+                    <g id="el-figure" class="scene-el">
+                        <!-- head -->
+                        <circle cx="62" cy="88" r="10" fill="none" stroke="#F0EBE3" stroke-width="2" />
+                        <!-- body -->
+                        <line x1="62" y1="98" x2="62" y2="122" stroke="#F0EBE3" stroke-width="2" />
+                        <!-- left arm -->
+                        <line x1="62" y1="106" x2="44" y2="116" stroke="#F0EBE3" stroke-width="2" />
+                        <!-- right arm -->
+                        <line x1="62" y1="106" x2="80" y2="116" stroke="#F0EBE3" stroke-width="2" />
+                        <!-- left leg -->
+                        <line x1="62" y1="122" x2="46" y2="138" stroke="#F0EBE3" stroke-width="2" />
+                        <!-- right leg -->
+                        <line x1="62" y1="122" x2="78" y2="138" stroke="#F0EBE3" stroke-width="2" />
+                        <!-- label -->
+                        <text x="62" y="160" text-anchor="middle" class="diagram-label">Where you are</text>
+                    </g>
+
+                    <!-- ═══════════════════════════════════════ -->
+                    <!-- PRESS 2 — TREASURE CHEST                -->
+                    <!-- ═══════════════════════════════════════ -->
+                    <g id="el-chest" class="scene-el">
+                        <!-- chest body -->
+                        <rect x="530" y="112" width="60" height="26" rx="2" fill="none" stroke="#C8744A"
+                            stroke-width="2" />
+                        <!-- lid -->
+                        <path d="M530,112 Q530,97 560,97 Q590,97 590,112" fill="none" stroke="#C8744A"
+                            stroke-width="2" />
+                        <!-- lid divider line -->
+                        <line x1="530" y1="112" x2="590" y2="112" stroke="#C8744A" stroke-width="1.5" />
+                        <!-- latch -->
+                        <circle cx="560" cy="122" r="4" fill="none" stroke="#C8744A" stroke-width="1.5" />
+                        <!-- glow lines -->
+                        <line x1="544" y1="105" x2="544" y2="109" stroke="#C8744A" stroke-width="1" opacity="0.5" />
+                        <line x1="560" y1="103" x2="560" y2="107" stroke="#C8744A" stroke-width="1" opacity="0.6" />
+                        <line x1="576" y1="105" x2="576" y2="109" stroke="#C8744A" stroke-width="1" opacity="0.5" />
+                        <!-- label -->
+                        <text x="560" y="160" text-anchor="middle" class="diagram-label">Where you want to go</text>
+                    </g>
+
+                    <!-- ═══════════════════════════════════════ -->
+                    <!-- PRESS 3 — GAP + FIRE                    -->
+                    <!-- ═══════════════════════════════════════ -->
+                    <g id="el-gap" class="scene-el">
+                        <!-- jagged gap edges on ground -->
+                        <polyline points="236,138 242,132 248,140 254,133 260,138" fill="none" stroke="#2A2724"
+                            stroke-width="1.5" />
+                        <polyline points="404,138 398,132 392,140 386,133 380,138" fill="none" stroke="#2A2724"
+                            stroke-width="1.5" />
+
+                        <!-- flames — layered, transform-origin at base -->
+                        <!-- back flame (darkest) -->
+                        <path id="flame-1"
+                            d="M320,138 C310,128 304,114 316,104 C312,118 322,120 318,108 C326,118 330,108 328,98 C334,112 338,122 330,132 C326,136 322,138 320,138 Z"
+                            fill="#C0392B" opacity="0.85" />
+                        <!-- mid flame -->
+                        <path id="flame-2"
+                            d="M320,138 C314,130 310,118 318,110 C316,120 323,118 321,110 C327,120 328,112 326,104 C332,116 332,128 326,134 C323,137 321,138 320,138 Z"
+                            fill="#C8744A" opacity="0.9" />
+                        <!-- front tip flame (brightest) -->
+                        <path id="flame-3"
+                            d="M320,138 C316,132 315,122 320,114 C322,122 325,120 323,114 C327,122 326,132 322,137 C321,138 320,138 320,138 Z"
+                            fill="#E8955A" opacity="0.95" />
+
+                        <!-- label -->
+                        <text x="320" y="165" text-anchor="middle" class="diagram-label">What's stopping you</text>
+                    </g>
+
+                    <!-- ═══════════════════════════════════════ -->
+                    <!-- PRESS 4 — BRIDGE                        -->
+                    <!-- ═══════════════════════════════════════ -->
+                    <g id="el-bridge" class="scene-el">
+                        <!-- Curved bridge deck -->
+                        <path id="bridge-path" d="M236,138 Q320,30 404,138" fill="none" stroke="#F0EBE3"
+                            stroke-width="2" stroke-linecap="round" />
+                        <!-- label above bridge -->
+                        <text x="320" y="32" text-anchor="middle" class="diagram-label">How to get there</text>
+                    </g>
+
+                    <!-- ═══════════════════════════════════════ -->
+                    <!-- PRESS 5 — CHEST OPEN + COINS            -->
+                    <!-- ═══════════════════════════════════════ -->
+
+                    <!-- Open lid (revealed on press 5, covers closed lid) -->
+                    <path id="chest-lid-open" d="M530,112 Q530,97 560,97 Q590,97 590,112" fill="#3D2418" stroke="#C8744A"
+                        stroke-width="2" opacity="0" />
+
+                    <!-- Gold coins (8 coins flying out) -->
+                    <circle class="coin" id="coin-1" cx="560" cy="104" r="5" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: -28px; --ty-mid: -42px; --ty: -22px; --delay: 80ms; --dur: 850ms;" />
+                    <circle class="coin" id="coin-2" cx="560" cy="104" r="5" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: -8px; --ty-mid: -56px; --ty: -30px; --delay: 140ms; --dur: 920ms;" />
+                    <circle class="coin" id="coin-3" cx="560" cy="104" r="5" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: 14px; --ty-mid: -60px; --ty: -32px; --delay: 60ms; --dur: 880ms;" />
+                    <circle class="coin" id="coin-4" cx="560" cy="104" r="5" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: 30px; --ty-mid: -44px; --ty: -20px; --delay: 200ms; --dur: 800ms;" />
+                    <circle class="coin" id="coin-5" cx="560" cy="104" r="4" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: -18px; --ty-mid: -50px; --ty: -28px; --delay: 300ms; --dur: 780ms;" />
+                    <circle class="coin" id="coin-6" cx="560" cy="104" r="4" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: 22px; --ty-mid: -54px; --ty: -34px; --delay: 250ms; --dur: 860ms;" />
+                    <circle class="coin" id="coin-7" cx="560" cy="104" r="3.5" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: 2px; --ty-mid: -64px; --ty: -40px; --delay: 180ms; --dur: 950ms;" />
+                    <circle class="coin" id="coin-8" cx="560" cy="104" r="3.5" fill="#F5C542" stroke="#C8744A" stroke-width="1"
+                        style="--tx: -36px; --ty-mid: -38px; --ty: -18px; --delay: 350ms; --dur: 820ms;" />
+
+                    <!-- label -->
+                    <text id="success-label" x="560" y="58" text-anchor="middle" class="diagram-label accent"
+                        opacity="0">How we measure success</text>
+
+                </svg>
+            </div>
+
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        let step = 0;
+
+        // ── helpers ────────────────────────────────────────────────────────────────
+        function show(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('visible');
+        }
+
+        function hideGroundCenter() {
+            const el = document.getElementById('ground-center');
+            if (el) el.style.opacity = '0';
+        }
+
+        function drawBridge() {
+            // slight delay so the fade-in starts first
+            setTimeout(() => {
+                document.getElementById('bridge-path').classList.add('drawn');
+            }, 80);
+        }
+
+        function openChest() {
+            // Reveal and animate the open lid
+            const lid = document.getElementById('chest-lid-open');
+            lid.setAttribute('opacity', '1');
+            // Force reflow then add class
+            void lid.getBoundingClientRect();
+            lid.classList.add('opened');
+
+            // Launch coins
+            const coins = document.querySelectorAll('.coin');
+            coins.forEach(c => c.classList.add('flying'));
+
+            // Fade in label after coins peak
+            setTimeout(() => {
+                const lbl = document.getElementById('success-label');
+                lbl.style.transition = 'opacity 500ms ease-out';
+                lbl.style.opacity = '1';
+            }, 700);
+        }
+
+        // ── spacebar handler ───────────────────────────────────────────────────────
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space') return;
+            e.preventDefault();
+
+            step++;
+
+            switch (step) {
+                case 1:
+                    show('el-figure');
+                    break;
+
+                case 2:
+                    show('el-chest');
+                    break;
+
+                case 3:
+                    show('el-gap');
+                    hideGroundCenter();
+                    break;
+
+                case 4:
+                    show('el-bridge');
+                    drawBridge();
+                    break;
+
+                case 5:
+                    openChest();
+                    break;
+            }
+        });
+    </script>
+</body>
+
+</html>

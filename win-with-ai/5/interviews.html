@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discovery — Interviews</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-red: #C0392B;
+            --color-blue: #2980B9;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            position: relative;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 55% at 25% 50%, #C0392B05 0%, transparent 68%);
+            pointer-events: none;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 56px 72px 56px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* accent rule */
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 20px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        /* eyebrow */
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-red);
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        /* headline */
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(28px, 3.2vw, 42px);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── DIAGRAM: two columns ── */
+        .diagram {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 0 40px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 750ms forwards;
+        }
+
+        /* vertical divider */
+        .divider {
+            background: var(--color-border);
+            width: 1px;
+            align-self: stretch;
+        }
+
+        /* ── COLUMN ── */
+        .col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* direction label + arrow row */
+        .dir-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 8px;
+        }
+
+        .dir-label {
+            font-family: 'Fraunces', Georgia, serif;
+            font-style: italic;
+            font-weight: 300;
+            font-size: clamp(18px, 1.9vw, 24px);
+            color: var(--color-text);
+            line-height: 1;
+        }
+
+        /* SVG arrows */
+        .arrow-svg {
+            flex-shrink: 0;
+        }
+
+        /* sub label */
+        .sub-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+            margin-bottom: 22px;
+        }
+
+        /* ── QUESTIONS ── */
+        .questions {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .question-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+
+        .question-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .q-bullet {
+            flex-shrink: 0;
+            width: 5px;
+            height: 2px;
+            border-radius: 1px;
+            margin-top: 9px;
+        }
+
+        .col-left .q-bullet {
+            background: var(--color-accent);
+        }
+
+        .col-right .q-bullet {
+            background: var(--color-blue);
+        }
+
+        .q-text {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--color-text);
+        }
+
+        .q-number {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            margin-right: 4px;
+        }
+
+        .col-left .q-number {
+            color: var(--color-accent);
+        }
+
+        .col-right .q-number {
+            color: var(--color-blue);
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="accent-rule"></div>
+            <div class="eyebrow">01 — Discovery</div>
+
+            <h1 class="headline">
+                We hear from both sides<br>of the business.
+            </h1>
+
+            <div class="diagram">
+
+                <!-- ── LEFT: Top-Down / Stakeholders ── -->
+                <div class="col col-left">
+                    <div class="dir-row">
+                        <div class="dir-label">Top-Down</div>
+                        <!-- downward arrow -->
+                        <svg class="arrow-svg" width="18" height="36" viewBox="0 0 18 36" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <line x1="9" y1="0" x2="9" y2="28" stroke="#C8744A" stroke-width="2"
+                                stroke-linecap="round" />
+                            <polyline points="3,22 9,32 15,22" fill="none" stroke="#C8744A" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="sub-label">Stakeholders</div>
+
+                    <div class="questions" id="q-left">
+                        <div class="question-item">
+                            <div class="q-bullet"></div>
+                            <div class="q-text"><span class="q-number">01</span>Could you walk me through your team's structure? Who reports to whom?
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <div class="q-bullet"></div>
+                            <div class="q-text"><span class="q-number">02</span>What are the main goals or KPIs your team is responsible for this quarter / year?</div>
+                        </div>
+                        <div class="question-item">
+                            <div class="q-bullet"></div>
+                            <div class="q-text"><span class="q-number">03</span>If you had a magic wand, what is the one problem you would solve for your team overnight?</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── DIVIDER ── -->
+                <div class="divider"></div>
+
+                <!-- ── RIGHT: Bottom-Up / End Users ── -->
+                <div class="col col-right">
+                    <div class="dir-row">
+                        <div class="dir-label">Bottom-Up</div>
+                        <!-- upward arrow -->
+                        <svg class="arrow-svg" width="18" height="36" viewBox="0 0 18 36" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <line x1="9" y1="36" x2="9" y2="8" stroke="#2980B9" stroke-width="2"
+                                stroke-linecap="round" />
+                            <polyline points="3,14 9,4 15,14" fill="none" stroke="#2980B9" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div class="sub-label">End Users</div>
+
+                    <div class="questions" id="q-right">
+                        <div class="question-item">
+                            <div class="q-bullet"></div>
+                            <div class="q-text"><span class="q-number">01</span>Can you walk me through a typical day or week in your role?</div>
+                        </div>
+                        <div class="question-item">
+                            <div class="q-bullet"></div>
+                            <div class="q-text"><span class="q-number">02</span>Could you walk me through the exact steps you take to complete a specific, common task?</div>
+                        </div>
+                        <div class="question-item">
+                            <div class="q-bullet"></div>
+                            <div class="q-text"><span class="q-number">03</span>If you had an assistant, what tasks would you give them immediately?</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        let step = 0;
+
+        function revealQuestions(containerId) {
+            const items = document.querySelectorAll(`#${containerId} .question-item`);
+            items.forEach((item, i) => {
+                setTimeout(() => item.classList.add('visible'), i * 120);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space') return;
+            e.preventDefault();
+            step++;
+            if (step === 1) revealQuestions('q-left');
+            else if (step === 2) revealQuestions('q-right');
+        });
+    </script>
+</body>
+
+</html>
