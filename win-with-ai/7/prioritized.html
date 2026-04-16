@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discovery — Prioritizing Bottlenecks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-red: #C0392B;
+            --color-red-fill: #2A0A08;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            position: relative;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 55% 60% at 28% 52%, #C0392B05 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 56px 72px 56px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 20px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-red);
+            margin-bottom: 14px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(28px, 3.2vw, 42px);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            margin-bottom: 44px;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── DIAGRAM WRAP ── */
+        .diagram-wrap {
+            opacity: 0;
+            animation: fadeUp 400ms ease-out 800ms forwards;
+        }
+
+        /* ── DIAGRAM LAYOUT ── */
+        .diagram {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+
+        /* ── COLUMN ── */
+        .col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .col-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .nodes-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* ── ARROW CENTER ── */
+        .arrow-wrap {
+            flex: 0 0 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            margin-top: 26px;
+            /* offset for label */
+        }
+
+        .arrow-svg {
+            width: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        #arrow-line {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            transition: stroke-dashoffset 500ms ease-out;
+        }
+
+        #arrow-line.drawn {
+            stroke-dashoffset: 0;
+        }
+
+        #arrow-head {
+            opacity: 0;
+            transition: opacity 150ms ease-out 460ms;
+        }
+
+        #arrow-head.drawn {
+            opacity: 1;
+        }
+
+        /* ── RIGHT COL FADE ── */
+        .col-right {
+            opacity: 0;
+            transition: opacity 300ms ease-out;
+        }
+
+        .col-right.visible {
+            opacity: 1;
+        }
+
+        /* right col label */
+        .col-right .col-label {
+            opacity: 0;
+            transition: opacity 300ms ease-out;
+        }
+
+        .col-right.visible .col-label {
+            opacity: 1;
+        }
+
+        /* ── NUMBERED ROW ── */
+        .numbered-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+
+        .numbered-row.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pri-number {
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-accent);
+            width: 26px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* ── NODE SHAPES (SVG-based, inline) ── */
+        .node-svg {
+            display: block;
+            flex-shrink: 0;
+        }
+
+        /* bottleneck SVG elements */
+        .bn-shape {
+            fill: var(--color-red-fill);
+            stroke: var(--color-red);
+            stroke-width: 2;
+            filter: drop-shadow(0 0 6px #C0392B55);
+        }
+
+        /* default clean node rect */
+        .clean-rect {
+            fill: var(--color-surface);
+            stroke: var(--color-border);
+            stroke-width: 1.5;
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="accent-rule"></div>
+            <div class="eyebrow">01 — Discovery</div>
+
+            <h1 class="headline">
+                Now we put them<br>in order.
+            </h1>
+
+            <div class="diagram-wrap">
+                <div class="diagram">
+
+                    <!-- ══════════════════ LEFT COLUMN ══════════════════ -->
+                    <div class="col col-left">
+                        <div class="col-label">Bottlenecks Found</div>
+                        <div class="nodes-stack">
+
+                            <!-- 1: rounded rect -->
+                            <svg class="node-svg" width="56" height="36" viewBox="0 0 56 36">
+                                <rect class="bn-shape" x="2" y="2" width="52" height="32" rx="6" />
+                            </svg>
+
+                            <!-- 2: diamond -->
+                            <svg class="node-svg" width="48" height="48" viewBox="0 0 48 48">
+                                <polygon class="bn-shape" points="24,3 45,24 24,45 3,24" />
+                            </svg>
+
+                            <!-- 3: circle -->
+                            <svg class="node-svg" width="44" height="44" viewBox="0 0 44 44">
+                                <circle class="bn-shape" cx="22" cy="22" r="20" />
+                            </svg>
+
+                            <!-- 4: pill -->
+                            <svg class="node-svg" width="68" height="32" viewBox="0 0 68 32">
+                                <rect class="bn-shape" x="2" y="2" width="64" height="28" rx="14" />
+                            </svg>
+
+                            <!-- 5: hexagon -->
+                            <svg class="node-svg" width="52" height="46" viewBox="0 0 52 46">
+                                <polygon class="bn-shape" points="26,2 50,14 50,32 26,44 2,32 2,14" />
+                            </svg>
+
+                        </div>
+                    </div>
+
+                    <!-- ══════════════════ CENTER ARROW ══════════════════ -->
+                    <div class="arrow-wrap">
+                        <svg class="arrow-svg" height="24" viewBox="0 0 120 24" preserveAspectRatio="none">
+                            <line id="arrow-line" x1="0" y1="12" x2="108" y2="12" stroke="#2A2724" stroke-width="1.5"
+                                stroke-linecap="round" />
+                            <polygon id="arrow-head" points="108,6 120,12 108,18" fill="#2A2724" />
+                        </svg>
+                    </div>
+
+                    <!-- ══════════════════ RIGHT COLUMN ══════════════════ -->
+                    <div class="col col-right" id="col-right">
+                        <div class="col-label">Prioritized</div>
+                        <div class="nodes-stack" id="pri-stack">
+
+                            <!-- 01: circle (was #3 in bottleneck) -->
+                            <div class="numbered-row" id="pri-row-1">
+                                <span class="pri-number">01</span>
+                                <svg class="node-svg" width="44" height="44" viewBox="0 0 44 44">
+                                    <circle class="clean-rect" cx="22" cy="22" r="20" />
+                                </svg>
+                            </div>
+
+                            <!-- 02: rounded rect (was #1 in bottleneck) -->
+                            <div class="numbered-row" id="pri-row-2">
+                                <span class="pri-number">02</span>
+                                <svg class="node-svg" width="56" height="36" viewBox="0 0 56 36">
+                                    <rect class="clean-rect" x="2" y="2" width="52" height="32" rx="6" />
+                                </svg>
+                            </div>
+
+                            <!-- 03: hexagon (was #5 in bottleneck) -->
+                            <div class="numbered-row" id="pri-row-3">
+                                <span class="pri-number">03</span>
+                                <svg class="node-svg" width="52" height="46" viewBox="0 0 52 46">
+                                    <polygon class="clean-rect" points="26,2 50,14 50,32 26,44 2,32 2,14" />
+                                </svg>
+                            </div>
+
+                            <!-- 04: diamond (was #2 in bottleneck) -->
+                            <div class="numbered-row" id="pri-row-4">
+                                <span class="pri-number">04</span>
+                                <svg class="node-svg" width="48" height="48" viewBox="0 0 48 48">
+                                    <polygon class="clean-rect" points="24,3 45,24 24,45 3,24" />
+                                </svg>
+                            </div>
+
+                            <!-- 05: pill (was #4 in bottleneck) -->
+                            <div class="numbered-row" id="pri-row-5">
+                                <span class="pri-number">05</span>
+                                <svg class="node-svg" width="68" height="32" viewBox="0 0 68 32">
+                                    <rect class="clean-rect" x="2" y="2" width="64" height="28" rx="14" />
+                                </svg>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        let triggered = false;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space' || triggered) return;
+            e.preventDefault();
+            triggered = true;
+
+            // 1. Draw arrow
+            document.getElementById('arrow-line').classList.add('drawn');
+            document.getElementById('arrow-head').classList.add('drawn');
+
+            // 2. Show right column after arrow (550ms)
+            setTimeout(() => {
+                document.getElementById('col-right').classList.add('visible');
+            }, 550);
+
+            // 3. Stagger in numbered rows (starting 650ms)
+            const rows = document.querySelectorAll('.numbered-row');
+            rows.forEach((row, i) => {
+                setTimeout(() => row.classList.add('visible'), 650 + i * 90);
+            });
+        });
+    </script>
+</body>
+
+</html>

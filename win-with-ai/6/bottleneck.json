@@ -1,0 +1,771 @@
+{
+    "slides": [
+        {
+            "id": "slide-01-cover",
+            "type": "cover",
+            "title": "How Small Businesses Win with Claude AI",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — leave this region completely empty, no background elements or text bleed into it"
+            },
+            "content": {
+                "eyebrow": null,
+                "headline": "How Small\nBusinesses Win\nwith Claude AI",
+                "subheadline": "The gap between where you are and where you could be has never been smaller.",
+                "date": null,
+                "chart": {
+                    "type": "line",
+                    "position": "below-subheadline",
+                    "width": "100%",
+                    "height": "160px",
+                    "data_points": [
+                        0.55,
+                        0.48,
+                        0.52,
+                        0.45,
+                        0.5,
+                        0.62,
+                        0.75,
+                        0.92
+                    ],
+                    "data_description": "8-point upward-trending curve. Starts mid-low, dips slightly to its lowest point at index 3 (the 'You Are Here' marker), then climbs with accelerating momentum to a high point at index 7 (the 'AI-Native' marker).",
+                    "annotations": {
+                        "trigger": "keydown:Space",
+                        "trigger_note": "Both annotations appear simultaneously on first spacebar press. A second spacebar press advances to the next slide (standard deck navigation).",
+                        "low_point_index": 3,
+                        "high_point_index": 7,
+                        "annotation_low": {
+                            "label": "You Are Here",
+                            "circle": {
+                                "radius": 8,
+                                "stroke": "#C8744A",
+                                "stroke_width": 2,
+                                "fill": "transparent"
+                            },
+                            "arrow": {
+                                "direction": "pointing down-right toward circle from upper-left",
+                                "color": "#F0EBE3",
+                                "length": "40px"
+                            },
+                            "label_style": {
+                                "font": "DM Mono",
+                                "size": "12px",
+                                "weight": "500",
+                                "color": "#F0EBE3",
+                                "transform": "uppercase",
+                                "tracking": "+0.06em"
+                            },
+                            "entrance": "fade-in + scale from 0.8, 300ms ease-out"
+                        },
+                        "annotation_high": {
+                            "label": "AI-Native",
+                            "circle": {
+                                "radius": 8,
+                                "stroke": "#C8744A",
+                                "stroke_width": 2,
+                                "fill": "#C8744A"
+                            },
+                            "arrow": {
+                                "direction": "pointing down-left toward circle from upper-right",
+                                "color": "#F0EBE3",
+                                "length": "40px"
+                            },
+                            "label_style": {
+                                "font": "DM Mono",
+                                "size": "12px",
+                                "weight": "500",
+                                "color": "#C8744A",
+                                "transform": "uppercase",
+                                "tracking": "+0.06em"
+                            },
+                            "entrance": "fade-in + scale from 0.8, 300ms ease-out, delay: 120ms"
+                        }
+                    },
+                    "style": {
+                        "line_color": "#C8744A",
+                        "line_width": 2.5,
+                        "area_fill": "#C8744A22",
+                        "area_gradient": "top: #C8744A44 → bottom: transparent",
+                        "axis": "none",
+                        "grid": "none",
+                        "tooltip": false,
+                        "animation": "draw-in left-to-right, 800ms ease-out"
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "var(--color-bg)",
+                "text_primary": "var(--color-text)",
+                "text_muted": "var(--color-text-muted)",
+                "accent": "var(--color-accent)",
+                "font_headline": "Canela (fallback: Fraunces), 64px, weight 300, line-height 1.1",
+                "font_subheadline": "DM Sans, 16px, weight 400, line-height 1.7"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_subheadline_gap": "24px",
+                "subheadline_to_chart_gap": "40px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "var(--color-accent)",
+                    "position": "above headline"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. The slide is divided into two columns: LEFT 8/12 holds all content, RIGHT 4/12 is completely empty — no backgrounds, borders, or elements of any kind (reserved for presenter video overlay). In the left region, render from top: a thin 120px terracotta rule line (#C8744A), then a large display headline in Fraunces weight-300 reading 'How Small Businesses Win with Claude AI' (break after 'Small' and 'Businesses'), then a subtitle in DM Sans reading 'The gap between where you are and where you could be has never been smaller.', then below that a 160px tall SVG line chart. The chart has 8 data points: [0.55, 0.48, 0.52, 0.45, 0.50, 0.62, 0.75, 0.92] — the lowest point is index 3 and the highest is index 7. Render the chart with a smooth cubic bezier curve in #C8744A (2.5px stroke), soft orange area fill with a gradient from #C8744A44 to transparent, no axes, no grid, no labels. Animate the line drawing left-to-right on page load over 800ms ease-out. On the first spacebar keypress, simultaneously reveal two annotations over the chart: (1) At the index-3 low point — an open circle ring (8px radius, #C8744A stroke, transparent fill), a short angled arrow pointing down-right toward the circle from upper-left, and the label 'YOU ARE HERE' in DM Mono 12px uppercase #F0EBE3 above the arrow. (2) At the index-7 high point — a filled circle (8px radius, #C8744A fill), a short angled arrow pointing down-left toward the circle from upper-right, and the label 'AI-NATIVE' in DM Mono 12px uppercase #C8744A above the arrow. Both annotations fade in and scale from 0.8 to 1 over 300ms ease-out; the high-point annotation has a 120ms delay. Background is #0E0D0C. All tokens and spacing follow DESIGN.md exactly."
+        }
+    ],
+    "slides_next": [
+        {
+            "id": "slide-02-pain",
+            "type": "content",
+            "title": "The Cost of Doing It Manually",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "headline": "You're spending\ntime you don't have\non work that doesn't scale.",
+                "headline_note": "Display font (Fraunces), weight 300. Line breaks as shown.",
+                "time_waste_block": {
+                    "description": "A horizontal bar showing a visual breakdown of a typical 40-hour work week. The bar is divided into two segments: 'Manual Work' takes up 40% of the bar (filled in terracotta #C8744A), and 'Everything Else' takes the remaining 60% (filled in --color-border #2A2724). Below the bar, a single stark stat: '15+ hours/week on tasks AI can handle'.",
+                    "stat_label": "15+ hrs/week",
+                    "stat_sublabel": "on tasks AI can handle — follow-ups, reporting, scheduling, data entry",
+                    "bar": {
+                        "total_width": "100%",
+                        "height": "10px",
+                        "border_radius": "2px",
+                        "segments": [
+                            {
+                                "label": "Manual Work",
+                                "percent": 40,
+                                "color": "#C8744A"
+                            },
+                            {
+                                "label": "Everything Else",
+                                "percent": 60,
+                                "color": "#2A2724"
+                            }
+                        ],
+                        "animation": "segments fill left-to-right on load, staggered 200ms apart"
+                    }
+                },
+                "spacebar_sequence": {
+                    "trigger": "keydown:Space",
+                    "hint": null,
+                    "steps": [
+                        {
+                            "step": 1,
+                            "label": "Reveal opportunity reframe",
+                            "description": "The manual work segment of the bar pulses briefly (scale 1.0 → 1.02 → 1.0, 400ms), then a callout block fades up below the bar. The callout asks the rhetorical question and shows the calculator.",
+                            "entrance": "fade-up, 400ms ease-out"
+                        },
+                        {
+                            "step": 2,
+                            "label": "Reveal annual total",
+                            "description": "The dollar total counts up from $0 to the final value using an animated counter, 800ms ease-out. A terracotta underline rule grows beneath it.",
+                            "entrance": "count-up animation, 800ms ease-out"
+                        }
+                    ]
+                },
+                "opportunity_block": {
+                    "trigger_step": 1,
+                    "rhetorical_question": "What if those 15 hours\ngave you one more client a month?",
+                    "question_font": "Fraunces, italic, weight 300, 28px",
+                    "question_color": "#F0EBE3",
+                    "calculator": {
+                        "description": "A clean inline calculator-style display. Two input rows with muted labels on the left and editable values on the right. User can adjust the values to see the annual total update in real time.",
+                        "rows": [
+                            {
+                                "id": "avg_client_value",
+                                "label": "Avg. client value / month",
+                                "default_value": 2000,
+                                "unit": "$",
+                                "format": "currency"
+                            },
+                            {
+                                "id": "extra_clients",
+                                "label": "Extra clients / month",
+                                "default_value": 1,
+                                "unit": "",
+                                "format": "integer"
+                            }
+                        ],
+                        "formula": "avg_client_value × extra_clients × 12 = annual_upside",
+                        "result": {
+                            "trigger_step": 2,
+                            "label": "potential extra revenue / year",
+                            "default_calculated_value": 24000,
+                            "display": "$24,000",
+                            "font": "Fraunces, weight 300, 56px",
+                            "color": "#C8744A",
+                            "underline_rule": {
+                                "width": "grows from 0 to 100% of number width",
+                                "height": "1px",
+                                "color": "#C8744A",
+                                "animation": "grow left-to-right, 400ms, after counter finishes"
+                            }
+                        }
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "var(--color-bg)",
+                "text_primary": "var(--color-text)",
+                "text_muted": "var(--color-text-muted)",
+                "accent": "#C8744A",
+                "font_headline": "Fraunces, 44px, weight 300, line-height 1.15",
+                "font_stat": "Fraunces, 56px, weight 300",
+                "font_label": "DM Mono, 11px, uppercase, +0.08em tracking",
+                "font_body": "DM Sans, 14px, weight 400, line-height 1.6"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_bar_gap": "40px",
+                "bar_to_stat_gap": "16px",
+                "stat_to_opportunity_gap": "48px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above headline"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 is completely empty (presenter video region — no elements, borders, or backgrounds). No spacebar hint. In the left region render: (1) A thin 120px terracotta rule line above the headline. (2) Headline in Fraunces weight-300 44px: 'You're spending time you don't have on work that doesn't scale.' with natural line breaks. (3) A horizontal segmented bar (10px tall, full content width, border-radius 2px). Left 40% fills in terracotta #C8744A on load with a left-to-right fill animation (600ms ease-out). Right 60% is #2A2724. Below the bar, a label in DM Mono 11px uppercase muted: '15+ HRS/WEEK ON TASKS AI CAN HANDLE — FOLLOW-UPS, REPORTING, SCHEDULING, DATA ENTRY'. (4) On FIRST spacebar press: a block fades up below the bar stat label. It contains a rhetorical question in Fraunces italic weight-300 28px: 'What if those 15 hours gave you one more client a month?' Below that, a minimal two-row calculator: row 1 label 'Avg. client value / month' with default value '$2,000'; row 2 label 'Extra clients / month' with default value '1'. Both rows use DM Mono labels (muted, 12px) and DM Sans values (off-white, 20px). Values are editable inputs that recalculate the result live. Below the calculator rows, a result label in DM Mono 11px uppercase muted reads 'POTENTIAL EXTRA REVENUE / YEAR'. (5) On SECOND spacebar press: the dollar result counts up from $0 to $24,000 (recalculated from inputs) in Fraunces weight-300 56px terracotta #C8744A over 800ms ease-out. After the counter finishes, a 1px terracotta underline rule grows left-to-right beneath the number over 400ms. The calculator inputs update the result in real time whenever the user edits them. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-03-roadmap",
+            "type": "content",
+            "title": "The Three-Step Path",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "headline": "Three steps to\nbecoming AI-Native.",
+                "headline_note": "Fraunces weight-300. Line break after 'steps to'.",
+                "spacebar_hint": null,
+                "steps": [
+                    {
+                        "number": "01",
+                        "id": "discovery",
+                        "label": "Discovery",
+                        "description": "We map your workflows, find the hours being lost, and identify exactly where AI will drive the fastest return.",
+                        "color": "#C0392B",
+                        "color_name": "red",
+                        "spacebar_press": 1,
+                        "entrance": "fade-up (translateY 16px → 0, opacity 0 → 1, 400ms ease-out) + left accent bar grows top-to-bottom (height 0 → 100%, 400ms ease-out, simultaneous)"
+                    },
+                    {
+                        "number": "02",
+                        "id": "implementation",
+                        "label": "Implementation",
+                        "description": "We build and deploy the automations — tested, integrated with your existing tools, and ready from day one.",
+                        "color": "#2980B9",
+                        "color_name": "blue",
+                        "spacebar_press": 2,
+                        "entrance": "fade-up (translateY 16px → 0, opacity 0 → 1, 400ms ease-out) + left accent bar grows top-to-bottom (height 0 → 100%, 400ms ease-out, simultaneous)"
+                    },
+                    {
+                        "number": "03",
+                        "id": "adoption",
+                        "label": "Adoption",
+                        "description": "We train your team, refine the systems, and make sure the gains compound — not just land and fade.",
+                        "color": "#27AE60",
+                        "color_name": "green",
+                        "spacebar_press": 3,
+                        "entrance": "fade-up (translateY 16px → 0, opacity 0 → 1, 400ms ease-out) + left accent bar grows top-to-bottom (height 0 → 100%, 400ms ease-out, simultaneous)"
+                    }
+                ],
+                "step_layout": {
+                    "style": "vertical stacked cards",
+                    "card": {
+                        "background": "#161513",
+                        "border": "1px solid #2A2724",
+                        "border_radius": "4px",
+                        "padding": "20px 24px 20px 28px",
+                        "left_accent_bar": {
+                            "width": "3px",
+                            "position": "absolute, flush to left inner edge of card",
+                            "height_animation": "grows from 0 to 100% of card height on entrance, 400ms ease-out",
+                            "color": "matches step color",
+                            "border_radius": "2px"
+                        }
+                    },
+                    "number_style": {
+                        "font": "DM Mono, 11px, weight 500, uppercase, +0.08em letter-spacing",
+                        "color": "matches step color",
+                        "margin_bottom": "6px"
+                    },
+                    "label_style": {
+                        "font": "Fraunces, weight 300, 26px, line-height 1.2",
+                        "color": "#F0EBE3",
+                        "margin_bottom": "8px"
+                    },
+                    "description_style": {
+                        "font": "DM Sans, 14px, weight 400, line-height 1.6",
+                        "color": "#7A7068"
+                    },
+                    "gap_between_cards": "12px"
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent_rule": "#C8744A",
+                "font_headline": "Fraunces, 44px, weight 300, line-height 1.12",
+                "font_number": "DM Mono, 11px, weight 500, uppercase",
+                "font_step_label": "Fraunces, 26px, weight 300",
+                "font_description": "DM Sans, 14px, weight 400, line-height 1.6"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_steps_gap": "40px",
+                "gap_between_cards": "12px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above headline, margin-bottom 24px"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 is completely empty (presenter video — no elements, borders, or backgrounds). No spacebar hint anywhere. In the left region render: (1) A thin 120px terracotta rule (#C8744A, 1px, margin-bottom 24px) above the headline. (2) Headline in Fraunces weight-300 44px: 'Three steps to becoming AI-Native.' with a line break after 'to'. (3) Three step cards stacked vertically with 12px gaps, all hidden (opacity 0, pointer-events none) on load. Each card: background #161513, border 1px solid #2A2724, border-radius 4px, padding 20px 24px 20px 28px, position relative, overflow hidden. Each card has a 3px wide colored left accent bar absolutely positioned at the left edge (top 0, left 0, bottom 0), initially height 0, that animates to full card height simultaneously with the card fade-up. Inside each card: step number in DM Mono 11px weight-500 uppercase colored text above the label, then step label in Fraunces weight-300 26px off-white (#F0EBE3), then description in DM Sans 14px muted (#7A7068) below. Step 01 DISCOVERY: accent color #C0392B. Step 02 IMPLEMENTATION: accent color #2980B9. Step 03 ADOPTION: accent color #27AE60. On each spacebar press reveal the next card: fade-up (translateY 16px→0, opacity 0→1) AND left accent bar grows (height 0→100%) both over 400ms ease-out simultaneously. First press: step 01. Second press: step 02. Third press: step 03. No further action on subsequent presses. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-04-discovery-objective",
+            "type": "content",
+            "title": "Discovery — Understanding the Objective",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "Before we build anything,\nwe need to understand\nthe objective.",
+                "headline_note": "Fraunces weight-300. Sets up the diagram reveal below.",
+                "spacebar_hint": null,
+                "diagram": {
+                    "description": "A horizontal SVG scene that builds piece by piece across the width of the content area. Each spacebar press adds the next visual element left-to-right. All elements are minimal, icon-style SVG line art in off-white (#F0EBE3) and muted tones, consistent stroke weight (2px). The scene is persistent — each element stays visible once revealed.",
+                    "scene_width": "100%",
+                    "scene_height": "180px",
+                    "ground_line": "a single horizontal baseline rule across the full width at 70% height, color #2A2724, present from load",
+                    "elements": [
+                        {
+                            "press": 1,
+                            "id": "stick-figure",
+                            "position": "far left of scene, standing on ground line",
+                            "visual": "Minimal stick figure: circle head, single vertical line body, two angled legs, two angled arms slightly raised — all stroked in #F0EBE3, 2px stroke",
+                            "label": "Where you are",
+                            "label_position": "below ground line, centered under figure",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "fade-in + slight scale from 0.85, 350ms ease-out"
+                        },
+                        {
+                            "press": 2,
+                            "id": "treasure-chest",
+                            "position": "far right of scene (before reserved video region), standing on ground line",
+                            "visual": "Simple treasure chest: a rectangle body with a rounded-top lid, a horizontal line dividing lid from body, a small circle latch in center, a subtle glow or accent lines suggesting gold — stroked in #C8744A, 2px stroke, fill none",
+                            "label": "Where you want to go",
+                            "label_position": "below ground line, centered under chest",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "fade-in + slight scale from 0.85, 350ms ease-out"
+                        },
+                        {
+                            "press": 3,
+                            "id": "gap-and-fire",
+                            "position": "center of scene, between stick figure and treasure chest",
+                            "visual": "A gap in the ground line — the baseline breaks in the middle third. Inside the gap, a fire pit: three upward flame shapes drawn in #C0392B and #C8744A, layered and flickering. The gap edges are jagged/rough. The baseline on either side of the gap remains.",
+                            "label": "What's stopping you",
+                            "label_position": "below the gap, centered",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "flames flicker in with opacity animation cycling 0.6→1→0.6, gap edges appear with a quick draw-in, 400ms",
+                            "animation_note": "Flames have a gentle looping flicker after reveal: opacity oscillates between 0.7 and 1.0 with a 1.2s ease-in-out loop"
+                        },
+                        {
+                            "press": 4,
+                            "id": "bridge",
+                            "position": "spanning the gap in the center, connecting both ground edges",
+                            "visual": "A simple flat bridge arc drawn as a path spanning the gap — a shallow curved or flat horizontal line at ground level connecting the two edges over the fire. Two short vertical support lines drop from the bridge edges. Stroked in #F0EBE3, 2px.",
+                            "label": "How to get there",
+                            "label_position": "above the bridge arc, centered",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "bridge path draws in left-to-right using stroke-dashoffset animation, 500ms ease-out"
+                        },
+                        {
+                            "press": 5,
+                            "id": "bridge-bricks",
+                            "position": "overlaid on the bridge surface",
+                            "visual": "The bridge surface fills with small rectangle bricks — 5 to 7 evenly spaced rectangles drawn along the bridge span, each labeled or implied as a component (no text on them, just the brick shapes). Stroked in #C8744A, 1.5px, fill #3D2418 (very subtle warm fill).",
+                            "label": "What makes it a solution",
+                            "label_position": "below the bridge, centered",
+                            "label_style": "DM Mono, 11px, uppercase, #C8744A",
+                            "entrance": "bricks pop in one by one with staggered 60ms delays, each scaling from 0 to 1, 250ms ease-out"
+                        }
+                    ]
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking, color #C0392B",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_diagram_label": "DM Mono, 11px, uppercase, +0.06em tracking"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "eyebrow_to_headline_gap": "12px",
+                "headline_to_diagram_gap": "40px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. In the left region render: (1) Thin 120px terracotta rule (#C8744A) above the eyebrow. (2) Eyebrow in DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline in Fraunces weight-300 40px off-white: 'Before we build anything, we need to understand the objective.' with natural line breaks. (4) Below the headline, a full-width SVG scene 180px tall. A horizontal baseline spans the full SVG width at y=130, color #2A2724, 1px. Five spacebar presses progressively build the scene: PRESS 1 — fade in a minimal stick figure on the left (circle head, line body, legs, arms, all #F0EBE3 2px stroke) standing on the baseline. Below baseline centered under it: label 'WHERE YOU ARE' in DM Mono 11px #7A7068. PRESS 2 — fade in a simple treasure chest on the right side of the SVG (rectangle body, arc lid, latch circle, stroked #C8744A 2px) on the baseline. Label below: 'WHERE YOU WANT TO GO'. PRESS 3 — break the baseline in the center third (erase that segment) and draw a fire pit in the gap: 3 overlapping flame shapes in #C0392B and #C8744A that flicker with a looping opacity animation (0.7→1.0, 1.2s ease-in-out infinite). Label below gap: 'WHAT'S STOPPING YOU'. PRESS 4 — draw a bridge over the gap: a flat horizontal path at baseline height connecting the two edges, with 2 short vertical supports, stroked #F0EBE3 2px, drawn left-to-right via stroke-dashoffset over 500ms. Label above bridge: 'HOW TO GET THERE' in DM Mono 11px #7A7068. PRESS 5 — overlay 6 small brick rectangles evenly spaced along the bridge surface, each stroked #C8744A 1.5px with fill #3D2418, popping in one by one with 60ms stagger, scale 0→1 over 250ms. Label below bridge: 'WHAT MAKES IT A SOLUTION' in DM Mono 11px #C8744A. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-05-discovery-interviews",
+            "type": "content",
+            "title": "Discovery — Interviews",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "We hear from both sides\nof the business.",
+                "headline_note": "Fraunces weight-300. Sets up the two-column interview diagram.",
+                "spacebar_hint": null,
+                "diagram": {
+                    "layout": "two columns, side by side, equal width, separated by a subtle 1px vertical rule (#2A2724)",
+                    "columns": [
+                        {
+                            "id": "top-down",
+                            "position": "left column",
+                            "direction_label": "Top-Down",
+                            "direction_label_style": "Fraunces, italic, weight 300, 22px, #F0EBE3",
+                            "arrow": {
+                                "direction": "pointing downward",
+                                "style": "single vertical line with arrowhead at bottom, #C8744A, 2px stroke, 32px tall"
+                            },
+                            "sub_label": "Stakeholders",
+                            "sub_label_style": "DM Mono, 11px, uppercase, +0.07em tracking, #7A7068",
+                            "sub_label_position": "below arrow, below direction label",
+                            "questions": [
+                                "What does success look like in 90 days?",
+                                "Where are you losing the most time right now?",
+                                "What would you do with 10 extra hours a week?"
+                            ],
+                            "questions_trigger": "spacebar press 1",
+                            "question_style": {
+                                "font": "DM Sans, 14px, weight 400, line-height 1.55",
+                                "color": "#F0EBE3",
+                                "bullet": "1px terracotta (#C8744A) square bullet or dash, 6px",
+                                "entrance": "each question fades up one by one, 120ms stagger, 300ms ease-out per item"
+                            }
+                        },
+                        {
+                            "id": "bottom-up",
+                            "position": "right column",
+                            "direction_label": "Bottom-Up",
+                            "direction_label_style": "Fraunces, italic, weight 300, 22px, #F0EBE3",
+                            "arrow": {
+                                "direction": "pointing upward",
+                                "style": "single vertical line with arrowhead at top, #2980B9, 2px stroke, 32px tall"
+                            },
+                            "sub_label": "End Users",
+                            "sub_label_style": "DM Mono, 11px, uppercase, +0.07em tracking, #7A7068",
+                            "sub_label_position": "below arrow, below direction label",
+                            "questions": [
+                                "What part of your day feels like busywork?",
+                                "What slows you down most before a task is done?",
+                                "If one thing could be automated, what would it be?"
+                            ],
+                            "questions_trigger": "spacebar press 2",
+                            "question_style": {
+                                "font": "DM Sans, 14px, weight 400, line-height 1.55",
+                                "color": "#F0EBE3",
+                                "bullet": "1px blue (#2980B9) square bullet or dash, 6px",
+                                "entrance": "each question fades up one by one, 120ms stagger, 300ms ease-out per item"
+                            }
+                        }
+                    ],
+                    "divider": {
+                        "style": "1px vertical rule",
+                        "color": "#2A2724",
+                        "height": "100% of diagram height",
+                        "position": "center between two columns"
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "blue": "#2980B9",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking, color #C0392B",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_direction_label": "Fraunces, italic, weight 300, 22px",
+                "font_sub_label": "DM Mono, 11px, uppercase, +0.07em tracking",
+                "font_question": "DM Sans, 14px, weight 400, line-height 1.55"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "eyebrow_to_headline_gap": "12px",
+                "headline_to_diagram_gap": "36px",
+                "column_gap": "48px",
+                "direction_label_to_arrow_gap": "10px",
+                "arrow_to_sub_label_gap": "8px",
+                "sub_label_to_questions_gap": "20px",
+                "between_questions_gap": "12px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint anywhere. In the left region render: (1) Thin 120px terracotta rule (#C8744A, 1px) above eyebrow. (2) Eyebrow in DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline in Fraunces weight-300 40px: 'We hear from both sides of the business.' with a line break after 'sides'. (4) Below headline, a two-column diagram separated by a centered 1px vertical rule (#2A2724). LEFT COLUMN: direction label 'Top-Down' in Fraunces italic weight-300 22px #F0EBE3. Below it a 32px downward arrow in #C8744A (vertical line + arrowhead pointing down). Below that, sub-label 'Stakeholders' in DM Mono 11px uppercase #7A7068. RIGHT COLUMN: direction label 'Bottom-Up' in Fraunces italic weight-300 22px #F0EBE3. Below it a 32px upward arrow in #2980B9 (vertical line + arrowhead pointing up). Below that, sub-label 'End Users' in DM Mono 11px uppercase #7A7068. Below each column's sub-label is a list of 3 questions, all hidden on load. FIRST spacebar press: reveal the 3 left-column (Stakeholder) questions one by one with 120ms stagger each — fade up (translateY 8px→0, opacity 0→1, 300ms ease-out). Questions: '1. What does success look like in 90 days?' / '2. Where are you losing the most time right now?' / '3. What would you do with 10 extra hours a week?' Each has a small #C8744A dash bullet. SECOND spacebar press: reveal the 3 right-column (End User) questions one by one with 120ms stagger — same entrance animation. Questions: '1. What part of your day feels like busywork?' / '2. What slows you down most before a task is done?' / '3. If one thing could be automated, what would it be?' Each has a small #2980B9 dash bullet. Question font: DM Sans 14px #F0EBE3 line-height 1.55. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-06-bottlenecks",
+            "type": "content",
+            "title": "Discovery — Identifying Bottlenecks",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "Every workflow has\na breaking point.",
+                "spacebar_hint": null,
+                "flowchart_layout": {
+                    "description": "Three horizontal flowcharts stacked vertically. Each represents a different business workflow. All three flowcharts are visible on load but only the first is fully opaque — the 2nd and 3rd start hidden. Each chart has 5 nodes connected by arrows left-to-right. Each node is a rounded rectangle. One node per chart is the bottleneck. Spacebar presses progressively reveal bottlenecks and new charts.",
+                    "node_style": {
+                        "default": {
+                            "fill": "#161513",
+                            "stroke": "#2A2724",
+                            "stroke_width": "1.5px",
+                            "border_radius": "6px",
+                            "width": "80px",
+                            "height": "34px",
+                            "font": "DM Mono, 10px, uppercase, +0.04em tracking",
+                            "text_color": "#7A7068"
+                        },
+                        "bottleneck": {
+                            "fill": "#2A0A08",
+                            "stroke": "#C0392B",
+                            "stroke_width": "2px",
+                            "text_color": "#F0EBE3",
+                            "glow": "drop-shadow: 0 0 8px #C0392B66",
+                            "transition": "300ms ease-out, all properties"
+                        }
+                    },
+                    "connector_style": {
+                        "stroke": "#2A2724",
+                        "stroke_width": "1.5px",
+                        "arrowhead": "small filled triangle, same color"
+                    }
+                },
+                "flowcharts": [
+                    {
+                        "id": "flow-1",
+                        "label": "Client Onboarding",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, left-aligned above chart",
+                        "visible_on_load": true,
+                        "nodes": [
+                            {
+                                "id": "f1-n1",
+                                "text": "Inquiry",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f1-n2",
+                                "text": "Intake Form",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f1-n3",
+                                "text": "Manual Review",
+                                "bottleneck": true,
+                                "bottleneck_note": "Hours spent reading forms and copy-pasting to CRM"
+                            },
+                            {
+                                "id": "f1-n4",
+                                "text": "Contract",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f1-n5",
+                                "text": "Kickoff",
+                                "bottleneck": false
+                            }
+                        ],
+                        "bottleneck_trigger": "spacebar press 1",
+                        "bottleneck_label": {
+                            "text": "Bottleneck",
+                            "position": "below bottleneck node",
+                            "style": "DM Mono, 10px, uppercase, #C0392B",
+                            "entrance": "fade-in, 250ms ease-out, after node turns red"
+                        }
+                    },
+                    {
+                        "id": "flow-2",
+                        "label": "Project Reporting",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, left-aligned above chart",
+                        "visible_on_load": false,
+                        "entrance": "fade-up (translateY 12px→0, opacity 0→1), 400ms ease-out",
+                        "nodes": [
+                            {
+                                "id": "f2-n1",
+                                "text": "Data Pull",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f2-n2",
+                                "text": "Spreadsheet",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f2-n3",
+                                "text": "Format",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f2-n4",
+                                "text": "Manual Send",
+                                "bottleneck": true,
+                                "bottleneck_note": "Sending individual reports by hand, every week"
+                            },
+                            {
+                                "id": "f2-n5",
+                                "text": "Follow-up",
+                                "bottleneck": false
+                            }
+                        ],
+                        "bottleneck_trigger": "spacebar press 2 — revealed simultaneously with chart appearing",
+                        "bottleneck_label": {
+                            "text": "Bottleneck",
+                            "position": "below bottleneck node",
+                            "style": "DM Mono, 10px, uppercase, #C0392B",
+                            "entrance": "fade-in 300ms after chart enters"
+                        }
+                    },
+                    {
+                        "id": "flow-3",
+                        "label": "Invoice & Payment",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, left-aligned above chart",
+                        "visible_on_load": false,
+                        "entrance": "fade-up (translateY 12px→0, opacity 0→1), 400ms ease-out, after flow-2",
+                        "nodes": [
+                            {
+                                "id": "f3-n1",
+                                "text": "Job Done",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f3-n2",
+                                "text": "Time Log",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f3-n3",
+                                "text": "Draft Invoice",
+                                "bottleneck": true,
+                                "bottleneck_note": "Manual invoice drafting delays cash flow by days"
+                            },
+                            {
+                                "id": "f3-n4",
+                                "text": "Approval",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f3-n5",
+                                "text": "Payment",
+                                "bottleneck": false
+                            }
+                        ],
+                        "bottleneck_trigger": "spacebar press 3 — revealed simultaneously with chart appearing",
+                        "bottleneck_label": {
+                            "text": "Bottleneck",
+                            "position": "below bottleneck node",
+                            "style": "DM Mono, 10px, uppercase, #C0392B",
+                            "entrance": "fade-in 300ms after chart enters"
+                        }
+                    }
+                ],
+                "spacebar_sequence": [
+                    {
+                        "press": 1,
+                        "action": "Turn bottleneck node red on flow-1 (f1-n3 'Manual Review'). Node fill becomes #2A0A08, stroke becomes #C0392B, text becomes #F0EBE3, glow appears. 'Bottleneck' label fades in below it."
+                    },
+                    {
+                        "press": 2,
+                        "action": "flow-2 (Project Reporting) fades up into view. Simultaneously after 300ms, f2-n4 'Manual Send' turns red with the same bottleneck style. 'Bottleneck' label fades in below it."
+                    },
+                    {
+                        "press": 3,
+                        "action": "flow-3 (Invoice & Payment) fades up into view. Simultaneously after 300ms, f3-n3 'Draft Invoice' turns red. 'Bottleneck' label fades in below it."
+                    }
+                ]
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "node_default_fill": "#161513",
+                "node_default_stroke": "#2A2724",
+                "node_bottleneck_fill": "#2A0A08",
+                "node_bottleneck_stroke": "#C0392B",
+                "connector_color": "#2A2724",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_node": "DM Mono, 10px, uppercase, +0.04em tracking",
+                "font_flow_label": "DM Mono, 10px, uppercase, +0.06em tracking"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "56px",
+                "headline_to_charts_gap": "36px",
+                "between_charts_gap": "20px",
+                "node_horizontal_gap": "16px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Left region: (1) Thin 120px terracotta rule (#C8744A). (2) Eyebrow DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline Fraunces weight-300 40px: 'Every workflow has a breaking point.' (4) Three SVG flowcharts stacked vertically with 20px gaps. Each chart is a horizontal row of 5 rounded-rect nodes (80×34px, rx 6, fill #161513, stroke #2A2724 1.5px) connected by arrows (line + small arrowhead, stroke #2A2724). Node labels in DM Mono 10px uppercase #7A7068. A flow label in DM Mono 10px uppercase #7A7068 sits above-left of each chart. CHART 1 'CLIENT ONBOARDING' — nodes: Inquiry → Intake Form → Manual Review → Contract → Kickoff. Fully visible on load. CHART 2 'PROJECT REPORTING' — nodes: Data Pull → Spreadsheet → Format → Manual Send → Follow-up. Hidden on load (opacity 0). CHART 3 'INVOICE & PAYMENT' — nodes: Job Done → Time Log → Draft Invoice → Approval → Payment. Hidden on load (opacity 0). SPACEBAR INTERACTIONS: Press 1 — node 'Manual Review' (chart 1, index 2) transitions to bottleneck style: fill #2A0A08, stroke #C0392B 2px, text color #F0EBE3, drop-shadow 0 0 8px #C0392B66, 300ms ease-out. A label 'BOTTLENECK' in DM Mono 10px #C0392B fades in below it. Press 2 — chart 2 fades up (translateY 12px→0, opacity 0→1, 400ms ease-out). After 300ms delay, node 'Manual Send' (index 3) turns bottleneck red with same style + label. Press 3 — chart 3 fades up same way. After 300ms, node 'Draft Invoice' (index 2) turns bottleneck red + label. Background #0E0D0C. All DESIGN.md tokens apply."
+        }
+    ]
+}

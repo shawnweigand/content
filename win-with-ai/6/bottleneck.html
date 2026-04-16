@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discovery — Bottlenecks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-red: #C0392B;
+            --color-red-fill: #2A0A08;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw; height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+            position: relative;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 50% 55% at 25% 50%, #C0392B05 0%, transparent 68%);
+            pointer-events: none;
+        }
+
+        .content {
+            padding: 52px 72px 52px 80px;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; z-index: 1;
+        }
+
+        .accent-rule {
+            width: 0; height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 20px;
+            animation: ruleGrow 600ms cubic-bezier(0.16,1,0.3,1) 200ms forwards;
+        }
+        @keyframes ruleGrow { to { width: 120px; } }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px; font-weight: 500;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--color-red); margin-bottom: 14px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(28px, 3.2vw, 40px);
+            font-weight: 300; line-height: 1.15; letter-spacing: -0.02em;
+            color: var(--color-text); margin-bottom: 36px;
+            opacity: 0; transform: translateY(12px);
+            animation: fadeUp 600ms cubic-bezier(0.16,1,0.3,1) 550ms forwards;
+        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .charts { display: flex; flex-direction: column; gap: 24px; }
+
+        .chart-block { display: flex; flex-direction: column; gap: 8px; }
+
+        .chart-block.hidden {
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 450ms ease-out, transform 450ms ease-out;
+        }
+        .chart-block.hidden.visible { opacity: 1; transform: translateY(0); }
+
+        .flow-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px; font-weight: 500;
+            letter-spacing: 0.06em; text-transform: uppercase;
+            color: var(--color-muted);
+        }
+
+        /* SVG chart canvas */
+        .flow-svg { width: 100%; overflow: visible; }
+
+        /* All shapes default */
+        .sf {
+            fill: var(--color-surface);
+            stroke: var(--color-border);
+            stroke-width: 1.5;
+            transition: fill 300ms ease-out, stroke 300ms ease-out, stroke-width 300ms ease-out;
+        }
+
+        /* Hot group — filter glow */
+        .ng { transition: filter 300ms ease-out; }
+        .ng.hot { filter: drop-shadow(0 0 8px #C0392B66); }
+        .ng.hot .sf {
+            fill: var(--color-red-fill);
+            stroke: var(--color-red);
+            stroke-width: 2;
+        }
+
+        /* Bottleneck text inside SVG */
+        .bn {
+            font-family: 'DM Mono', monospace;
+            font-size: 8.5px; font-weight: 500;
+            letter-spacing: 0.07em;
+            fill: var(--color-red);
+            text-anchor: middle;
+            opacity: 0;
+            transition: opacity 280ms ease-out;
+        }
+        .bn.visible { opacity: 1; }
+
+        /* Connector lines */
+        .cl { stroke: #2A2724; stroke-width: 1.5; fill: none; }
+        .ah { fill: #2A2724; }
+
+        .video-region { /* intentionally empty */ }
+    </style>
+</head>
+<body>
+<div class="slide">
+    <div class="content">
+        <div class="accent-rule"></div>
+        <div class="eyebrow">01 — Discovery</div>
+        <h1 class="headline">Every workflow has<br>a breaking point.</h1>
+
+        <div class="charts">
+
+            <!-- ═══════════════════════════════════════════════ -->
+            <!-- CHART 1 — CLIENT ONBOARDING                    -->
+            <!-- Shape: rect→circle→diamond(hot)→ branches to   -->
+            <!--         circle (top) and rect (bottom)          -->
+            <!-- ═══════════════════════════════════════════════ -->
+            <div class="chart-block" id="chart-1">
+                <div class="flow-label">Client Onboarding</div>
+                <!--
+                  Nodes (cx,cy):
+                    A rect   (38, 55)  72×32
+                    B circle (122, 55) r=16
+                    C diam   (210, 55) HOT  ← branch point
+                    D circle (330, 22) r=16
+                    E rect   (330, 88) 72×32
+                  ViewBox: 0 0 400 112
+                -->
+                <svg class="flow-svg" viewBox="0 0 400 112" preserveAspectRatio="xMinYMid meet">
+                    <!-- connectors -->
+                    <!-- A→B -->
+                    <line class="cl" x1="74" y1="55" x2="99" y2="55"/>
+                    <polygon class="ah" points="99,51 107,55 99,59"/>
+                    <!-- B→C -->
+                    <line class="cl" x1="138" y1="55" x2="175" y2="55"/>
+                    <polygon class="ah" points="175,51 183,55 175,59"/>
+                    <!-- C→fork junction (no arrowhead) -->
+                    <line class="cl" x1="237" y1="55" x2="258" y2="55"/>
+                    <!-- fork vertical bar -->
+                    <line class="cl" x1="258" y1="22" x2="258" y2="88"/>
+                    <!-- fork upper → D -->
+                    <line class="cl" x1="258" y1="22" x2="306" y2="22"/>
+                    <polygon class="ah" points="306,18 314,22 306,26"/>
+                    <!-- fork lower → E -->
+                    <line class="cl" x1="258" y1="88" x2="286" y2="88"/>
+                    <polygon class="ah" points="286,84 294,88 286,92"/>
+
+                    <!-- Node A: rounded-rect, center (38,55) -->
+                    <rect class="sf" x="2" y="39" width="72" height="32" rx="7"/>
+
+                    <!-- Node B: circle, center (122,55) -->
+                    <circle class="sf" cx="122" cy="55" r="16"/>
+
+                    <!-- Node C: diamond, center (210,55) HOT -->
+                    <g class="ng" id="hot-1">
+                        <polygon class="sf" points="210,37 237,55 210,73 183,55"/>
+                        <text class="bn" id="bn-1" x="210" y="86">BOTTLENECK</text>
+                    </g>
+
+                    <!-- Node D: circle, center (330,22) -->
+                    <circle class="sf" cx="330" cy="22" r="16"/>
+
+                    <!-- Node E: rounded-rect, center (330,88) -->
+                    <rect class="sf" x="294" y="72" width="72" height="32" rx="7"/>
+                </svg>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════ -->
+            <!-- CHART 2 — PROJECT REPORTING                    -->
+            <!-- Two inputs converge → diamond HOT → rect       -->
+            <!-- circle (top) + rect (bottom) → diamond → rect  -->
+            <!-- ═══════════════════════════════════════════════ -->
+            <div class="chart-block hidden" id="chart-2">
+                <div class="flow-label">Project Reporting</div>
+                <!--
+                  Nodes:
+                    A circle (38, 22)  r=16
+                    B rect   (38, 88)  72×32
+                    junction x=118, connects at y=55
+                    C diam   (190, 55) HOT
+                    D rect   (320, 55) 72×32
+                  ViewBox: 0 0 375 110
+                -->
+                <svg class="flow-svg" viewBox="0 0 375 110" preserveAspectRatio="xMinYMid meet">
+                    <!-- A horizontal to junction top -->
+                    <line class="cl" x1="54" y1="22" x2="118" y2="22"/>
+                    <!-- B horizontal to junction bottom -->
+                    <line class="cl" x1="74" y1="88" x2="118" y2="88"/>
+                    <!-- junction vertical bar -->
+                    <line class="cl" x1="118" y1="22" x2="118" y2="88"/>
+                    <!-- junction → C -->
+                    <line class="cl" x1="118" y1="55" x2="155" y2="55"/>
+                    <polygon class="ah" points="155,51 163,55 155,59"/>
+                    <!-- C → D -->
+                    <line class="cl" x1="217" y1="55" x2="277" y2="55"/>
+                    <polygon class="ah" points="277,51 285,55 277,59"/>
+
+                    <!-- Node A: circle, center (38,22) -->
+                    <circle class="sf" cx="38" cy="22" r="16"/>
+
+                    <!-- Node B: rounded-rect, center (38,88) -->
+                    <rect class="sf" x="2" y="72" width="72" height="32" rx="7"/>
+
+                    <!-- Node C: diamond HOT, center (190,55) -->
+                    <g class="ng" id="hot-2">
+                        <polygon class="sf" points="190,37 217,55 190,73 163,55"/>
+                        <text class="bn" id="bn-2" x="190" y="86">BOTTLENECK</text>
+                    </g>
+
+                    <!-- Node D: rounded-rect, center (320,55) -->
+                    <rect class="sf" x="284" y="39" width="72" height="32" rx="7"/>
+                </svg>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════ -->
+            <!-- CHART 3 — INVOICE & PAYMENT                    -->
+            <!-- rect → forks to circle + rect → merge →        -->
+            <!-- diamond HOT → circle                           -->
+            <!-- ═══════════════════════════════════════════════ -->
+            <div class="chart-block hidden" id="chart-3">
+                <div class="flow-label">Invoice &amp; Payment</div>
+                <!--
+                  Nodes:
+                    A rect   (38, 60)  72×32
+                    fork x=108, y range 20–100
+                    B circle (172, 20) r=16
+                    C rect   (172,100) 72×32
+                    merge x=248, y=60
+                    D diam   (305, 60) HOT
+                    E circle (390, 60) r=16
+                  ViewBox: 0 0 415 122
+                -->
+                <svg class="flow-svg" viewBox="0 0 415 122" preserveAspectRatio="xMinYMid meet">
+                    <!-- A → fork -->
+                    <line class="cl" x1="74" y1="60" x2="108" y2="60"/>
+                    <!-- fork vertical -->
+                    <line class="cl" x1="108" y1="20" x2="108" y2="100"/>
+                    <!-- fork upper → B -->
+                    <line class="cl" x1="108" y1="20" x2="149" y2="20"/>
+                    <polygon class="ah" points="149,16 157,20 149,24"/>
+                    <!-- fork lower → C -->
+                    <line class="cl" x1="108" y1="100" x2="128" y2="100"/>
+                    <polygon class="ah" points="128,96 136,100 128,104"/>
+                    <!-- B → merge top -->
+                    <line class="cl" x1="188" y1="20" x2="248" y2="20"/>
+                    <!-- C → merge bottom -->
+                    <line class="cl" x1="208" y1="100" x2="248" y2="100"/>
+                    <!-- merge vertical -->
+                    <line class="cl" x1="248" y1="20" x2="248" y2="100"/>
+                    <!-- merge → D -->
+                    <line class="cl" x1="248" y1="60" x2="270" y2="60"/>
+                    <polygon class="ah" points="270,56 278,60 270,64"/>
+                    <!-- D → E -->
+                    <line class="cl" x1="332" y1="60" x2="367" y2="60"/>
+                    <polygon class="ah" points="367,56 375,60 367,64"/>
+
+                    <!-- Node A: rounded-rect, center (38,60) -->
+                    <rect class="sf" x="2" y="44" width="72" height="32" rx="7"/>
+
+                    <!-- Node B: circle, center (172,20) -->
+                    <circle class="sf" cx="172" cy="20" r="16"/>
+
+                    <!-- Node C: rounded-rect, center (172,100) -->
+                    <rect class="sf" x="136" y="84" width="72" height="32" rx="7"/>
+
+                    <!-- Node D: diamond HOT, center (305,60) -->
+                    <g class="ng" id="hot-3">
+                        <polygon class="sf" points="305,42 332,60 305,78 278,60"/>
+                        <text class="bn" id="bn-3" x="305" y="92">BOTTLENECK</text>
+                    </g>
+
+                    <!-- Node E: circle, center (390,60) -->
+                    <circle class="sf" cx="390" cy="60" r="16"/>
+                </svg>
+            </div>
+
+        </div>
+    </div>
+    <div class="video-region"></div>
+</div>
+
+<script>
+    let step = 0;
+
+    function activateBottleneck(groupId, textId, delay) {
+        setTimeout(() => {
+            document.getElementById(groupId).classList.add('hot');
+            setTimeout(() => {
+                document.getElementById(textId).classList.add('visible');
+            }, 280);
+        }, delay);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code !== 'Space') return;
+        e.preventDefault();
+        step++;
+
+        if (step === 1) {
+            // First spacebar: activate chart 1 bottleneck
+            activateBottleneck('hot-1', 'bn-1', 0);
+        } else if (step === 2) {
+            // Second spacebar: show charts 2 & 3 with their bottlenecks
+            document.getElementById('chart-2').classList.add('visible');
+            document.getElementById('chart-3').classList.add('visible');
+            activateBottleneck('hot-2', 'bn-2', 550);
+            activateBottleneck('hot-3', 'bn-3', 750);
+        }
+    });
+</script>
+</body>
+</html>
