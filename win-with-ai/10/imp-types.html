@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Implementation — Enable vs Scope</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-blue: #2980B9;
+            --color-red: #C0392B;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 56px 72px 56px 80px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── META ── */
+        .meta {
+            flex-shrink: 0;
+            margin-bottom: 36px;
+        }
+
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 18px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-blue);
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(28px, 3vw, 42px);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── COLUMNS ── */
+        .columns {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            min-height: 0;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* ── COLUMN HEADER (title block) ── */
+        .col-header {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 400ms ease-out, transform 400ms ease-out;
+            margin-bottom: 28px;
+        }
+
+        .col-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .col-rule {
+            height: 2px;
+            width: 40px;
+            border-radius: 1px;
+            margin-bottom: 14px;
+        }
+
+        .col-enable .col-rule {
+            background: var(--color-blue);
+        }
+
+        .col-scope .col-rule {
+            background: var(--color-accent);
+        }
+
+        .col-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(26px, 2.8vw, 38px);
+            font-weight: 300;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .col-desc {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--color-muted);
+            max-width: 36ch;
+        }
+
+        /* ── DIAGRAM BLOCK ── */
+        .diagram-block {
+            flex: 1;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 400ms ease-out, transform 400ms ease-out;
+        }
+
+        .diagram-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── HUB SVG ── */
+        .hub-svg {
+            width: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        /* dotted connector draw-in */
+        .spoke {
+            stroke: var(--color-border);
+            stroke-width: 1.2;
+            stroke-dasharray: 3 4;
+            fill: none;
+            stroke-dashoffset: 0;
+        }
+
+        .spoke.hidden {
+            stroke-dashoffset: 120;
+        }
+
+        .spoke.drawn {
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 400ms ease-out;
+        }
+
+        /* ── SCOPE SVG ── */
+        .scope-svg {
+            width: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="meta">
+                <div class="accent-rule"></div>
+                <div class="eyebrow">02 — Implementation</div>
+                <h1 class="headline">Two ways we work.</h1>
+            </div>
+
+            <div class="columns">
+
+                <!-- ═══════════════════ ENABLE ═══════════════════ -->
+                <div class="col col-enable">
+
+                    <div class="col-header" id="hdr-enable">
+                        <div class="col-rule"></div>
+                        <div class="col-title">Enable</div>
+                        <div class="col-desc">Build the AI platform your whole business runs on.</div>
+                    </div>
+
+                    <div class="diagram-block" id="diag-enable">
+                        <!--
+            Hub-and-spoke SVG
+            ViewBox: 260 × 220
+            Center platform node: cx=130, cy=110, 72×32 rect
+            5 robot agents distributed in arc around it
+          -->
+                        <svg class="hub-svg" viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="blue-glow">
+                                    <feGaussianBlur stdDeviation="3" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+
+                            <!-- ── SPOKES (drawn in by JS) ── -->
+                            <!-- Agent positions (cx,cy): TL(40,40) T(130,18) TR(220,40) BL(40,182) BR(220,182) -->
+                            <!-- Center of platform rect: 130,110 -->
+                            <line class="spoke hidden" id="spoke-0" x1="40" y1="58" x2="94" y2="100" />
+                            <line class="spoke hidden" id="spoke-1" x1="130" y1="36" x2="130" y2="94" />
+                            <line class="spoke hidden" id="spoke-2" x1="220" y1="58" x2="166" y2="100" />
+                            <line class="spoke hidden" id="spoke-3" x1="40" y1="164" x2="94" y2="120" />
+                            <line class="spoke hidden" id="spoke-4" x1="220" y1="164" x2="166" y2="120" />
+
+                            <!-- ── CENTER PLATFORM NODE ── -->
+                            <rect x="94" y="94" width="72" height="32" rx="6" fill="#0D1A2A" stroke="#2980B9"
+                                stroke-width="2" filter="url(#blue-glow)" />
+                            <text x="130" y="114" text-anchor="middle" font-family="'DM Mono', monospace" font-size="9"
+                                font-weight="500" letter-spacing="0.06em" fill="#2980B9">AI PLATFORM</text>
+
+                            <!-- ── ROBOT AGENTS ── -->
+                            <!-- Robot macro: head circle + body rect, centered on given cx,cy (top of head) -->
+
+                            <!-- Agent 0: top-left -->
+                            <g transform="translate(28, 28)">
+                                <circle cx="12" cy="8" r="8" fill="#161513" stroke="#2A2724" stroke-width="1.5" />
+                                <rect x="4" y="17" width="16" height="12" rx="3" fill="#161513" stroke="#2A2724"
+                                    stroke-width="1.5" />
+                                <!-- eyes -->
+                                <circle cx="9" cy="8" r="1.5" fill="#7A7068" />
+                                <circle cx="15" cy="8" r="1.5" fill="#7A7068" />
+                            </g>
+
+                            <!-- Agent 1: top-center -->
+                            <g transform="translate(118, 0)">
+                                <circle cx="12" cy="8" r="8" fill="#161513" stroke="#2A2724" stroke-width="1.5" />
+                                <rect x="4" y="17" width="16" height="12" rx="3" fill="#161513" stroke="#2A2724"
+                                    stroke-width="1.5" />
+                                <circle cx="9" cy="8" r="1.5" fill="#7A7068" />
+                                <circle cx="15" cy="8" r="1.5" fill="#7A7068" />
+                            </g>
+
+                            <!-- Agent 2: top-right -->
+                            <g transform="translate(208, 28)">
+                                <circle cx="12" cy="8" r="8" fill="#161513" stroke="#2A2724" stroke-width="1.5" />
+                                <rect x="4" y="17" width="16" height="12" rx="3" fill="#161513" stroke="#2A2724"
+                                    stroke-width="1.5" />
+                                <circle cx="9" cy="8" r="1.5" fill="#7A7068" />
+                                <circle cx="15" cy="8" r="1.5" fill="#7A7068" />
+                            </g>
+
+                            <!-- Agent 3: bottom-left -->
+                            <g transform="translate(28, 152)">
+                                <circle cx="12" cy="8" r="8" fill="#161513" stroke="#2A2724" stroke-width="1.5" />
+                                <rect x="4" y="17" width="16" height="12" rx="3" fill="#161513" stroke="#2A2724"
+                                    stroke-width="1.5" />
+                                <circle cx="9" cy="8" r="1.5" fill="#7A7068" />
+                                <circle cx="15" cy="8" r="1.5" fill="#7A7068" />
+                            </g>
+
+                            <!-- Agent 4: bottom-right -->
+                            <g transform="translate(208, 152)">
+                                <circle cx="12" cy="8" r="8" fill="#161513" stroke="#2A2724" stroke-width="1.5" />
+                                <rect x="4" y="17" width="16" height="12" rx="3" fill="#161513" stroke="#2A2724"
+                                    stroke-width="1.5" />
+                                <circle cx="9" cy="8" r="1.5" fill="#7A7068" />
+                                <circle cx="15" cy="8" r="1.5" fill="#7A7068" />
+                            </g>
+
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════ SCOPE ═══════════════════ -->
+                <div class="col col-scope">
+
+                    <div class="col-header" id="hdr-scope">
+                        <div class="col-rule"></div>
+                        <div class="col-title">Scope</div>
+                        <div class="col-desc">Solve specific problems, one workflow at a time.</div>
+                    </div>
+
+                    <div class="diagram-block" id="diag-scope">
+                        <!--
+            Horizontal workflow SVG
+            ViewBox: 260 × 160
+            5 nodes across, connected by arrows
+            Node centers x: 24, 76, 130, 184, 236
+            All at y=80
+          -->
+                        <svg class="scope-svg" viewBox="0 0 260 160" xmlns="http://www.w3.org/2000/svg">
+
+                            <!-- ── CONNECTORS ── -->
+                            <!-- 1→2 -->
+                            <line x1="65" y1="80" x2="78" y2="80" stroke="#2A2724" stroke-width="1.5" />
+                            <polygon points="77,76 85,80 77,84" fill="#2A2724" />
+                            <!-- 2→3 -->
+                            <line x1="125" y1="80" x2="138" y2="80" stroke="#2A2724" stroke-width="1.5" />
+                            <polygon points="137,76 145,80 137,84" fill="#2A2724" />
+                            <!-- 3→4 -->
+                            <line x1="185" y1="80" x2="198" y2="80" stroke="#2A2724" stroke-width="1.5" />
+                            <polygon points="197,76 205,80 197,84" fill="#2A2724" />
+
+                            <!-- ── NODES ── -->
+
+                            <!-- Node 1: rounded-rect, purple -->
+                            <rect x="25" y="62" width="40" height="36" rx="6" fill="#1A1535" stroke="#3D3580"
+                                stroke-width="1.5" />
+
+                            <!-- Node 2: diamond, blue -->
+                            <polygon points="105,62 125,80 105,98 85,80" fill="#0D1A2A" stroke="#1E4A6A"
+                                stroke-width="1.5" />
+
+                            <!-- Node 3: pill, yellow-tinted -->
+                            <rect x="145" y="66" width="40" height="28" rx="14" fill="#1A1A0E" stroke="#3A3A1A"
+                                stroke-width="1.5" />
+
+                            <!-- Node 4: rounded-rect, red-tinted -->
+                            <rect x="205" y="62" width="40" height="36" rx="6" fill="#1A0F0E" stroke="#3A1A18"
+                                stroke-width="1.5" />
+
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        let step = 0;
+
+        // spoke draw-in
+        function drawSpokes() {
+            const spokes = document.querySelectorAll('.spoke');
+            spokes.forEach((s, i) => {
+                // measure length and set dasharray properly
+                const len = s.getTotalLength ? s.getTotalLength() : 120;
+                s.style.strokeDasharray = `3 4`;
+                s.style.strokeDashoffset = len;
+                setTimeout(() => {
+                    s.style.transition = `stroke-dashoffset 400ms ease-out`;
+                    s.style.strokeDashoffset = 0;
+                }, i * 90);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space') return;
+            e.preventDefault();
+            step++;
+
+            if (step === 1) {
+                // Show both column headers with slight stagger
+                document.getElementById('hdr-enable').classList.add('visible');
+                setTimeout(() => {
+                    document.getElementById('hdr-scope').classList.add('visible');
+                }, 70);
+            } else if (step === 2) {
+                document.getElementById('diag-enable').classList.add('visible');
+                // draw spokes after diagram fades in
+                setTimeout(drawSpokes, 300);
+            } else if (step === 3) {
+                document.getElementById('diag-scope').classList.add('visible');
+            }
+        });
+    </script>
+</body>
+
+</html>

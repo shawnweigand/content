@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What Does This Look Like in Claude? — Surfaces</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-blue: #2980B9;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 60px 72px 60px 80px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        .meta {
+            flex-shrink: 0;
+            margin-bottom: 36px;
+        }
+
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 18px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-blue);
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(26px, 3vw, 40px);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── COLUMNS ── */
+        .columns {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            min-height: 0;
+        }
+
+        /* ── CARD ── */
+        .col-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 400ms ease-out, transform 400ms ease-out;
+        }
+
+        .col-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* left accent bar */
+        .col-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 0;
+            border-radius: 0 2px 2px 0;
+            transition: height 420ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .col-card.visible::before {
+            height: 100%;
+        }
+
+        .card-assistant::before {
+            background: var(--color-accent);
+        }
+
+        .card-agent::before {
+            background: var(--color-blue);
+        }
+
+        /* card title */
+        .card-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(28px, 2.8vw, 38px);
+            font-weight: 300;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .card-assistant .card-title {
+            color: var(--color-text);
+        }
+
+        .card-agent .card-title {
+            color: var(--color-text);
+        }
+
+        /* card desc */
+        .card-desc {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--color-muted);
+            margin-bottom: 24px;
+        }
+
+        /* sub items */
+        .sub-items {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .sub-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+
+        .sub-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* icon container */
+        .icon-wrap {
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-assistant .icon-wrap {
+            background: #3D2418;
+            border: 1px solid #C8744A33;
+        }
+
+        .card-agent .icon-wrap {
+            background: #0D1A2A;
+            border: 1px solid #2980B933;
+        }
+
+        /* icon SVG */
+        .icon-wrap svg {
+            display: block;
+        }
+
+        /* text block */
+        .sub-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            padding-top: 2px;
+        }
+
+        .sub-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.2;
+            color: var(--color-text);
+        }
+
+        .sub-detail {
+            font-family: 'DM Mono', monospace;
+            font-size: 10.5px;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            color: var(--color-muted);
+            line-height: 1.4;
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="meta">
+                <div class="accent-rule"></div>
+                <div class="eyebrow">02 — Implementation</div>
+                <h1 class="headline">What does this look like<br>in Claude?</h1>
+            </div>
+
+            <div class="columns">
+
+                <!-- ════════════════════════ ASSISTANT ════════════════════════ -->
+                <div class="col-card card-assistant" id="card-assistant">
+
+                    <div class="card-title">Assistant</div>
+                    <div class="card-desc">Claude as a collaborator you prompt — available across every surface you
+                        already use.</div>
+
+                    <div class="sub-items">
+
+                        <!-- Web -->
+                        <div class="sub-item" id="si-web">
+                            <div class="icon-wrap">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="9" cy="9" r="7.5" stroke="#C8744A" stroke-width="1.5" />
+                                    <ellipse cx="9" cy="9" rx="3" ry="7.5" stroke="#C8744A" stroke-width="1.5" />
+                                    <line x1="1.5" y1="9" x2="16.5" y2="9" stroke="#C8744A" stroke-width="1.5" />
+                                    <line x1="9" y1="1.5" x2="9" y2="16.5" stroke="#C8744A" stroke-width="1.5"
+                                        stroke-dasharray="2 2" />
+                                </svg>
+                            </div>
+                            <div class="sub-text">
+                                <div class="sub-label">Web</div>
+                                <div class="sub-detail">claude.ai in any browser</div>
+                            </div>
+                        </div>
+
+                        <!-- Desktop -->
+                        <div class="sub-item" id="si-desktop">
+                            <div class="icon-wrap">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1.5" y="2.5" width="15" height="10" rx="2" stroke="#C8744A"
+                                        stroke-width="1.5" />
+                                    <line x1="9" y1="12.5" x2="9" y2="16" stroke="#C8744A" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <line x1="5.5" y1="16" x2="12.5" y2="16" stroke="#C8744A" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="sub-text">
+                                <div class="sub-label">Desktop</div>
+                                <div class="sub-detail">Native Mac &amp; Windows app</div>
+                            </div>
+                        </div>
+
+                        <!-- Terminal -->
+                        <div class="sub-item" id="si-terminal">
+                            <div class="icon-wrap">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1.5" y="2.5" width="15" height="13" rx="2" stroke="#C8744A"
+                                        stroke-width="1.5" />
+                                    <polyline points="4,8 7,10.5 4,13" stroke="#C8744A" stroke-width="1.5"
+                                        stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                                    <line x1="9" y1="13" x2="14" y2="13" stroke="#C8744A" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="sub-text">
+                                <div class="sub-label">Terminal</div>
+                                <div class="sub-detail">Claude Code — CLI for engineering workflows</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ════════════════════════ AGENT ════════════════════════ -->
+                <div class="col-card card-agent" id="card-agent">
+
+                    <div class="card-title">Agent</div>
+                    <div class="card-desc">Claude operating autonomously — running tasks, making decisions, and
+                        executing workflows without you in the loop.</div>
+
+                    <div class="sub-items">
+
+                        <!-- Managed Agents -->
+                        <div class="sub-item" id="si-managed">
+                            <div class="icon-wrap">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <!-- robot head -->
+                                    <rect x="3.5" y="5" width="11" height="9" rx="2.5" stroke="#2980B9"
+                                        stroke-width="1.5" />
+                                    <!-- antenna -->
+                                    <line x1="9" y1="5" x2="9" y2="2.5" stroke="#2980B9" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <circle cx="9" cy="2" r="1" fill="#2980B9" />
+                                    <!-- eyes -->
+                                    <circle cx="6.5" cy="9" r="1.2" fill="#2980B9" />
+                                    <circle cx="11.5" cy="9" r="1.2" fill="#2980B9" />
+                                    <!-- mouth line -->
+                                    <line x1="6.5" y1="12" x2="11.5" y2="12" stroke="#2980B9" stroke-width="1.2"
+                                        stroke-linecap="round" />
+                                </svg>
+                            </div>
+                            <div class="sub-text">
+                                <div class="sub-label">Managed Agents</div>
+                                <div class="sub-detail">Persistent agents scoped to a project or team</div>
+                            </div>
+                        </div>
+
+                        <!-- Routines -->
+                        <div class="sub-item" id="si-routines">
+                            <div class="icon-wrap">
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <!-- clock circle -->
+                                    <circle cx="9" cy="9" r="7" stroke="#2980B9" stroke-width="1.5" />
+                                    <!-- clock hands -->
+                                    <line x1="9" y1="9" x2="9" y2="5.5" stroke="#2980B9" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <line x1="9" y1="9" x2="12" y2="10.5" stroke="#2980B9" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <!-- loop arrow tip -->
+                                    <path d="M14.5,5.5 A7,7 0 0,1 16,9" stroke="#2980B9" stroke-width="1.5"
+                                        stroke-linecap="round" fill="none" />
+                                    <polyline points="15.2,12 16.2,9 13.2,9.5" stroke="#2980B9" stroke-width="1.3"
+                                        stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                                </svg>
+                            </div>
+                            <div class="sub-text">
+                                <div class="sub-label">Routines</div>
+                                <div class="sub-detail">Scheduled or trigger-based automations that run on their own
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        let step = 0;
+
+        const assistantItems = ['si-web', 'si-desktop', 'si-terminal'];
+        const agentItems = ['si-managed', 'si-routines'];
+
+        function staggerItems(ids, baseDelay = 300) {
+            ids.forEach((id, i) => {
+                setTimeout(() => {
+                    document.getElementById(id).classList.add('visible');
+                }, baseDelay + i * 90);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space') return;
+            e.preventDefault();
+            step++;
+
+            if (step === 1) {
+                document.getElementById('card-assistant').classList.add('visible');
+                staggerItems(assistantItems, 320);
+            } else if (step === 2) {
+                document.getElementById('card-agent').classList.add('visible');
+                staggerItems(agentItems, 320);
+            }
+        });
+    </script>
+</body>
+
+</html>

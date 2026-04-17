@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What Does This Look Like in Claude?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-surface2: #1C1A18;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-blue: #2980B9;
+            --color-green: #27AE60;
+            --color-purple: #9B59B6;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 52px 72px 52px 80px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* meta */
+        .meta {
+            flex-shrink: 0;
+            margin-bottom: 32px;
+        }
+
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 18px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-blue);
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(26px, 3vw, 40px);
+            font-weight: 300;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── GRID ── */
+        .grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 16px;
+            min-height: 0;
+        }
+
+        /* ── FEATURE CARD ── */
+        .feat-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 350ms ease-out, transform 350ms ease-out;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .feat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feat-title {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .feat-desc {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: var(--color-muted);
+            flex-shrink: 0;
+        }
+
+        /* ── IMAGE MOCKUP ── */
+        .feat-image {
+            flex: 1;
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: #131210;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            min-height: 0;
+            position: relative;
+        }
+
+        /* fake browser chrome */
+        .mock-chrome {
+            flex-shrink: 0;
+            height: 22px;
+            background: #1A1816;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 5px;
+        }
+
+        .mock-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        /* mock content area */
+        .mock-body {
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: 0;
+        }
+
+        .mock-line {
+            height: 7px;
+            border-radius: 3px;
+            background: var(--color-border);
+            opacity: 0.6;
+        }
+
+        .mock-line.short {
+            width: 40%;
+        }
+
+        .mock-line.med {
+            width: 65%;
+        }
+
+        .mock-line.full {
+            width: 90%;
+        }
+
+        .mock-line.accent-line {
+            opacity: 1;
+        }
+
+        .mock-block {
+            border-radius: 4px;
+            background: var(--color-surface2);
+            border: 1px solid var(--color-border);
+            flex: 1;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            min-height: 0;
+        }
+
+        .mock-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 3px;
+            padding: 2px 7px;
+            font-family: 'DM Mono', monospace;
+            font-size: 8px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            width: fit-content;
+        }
+
+        .mock-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .mock-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .mock-chip {
+            height: 20px;
+            border-radius: 3px;
+            flex: 1;
+            background: var(--color-border);
+            opacity: 0.5;
+        }
+
+        /* ── CARD ACCENT COLORS ── */
+        /* Skills — terracotta */
+        .card-skills .feat-title {
+            color: var(--color-accent);
+        }
+
+        .card-skills .feat-image {
+            border-color: #3A2A1E;
+        }
+
+        .card-skills .mock-chrome {
+            background: #1E1510;
+        }
+
+        .card-skills .mock-dot:nth-child(1) {
+            background: #C8744A;
+        }
+
+        .card-skills .mock-dot:nth-child(2) {
+            background: #3A2A1E;
+        }
+
+        .card-skills .mock-dot:nth-child(3) {
+            background: #3A2A1E;
+        }
+
+        .card-skills .mock-line.accent-line {
+            background: #C8744A44;
+        }
+
+        .card-skills .mock-tag {
+            background: #3D2418;
+            color: var(--color-accent);
+            border: 1px solid #C8744A44;
+        }
+
+        .card-skills .mock-icon {
+            background: #3D2418;
+            border: 1px solid #C8744A44;
+        }
+
+        /* Connectors — blue */
+        .card-connectors .feat-title {
+            color: var(--color-blue);
+        }
+
+        .card-connectors .feat-image {
+            border-color: #1A2D3D;
+        }
+
+        .card-connectors .mock-chrome {
+            background: #0F1A24;
+        }
+
+        .card-connectors .mock-dot:nth-child(1) {
+            background: var(--color-blue);
+        }
+
+        .card-connectors .mock-dot:nth-child(2) {
+            background: #1A2D3D;
+        }
+
+        .card-connectors .mock-dot:nth-child(3) {
+            background: #1A2D3D;
+        }
+
+        .card-connectors .mock-line.accent-line {
+            background: #2980B944;
+        }
+
+        .card-connectors .mock-tag {
+            background: #0D1A2A;
+            color: var(--color-blue);
+            border: 1px solid #2980B944;
+        }
+
+        .card-connectors .mock-icon {
+            background: #0D1A2A;
+            border: 1px solid #2980B944;
+        }
+
+        /* Projects — green */
+        .card-projects .feat-title {
+            color: var(--color-green);
+        }
+
+        .card-projects .feat-image {
+            border-color: #1A3020;
+        }
+
+        .card-projects .mock-chrome {
+            background: #0D1A10;
+        }
+
+        .card-projects .mock-dot:nth-child(1) {
+            background: var(--color-green);
+        }
+
+        .card-projects .mock-dot:nth-child(2) {
+            background: #1A3020;
+        }
+
+        .card-projects .mock-dot:nth-child(3) {
+            background: #1A3020;
+        }
+
+        .card-projects .mock-line.accent-line {
+            background: #27AE6044;
+        }
+
+        .card-projects .mock-tag {
+            background: #0D1F12;
+            color: var(--color-green);
+            border: 1px solid #27AE6044;
+        }
+
+        .card-projects .mock-icon {
+            background: #0D1F12;
+            border: 1px solid #27AE6044;
+        }
+
+        /* Agents — purple */
+        .card-agents .feat-title {
+            color: var(--color-purple);
+        }
+
+        .card-agents .feat-image {
+            border-color: #2D1A3A;
+        }
+
+        .card-agents .mock-chrome {
+            background: #1A1028;
+        }
+
+        .card-agents .mock-dot:nth-child(1) {
+            background: var(--color-purple);
+        }
+
+        .card-agents .mock-dot:nth-child(2) {
+            background: #2D1A3A;
+        }
+
+        .card-agents .mock-dot:nth-child(3) {
+            background: #2D1A3A;
+        }
+
+        .card-agents .mock-line.accent-line {
+            background: #9B59B644;
+        }
+
+        .card-agents .mock-tag {
+            background: #1E1030;
+            color: var(--color-purple);
+            border: 1px solid #9B59B644;
+        }
+
+        .card-agents .mock-icon {
+            background: #1E1030;
+            border: 1px solid #9B59B644;
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <div class="meta">
+                <div class="accent-rule"></div>
+                <div class="eyebrow">02 — Implementation</div>
+                <h1 class="headline">What does this look like<br>in Claude?</h1>
+            </div>
+
+            <div class="grid">
+
+                <!-- ══════════ SKILLS ══════════ -->
+                <div class="feat-card card-skills" id="card-skills">
+                    <div class="feat-title">Skills</div>
+                    <div class="feat-desc">Reusable instruction sets that give Claude domain expertise — your workflows,
+                        your tone, your tools.</div>
+                    <div class="feat-image">
+                        <div class="mock-chrome">
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="mock-tag">⚡ Skills</div>
+                            <div class="mock-line accent-line full"></div>
+                            <div class="mock-block">
+                                <div class="mock-row">
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip"></div>
+                                </div>
+                                <div class="mock-row">
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip"></div>
+                                </div>
+                                <div class="mock-row">
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══════════ CONNECTORS ══════════ -->
+                <div class="feat-card card-connectors" id="card-connectors">
+                    <div class="feat-title">Connectors</div>
+                    <div class="feat-desc">Native integrations that let Claude read and act inside your existing tools —
+                        Drive, Gmail, Notion, and more.</div>
+                    <div class="feat-image">
+                        <div class="mock-chrome">
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="mock-tag">🔌 Connectors</div>
+                            <div class="mock-line accent-line med"></div>
+                            <div class="mock-block">
+                                <div class="mock-row">
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip" style="flex:0.4"></div>
+                                    <div style="width:5px"></div>
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip" style="flex:0.4"></div>
+                                </div>
+                                <div class="mock-row">
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip" style="flex:0.4"></div>
+                                    <div style="width:5px"></div>
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip" style="flex:0.4"></div>
+                                </div>
+                                <div class="mock-row">
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip" style="flex:0.4"></div>
+                                    <div style="width:5px"></div>
+                                    <div class="mock-icon"></div>
+                                    <div class="mock-chip" style="flex:0.4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══════════ PROJECTS ══════════ -->
+                <div class="feat-card card-projects" id="card-projects">
+                    <div class="feat-title">Projects</div>
+                    <div class="feat-desc">Persistent workspaces that keep Claude in context — your files, history, and
+                        instructions always loaded.</div>
+                    <div class="feat-image">
+                        <div class="mock-chrome">
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="mock-tag">📁 Projects</div>
+                            <div style="display:flex; gap:6px; flex:1; min-height:0;">
+                                <!-- sidebar -->
+                                <div
+                                    style="width:32%; display:flex; flex-direction:column; gap:4px; border-right:1px solid var(--color-border); padding-right:6px;">
+                                    <div class="mock-line short" style="width:100%"></div>
+                                    <div class="mock-line accent-line"
+                                        style="width:100%; background:#27AE6033; border-radius:3px; height:20px;"></div>
+                                    <div class="mock-line short" style="width:100%"></div>
+                                    <div class="mock-line short" style="width:80%"></div>
+                                </div>
+                                <!-- main -->
+                                <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+                                    <div class="mock-line med"></div>
+                                    <div class="mock-line full"></div>
+                                    <div class="mock-line" style="width:50%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══════════ AGENTS ══════════ -->
+                <div class="feat-card card-agents" id="card-agents">
+                    <div class="feat-title">Agents</div>
+                    <div class="feat-desc">Autonomous Claude workflows that run multi-step tasks on their own — no human
+                        in the loop required.</div>
+                    <div class="feat-image">
+                        <div class="mock-chrome">
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                            <div class="mock-dot"></div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="mock-tag">🤖 Agents</div>
+                            <div class="mock-block">
+                                <!-- step-like rows suggesting automation chain -->
+                                <div class="mock-row" style="align-items:flex-start; gap:8px;">
+                                    <div
+                                        style="width:3px; background:#9B59B644; border-radius:2px; align-self:stretch; flex-shrink:0;">
+                                    </div>
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:4px;">
+                                        <div class="mock-line" style="width:55%; background:#9B59B633;"></div>
+                                        <div class="mock-line short"></div>
+                                    </div>
+                                </div>
+                                <div class="mock-row" style="align-items:flex-start; gap:8px;">
+                                    <div
+                                        style="width:3px; background:#9B59B644; border-radius:2px; align-self:stretch; flex-shrink:0;">
+                                    </div>
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:4px;">
+                                        <div class="mock-line" style="width:70%; background:#9B59B633;"></div>
+                                        <div class="mock-line short"></div>
+                                    </div>
+                                </div>
+                                <div class="mock-row" style="align-items:flex-start; gap:8px;">
+                                    <div
+                                        style="width:3px; background:#9B59B666; border-radius:2px; align-self:stretch; flex-shrink:0;">
+                                    </div>
+                                    <div style="flex:1; display:flex; flex-direction:column; gap:4px;">
+                                        <div class="mock-line accent-line" style="background:#9B59B644; width:60%;">
+                                        </div>
+                                        <div class="mock-line short"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        const cards = ['card-skills', 'card-connectors', 'card-projects', 'card-agents'];
+        let step = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space' || step >= cards.length) return;
+            e.preventDefault();
+            document.getElementById(cards[step]).classList.add('visible');
+            step++;
+        });
+    </script>
+</body>
+
+</html>

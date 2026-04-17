@@ -1,0 +1,1791 @@
+{
+    "slides": [
+        {
+            "id": "slide-01-cover",
+            "type": "cover",
+            "title": "How Small Businesses Win with Claude AI",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — leave this region completely empty, no background elements or text bleed into it"
+            },
+            "content": {
+                "eyebrow": null,
+                "headline": "How Small\nBusinesses Win\nwith Claude AI",
+                "subheadline": "The gap between where you are and where you could be has never been smaller.",
+                "date": null,
+                "chart": {
+                    "type": "line",
+                    "position": "below-subheadline",
+                    "width": "100%",
+                    "height": "160px",
+                    "data_points": [
+                        0.55,
+                        0.48,
+                        0.52,
+                        0.45,
+                        0.5,
+                        0.62,
+                        0.75,
+                        0.92
+                    ],
+                    "data_description": "8-point upward-trending curve. Starts mid-low, dips slightly to its lowest point at index 3 (the 'You Are Here' marker), then climbs with accelerating momentum to a high point at index 7 (the 'AI-Native' marker).",
+                    "annotations": {
+                        "trigger": "keydown:Space",
+                        "trigger_note": "Both annotations appear simultaneously on first spacebar press. A second spacebar press advances to the next slide (standard deck navigation).",
+                        "low_point_index": 3,
+                        "high_point_index": 7,
+                        "annotation_low": {
+                            "label": "You Are Here",
+                            "circle": {
+                                "radius": 8,
+                                "stroke": "#C8744A",
+                                "stroke_width": 2,
+                                "fill": "transparent"
+                            },
+                            "arrow": {
+                                "direction": "pointing down-right toward circle from upper-left",
+                                "color": "#F0EBE3",
+                                "length": "40px"
+                            },
+                            "label_style": {
+                                "font": "DM Mono",
+                                "size": "12px",
+                                "weight": "500",
+                                "color": "#F0EBE3",
+                                "transform": "uppercase",
+                                "tracking": "+0.06em"
+                            },
+                            "entrance": "fade-in + scale from 0.8, 300ms ease-out"
+                        },
+                        "annotation_high": {
+                            "label": "AI-Native",
+                            "circle": {
+                                "radius": 8,
+                                "stroke": "#C8744A",
+                                "stroke_width": 2,
+                                "fill": "#C8744A"
+                            },
+                            "arrow": {
+                                "direction": "pointing down-left toward circle from upper-right",
+                                "color": "#F0EBE3",
+                                "length": "40px"
+                            },
+                            "label_style": {
+                                "font": "DM Mono",
+                                "size": "12px",
+                                "weight": "500",
+                                "color": "#C8744A",
+                                "transform": "uppercase",
+                                "tracking": "+0.06em"
+                            },
+                            "entrance": "fade-in + scale from 0.8, 300ms ease-out, delay: 120ms"
+                        }
+                    },
+                    "style": {
+                        "line_color": "#C8744A",
+                        "line_width": 2.5,
+                        "area_fill": "#C8744A22",
+                        "area_gradient": "top: #C8744A44 → bottom: transparent",
+                        "axis": "none",
+                        "grid": "none",
+                        "tooltip": false,
+                        "animation": "draw-in left-to-right, 800ms ease-out"
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "var(--color-bg)",
+                "text_primary": "var(--color-text)",
+                "text_muted": "var(--color-text-muted)",
+                "accent": "var(--color-accent)",
+                "font_headline": "Canela (fallback: Fraunces), 64px, weight 300, line-height 1.1",
+                "font_subheadline": "DM Sans, 16px, weight 400, line-height 1.7"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_subheadline_gap": "24px",
+                "subheadline_to_chart_gap": "40px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "var(--color-accent)",
+                    "position": "above headline"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. The slide is divided into two columns: LEFT 8/12 holds all content, RIGHT 4/12 is completely empty — no backgrounds, borders, or elements of any kind (reserved for presenter video overlay). In the left region, render from top: a thin 120px terracotta rule line (#C8744A), then a large display headline in Fraunces weight-300 reading 'How Small Businesses Win with Claude AI' (break after 'Small' and 'Businesses'), then a subtitle in DM Sans reading 'The gap between where you are and where you could be has never been smaller.', then below that a 160px tall SVG line chart. The chart has 8 data points: [0.55, 0.48, 0.52, 0.45, 0.50, 0.62, 0.75, 0.92] — the lowest point is index 3 and the highest is index 7. Render the chart with a smooth cubic bezier curve in #C8744A (2.5px stroke), soft orange area fill with a gradient from #C8744A44 to transparent, no axes, no grid, no labels. Animate the line drawing left-to-right on page load over 800ms ease-out. On the first spacebar keypress, simultaneously reveal two annotations over the chart: (1) At the index-3 low point — an open circle ring (8px radius, #C8744A stroke, transparent fill), a short angled arrow pointing down-right toward the circle from upper-left, and the label 'YOU ARE HERE' in DM Mono 12px uppercase #F0EBE3 above the arrow. (2) At the index-7 high point — a filled circle (8px radius, #C8744A fill), a short angled arrow pointing down-left toward the circle from upper-right, and the label 'AI-NATIVE' in DM Mono 12px uppercase #C8744A above the arrow. Both annotations fade in and scale from 0.8 to 1 over 300ms ease-out; the high-point annotation has a 120ms delay. Background is #0E0D0C. All tokens and spacing follow DESIGN.md exactly."
+        }
+    ],
+    "slides_next": [
+        {
+            "id": "slide-02-pain",
+            "type": "content",
+            "title": "The Cost of Doing It Manually",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "headline": "You're spending\ntime you don't have\non work that doesn't scale.",
+                "headline_note": "Display font (Fraunces), weight 300. Line breaks as shown.",
+                "time_waste_block": {
+                    "description": "A horizontal bar showing a visual breakdown of a typical 40-hour work week. The bar is divided into two segments: 'Manual Work' takes up 40% of the bar (filled in terracotta #C8744A), and 'Everything Else' takes the remaining 60% (filled in --color-border #2A2724). Below the bar, a single stark stat: '15+ hours/week on tasks AI can handle'.",
+                    "stat_label": "15+ hrs/week",
+                    "stat_sublabel": "on tasks AI can handle — follow-ups, reporting, scheduling, data entry",
+                    "bar": {
+                        "total_width": "100%",
+                        "height": "10px",
+                        "border_radius": "2px",
+                        "segments": [
+                            {
+                                "label": "Manual Work",
+                                "percent": 40,
+                                "color": "#C8744A"
+                            },
+                            {
+                                "label": "Everything Else",
+                                "percent": 60,
+                                "color": "#2A2724"
+                            }
+                        ],
+                        "animation": "segments fill left-to-right on load, staggered 200ms apart"
+                    }
+                },
+                "spacebar_sequence": {
+                    "trigger": "keydown:Space",
+                    "hint": null,
+                    "steps": [
+                        {
+                            "step": 1,
+                            "label": "Reveal opportunity reframe",
+                            "description": "The manual work segment of the bar pulses briefly (scale 1.0 → 1.02 → 1.0, 400ms), then a callout block fades up below the bar. The callout asks the rhetorical question and shows the calculator.",
+                            "entrance": "fade-up, 400ms ease-out"
+                        },
+                        {
+                            "step": 2,
+                            "label": "Reveal annual total",
+                            "description": "The dollar total counts up from $0 to the final value using an animated counter, 800ms ease-out. A terracotta underline rule grows beneath it.",
+                            "entrance": "count-up animation, 800ms ease-out"
+                        }
+                    ]
+                },
+                "opportunity_block": {
+                    "trigger_step": 1,
+                    "rhetorical_question": "What if those 15 hours\ngave you one more client a month?",
+                    "question_font": "Fraunces, italic, weight 300, 28px",
+                    "question_color": "#F0EBE3",
+                    "calculator": {
+                        "description": "A clean inline calculator-style display. Two input rows with muted labels on the left and editable values on the right. User can adjust the values to see the annual total update in real time.",
+                        "rows": [
+                            {
+                                "id": "avg_client_value",
+                                "label": "Avg. client value / month",
+                                "default_value": 2000,
+                                "unit": "$",
+                                "format": "currency"
+                            },
+                            {
+                                "id": "extra_clients",
+                                "label": "Extra clients / month",
+                                "default_value": 1,
+                                "unit": "",
+                                "format": "integer"
+                            }
+                        ],
+                        "formula": "avg_client_value × extra_clients × 12 = annual_upside",
+                        "result": {
+                            "trigger_step": 2,
+                            "label": "potential extra revenue / year",
+                            "default_calculated_value": 24000,
+                            "display": "$24,000",
+                            "font": "Fraunces, weight 300, 56px",
+                            "color": "#C8744A",
+                            "underline_rule": {
+                                "width": "grows from 0 to 100% of number width",
+                                "height": "1px",
+                                "color": "#C8744A",
+                                "animation": "grow left-to-right, 400ms, after counter finishes"
+                            }
+                        }
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "var(--color-bg)",
+                "text_primary": "var(--color-text)",
+                "text_muted": "var(--color-text-muted)",
+                "accent": "#C8744A",
+                "font_headline": "Fraunces, 44px, weight 300, line-height 1.15",
+                "font_stat": "Fraunces, 56px, weight 300",
+                "font_label": "DM Mono, 11px, uppercase, +0.08em tracking",
+                "font_body": "DM Sans, 14px, weight 400, line-height 1.6"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_bar_gap": "40px",
+                "bar_to_stat_gap": "16px",
+                "stat_to_opportunity_gap": "48px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above headline"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 is completely empty (presenter video region — no elements, borders, or backgrounds). No spacebar hint. In the left region render: (1) A thin 120px terracotta rule line above the headline. (2) Headline in Fraunces weight-300 44px: 'You're spending time you don't have on work that doesn't scale.' with natural line breaks. (3) A horizontal segmented bar (10px tall, full content width, border-radius 2px). Left 40% fills in terracotta #C8744A on load with a left-to-right fill animation (600ms ease-out). Right 60% is #2A2724. Below the bar, a label in DM Mono 11px uppercase muted: '15+ HRS/WEEK ON TASKS AI CAN HANDLE — FOLLOW-UPS, REPORTING, SCHEDULING, DATA ENTRY'. (4) On FIRST spacebar press: a block fades up below the bar stat label. It contains a rhetorical question in Fraunces italic weight-300 28px: 'What if those 15 hours gave you one more client a month?' Below that, a minimal two-row calculator: row 1 label 'Avg. client value / month' with default value '$2,000'; row 2 label 'Extra clients / month' with default value '1'. Both rows use DM Mono labels (muted, 12px) and DM Sans values (off-white, 20px). Values are editable inputs that recalculate the result live. Below the calculator rows, a result label in DM Mono 11px uppercase muted reads 'POTENTIAL EXTRA REVENUE / YEAR'. (5) On SECOND spacebar press: the dollar result counts up from $0 to $24,000 (recalculated from inputs) in Fraunces weight-300 56px terracotta #C8744A over 800ms ease-out. After the counter finishes, a 1px terracotta underline rule grows left-to-right beneath the number over 400ms. The calculator inputs update the result in real time whenever the user edits them. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-03-roadmap",
+            "type": "content",
+            "title": "The Three-Step Path",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "headline": "Three steps to\nbecoming AI-Native.",
+                "headline_note": "Fraunces weight-300. Line break after 'steps to'.",
+                "spacebar_hint": null,
+                "steps": [
+                    {
+                        "number": "01",
+                        "id": "discovery",
+                        "label": "Discovery",
+                        "description": "We map your workflows, find the hours being lost, and identify exactly where AI will drive the fastest return.",
+                        "color": "#C0392B",
+                        "color_name": "red",
+                        "spacebar_press": 1,
+                        "entrance": "fade-up (translateY 16px → 0, opacity 0 → 1, 400ms ease-out) + left accent bar grows top-to-bottom (height 0 → 100%, 400ms ease-out, simultaneous)"
+                    },
+                    {
+                        "number": "02",
+                        "id": "implementation",
+                        "label": "Implementation",
+                        "description": "We build and deploy the automations — tested, integrated with your existing tools, and ready from day one.",
+                        "color": "#2980B9",
+                        "color_name": "blue",
+                        "spacebar_press": 2,
+                        "entrance": "fade-up (translateY 16px → 0, opacity 0 → 1, 400ms ease-out) + left accent bar grows top-to-bottom (height 0 → 100%, 400ms ease-out, simultaneous)"
+                    },
+                    {
+                        "number": "03",
+                        "id": "adoption",
+                        "label": "Adoption",
+                        "description": "We train your team, refine the systems, and make sure the gains compound — not just land and fade.",
+                        "color": "#27AE60",
+                        "color_name": "green",
+                        "spacebar_press": 3,
+                        "entrance": "fade-up (translateY 16px → 0, opacity 0 → 1, 400ms ease-out) + left accent bar grows top-to-bottom (height 0 → 100%, 400ms ease-out, simultaneous)"
+                    }
+                ],
+                "step_layout": {
+                    "style": "vertical stacked cards",
+                    "card": {
+                        "background": "#161513",
+                        "border": "1px solid #2A2724",
+                        "border_radius": "4px",
+                        "padding": "20px 24px 20px 28px",
+                        "left_accent_bar": {
+                            "width": "3px",
+                            "position": "absolute, flush to left inner edge of card",
+                            "height_animation": "grows from 0 to 100% of card height on entrance, 400ms ease-out",
+                            "color": "matches step color",
+                            "border_radius": "2px"
+                        }
+                    },
+                    "number_style": {
+                        "font": "DM Mono, 11px, weight 500, uppercase, +0.08em letter-spacing",
+                        "color": "matches step color",
+                        "margin_bottom": "6px"
+                    },
+                    "label_style": {
+                        "font": "Fraunces, weight 300, 26px, line-height 1.2",
+                        "color": "#F0EBE3",
+                        "margin_bottom": "8px"
+                    },
+                    "description_style": {
+                        "font": "DM Sans, 14px, weight 400, line-height 1.6",
+                        "color": "#7A7068"
+                    },
+                    "gap_between_cards": "12px"
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent_rule": "#C8744A",
+                "font_headline": "Fraunces, 44px, weight 300, line-height 1.12",
+                "font_number": "DM Mono, 11px, weight 500, uppercase",
+                "font_step_label": "Fraunces, 26px, weight 300",
+                "font_description": "DM Sans, 14px, weight 400, line-height 1.6"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_steps_gap": "40px",
+                "gap_between_cards": "12px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above headline, margin-bottom 24px"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 is completely empty (presenter video — no elements, borders, or backgrounds). No spacebar hint anywhere. In the left region render: (1) A thin 120px terracotta rule (#C8744A, 1px, margin-bottom 24px) above the headline. (2) Headline in Fraunces weight-300 44px: 'Three steps to becoming AI-Native.' with a line break after 'to'. (3) Three step cards stacked vertically with 12px gaps, all hidden (opacity 0, pointer-events none) on load. Each card: background #161513, border 1px solid #2A2724, border-radius 4px, padding 20px 24px 20px 28px, position relative, overflow hidden. Each card has a 3px wide colored left accent bar absolutely positioned at the left edge (top 0, left 0, bottom 0), initially height 0, that animates to full card height simultaneously with the card fade-up. Inside each card: step number in DM Mono 11px weight-500 uppercase colored text above the label, then step label in Fraunces weight-300 26px off-white (#F0EBE3), then description in DM Sans 14px muted (#7A7068) below. Step 01 DISCOVERY: accent color #C0392B. Step 02 IMPLEMENTATION: accent color #2980B9. Step 03 ADOPTION: accent color #27AE60. On each spacebar press reveal the next card: fade-up (translateY 16px→0, opacity 0→1) AND left accent bar grows (height 0→100%) both over 400ms ease-out simultaneously. First press: step 01. Second press: step 02. Third press: step 03. No further action on subsequent presses. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-04-discovery-objective",
+            "type": "content",
+            "title": "Discovery — Understanding the Objective",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "Before we build anything,\nwe need to understand\nthe objective.",
+                "headline_note": "Fraunces weight-300. Sets up the diagram reveal below.",
+                "spacebar_hint": null,
+                "diagram": {
+                    "description": "A horizontal SVG scene that builds piece by piece across the width of the content area. Each spacebar press adds the next visual element left-to-right. All elements are minimal, icon-style SVG line art in off-white (#F0EBE3) and muted tones, consistent stroke weight (2px). The scene is persistent — each element stays visible once revealed.",
+                    "scene_width": "100%",
+                    "scene_height": "180px",
+                    "ground_line": "a single horizontal baseline rule across the full width at 70% height, color #2A2724, present from load",
+                    "elements": [
+                        {
+                            "press": 1,
+                            "id": "stick-figure",
+                            "position": "far left of scene, standing on ground line",
+                            "visual": "Minimal stick figure: circle head, single vertical line body, two angled legs, two angled arms slightly raised — all stroked in #F0EBE3, 2px stroke",
+                            "label": "Where you are",
+                            "label_position": "below ground line, centered under figure",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "fade-in + slight scale from 0.85, 350ms ease-out"
+                        },
+                        {
+                            "press": 2,
+                            "id": "treasure-chest",
+                            "position": "far right of scene (before reserved video region), standing on ground line",
+                            "visual": "Simple treasure chest: a rectangle body with a rounded-top lid, a horizontal line dividing lid from body, a small circle latch in center, a subtle glow or accent lines suggesting gold — stroked in #C8744A, 2px stroke, fill none",
+                            "label": "Where you want to go",
+                            "label_position": "below ground line, centered under chest",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "fade-in + slight scale from 0.85, 350ms ease-out"
+                        },
+                        {
+                            "press": 3,
+                            "id": "gap-and-fire",
+                            "position": "center of scene, between stick figure and treasure chest",
+                            "visual": "A gap in the ground line — the baseline breaks in the middle third. Inside the gap, a fire pit: three upward flame shapes drawn in #C0392B and #C8744A, layered and flickering. The gap edges are jagged/rough. The baseline on either side of the gap remains.",
+                            "label": "What's stopping you",
+                            "label_position": "below the gap, centered",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "flames flicker in with opacity animation cycling 0.6→1→0.6, gap edges appear with a quick draw-in, 400ms",
+                            "animation_note": "Flames have a gentle looping flicker after reveal: opacity oscillates between 0.7 and 1.0 with a 1.2s ease-in-out loop"
+                        },
+                        {
+                            "press": 4,
+                            "id": "bridge",
+                            "position": "spanning the gap in the center, connecting both ground edges",
+                            "visual": "A simple flat bridge arc drawn as a path spanning the gap — a shallow curved or flat horizontal line at ground level connecting the two edges over the fire. Two short vertical support lines drop from the bridge edges. Stroked in #F0EBE3, 2px.",
+                            "label": "How to get there",
+                            "label_position": "above the bridge arc, centered",
+                            "label_style": "DM Mono, 11px, uppercase, #7A7068",
+                            "entrance": "bridge path draws in left-to-right using stroke-dashoffset animation, 500ms ease-out"
+                        },
+                        {
+                            "press": 5,
+                            "id": "bridge-bricks",
+                            "position": "overlaid on the bridge surface",
+                            "visual": "The bridge surface fills with small rectangle bricks — 5 to 7 evenly spaced rectangles drawn along the bridge span, each labeled or implied as a component (no text on them, just the brick shapes). Stroked in #C8744A, 1.5px, fill #3D2418 (very subtle warm fill).",
+                            "label": "What makes it a solution",
+                            "label_position": "below the bridge, centered",
+                            "label_style": "DM Mono, 11px, uppercase, #C8744A",
+                            "entrance": "bricks pop in one by one with staggered 60ms delays, each scaling from 0 to 1, 250ms ease-out"
+                        }
+                    ]
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking, color #C0392B",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_diagram_label": "DM Mono, 11px, uppercase, +0.06em tracking"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "eyebrow_to_headline_gap": "12px",
+                "headline_to_diagram_gap": "40px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. In the left region render: (1) Thin 120px terracotta rule (#C8744A) above the eyebrow. (2) Eyebrow in DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline in Fraunces weight-300 40px off-white: 'Before we build anything, we need to understand the objective.' with natural line breaks. (4) Below the headline, a full-width SVG scene 180px tall. A horizontal baseline spans the full SVG width at y=130, color #2A2724, 1px. Five spacebar presses progressively build the scene: PRESS 1 — fade in a minimal stick figure on the left (circle head, line body, legs, arms, all #F0EBE3 2px stroke) standing on the baseline. Below baseline centered under it: label 'WHERE YOU ARE' in DM Mono 11px #7A7068. PRESS 2 — fade in a simple treasure chest on the right side of the SVG (rectangle body, arc lid, latch circle, stroked #C8744A 2px) on the baseline. Label below: 'WHERE YOU WANT TO GO'. PRESS 3 — break the baseline in the center third (erase that segment) and draw a fire pit in the gap: 3 overlapping flame shapes in #C0392B and #C8744A that flicker with a looping opacity animation (0.7→1.0, 1.2s ease-in-out infinite). Label below gap: 'WHAT'S STOPPING YOU'. PRESS 4 — draw a bridge over the gap: a flat horizontal path at baseline height connecting the two edges, with 2 short vertical supports, stroked #F0EBE3 2px, drawn left-to-right via stroke-dashoffset over 500ms. Label above bridge: 'HOW TO GET THERE' in DM Mono 11px #7A7068. PRESS 5 — overlay 6 small brick rectangles evenly spaced along the bridge surface, each stroked #C8744A 1.5px with fill #3D2418, popping in one by one with 60ms stagger, scale 0→1 over 250ms. Label below bridge: 'WHAT MAKES IT A SOLUTION' in DM Mono 11px #C8744A. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-05-discovery-interviews",
+            "type": "content",
+            "title": "Discovery — Interviews",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty, no backgrounds, borders, or elements"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "We hear from both sides\nof the business.",
+                "headline_note": "Fraunces weight-300. Sets up the two-column interview diagram.",
+                "spacebar_hint": null,
+                "diagram": {
+                    "layout": "two columns, side by side, equal width, separated by a subtle 1px vertical rule (#2A2724)",
+                    "columns": [
+                        {
+                            "id": "top-down",
+                            "position": "left column",
+                            "direction_label": "Top-Down",
+                            "direction_label_style": "Fraunces, italic, weight 300, 22px, #F0EBE3",
+                            "arrow": {
+                                "direction": "pointing downward",
+                                "style": "single vertical line with arrowhead at bottom, #C8744A, 2px stroke, 32px tall"
+                            },
+                            "sub_label": "Stakeholders",
+                            "sub_label_style": "DM Mono, 11px, uppercase, +0.07em tracking, #7A7068",
+                            "sub_label_position": "below arrow, below direction label",
+                            "questions": [
+                                "What does success look like in 90 days?",
+                                "Where are you losing the most time right now?",
+                                "What would you do with 10 extra hours a week?"
+                            ],
+                            "questions_trigger": "spacebar press 1",
+                            "question_style": {
+                                "font": "DM Sans, 14px, weight 400, line-height 1.55",
+                                "color": "#F0EBE3",
+                                "bullet": "1px terracotta (#C8744A) square bullet or dash, 6px",
+                                "entrance": "each question fades up one by one, 120ms stagger, 300ms ease-out per item"
+                            }
+                        },
+                        {
+                            "id": "bottom-up",
+                            "position": "right column",
+                            "direction_label": "Bottom-Up",
+                            "direction_label_style": "Fraunces, italic, weight 300, 22px, #F0EBE3",
+                            "arrow": {
+                                "direction": "pointing upward",
+                                "style": "single vertical line with arrowhead at top, #2980B9, 2px stroke, 32px tall"
+                            },
+                            "sub_label": "End Users",
+                            "sub_label_style": "DM Mono, 11px, uppercase, +0.07em tracking, #7A7068",
+                            "sub_label_position": "below arrow, below direction label",
+                            "questions": [
+                                "What part of your day feels like busywork?",
+                                "What slows you down most before a task is done?",
+                                "If one thing could be automated, what would it be?"
+                            ],
+                            "questions_trigger": "spacebar press 2",
+                            "question_style": {
+                                "font": "DM Sans, 14px, weight 400, line-height 1.55",
+                                "color": "#F0EBE3",
+                                "bullet": "1px blue (#2980B9) square bullet or dash, 6px",
+                                "entrance": "each question fades up one by one, 120ms stagger, 300ms ease-out per item"
+                            }
+                        }
+                    ],
+                    "divider": {
+                        "style": "1px vertical rule",
+                        "color": "#2A2724",
+                        "height": "100% of diagram height",
+                        "position": "center between two columns"
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "blue": "#2980B9",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking, color #C0392B",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_direction_label": "Fraunces, italic, weight 300, 22px",
+                "font_sub_label": "DM Mono, 11px, uppercase, +0.07em tracking",
+                "font_question": "DM Sans, 14px, weight 400, line-height 1.55"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "eyebrow_to_headline_gap": "12px",
+                "headline_to_diagram_gap": "36px",
+                "column_gap": "48px",
+                "direction_label_to_arrow_gap": "10px",
+                "arrow_to_sub_label_gap": "8px",
+                "sub_label_to_questions_gap": "20px",
+                "between_questions_gap": "12px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint anywhere. In the left region render: (1) Thin 120px terracotta rule (#C8744A, 1px) above eyebrow. (2) Eyebrow in DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline in Fraunces weight-300 40px: 'We hear from both sides of the business.' with a line break after 'sides'. (4) Below headline, a two-column diagram separated by a centered 1px vertical rule (#2A2724). LEFT COLUMN: direction label 'Top-Down' in Fraunces italic weight-300 22px #F0EBE3. Below it a 32px downward arrow in #C8744A (vertical line + arrowhead pointing down). Below that, sub-label 'Stakeholders' in DM Mono 11px uppercase #7A7068. RIGHT COLUMN: direction label 'Bottom-Up' in Fraunces italic weight-300 22px #F0EBE3. Below it a 32px upward arrow in #2980B9 (vertical line + arrowhead pointing up). Below that, sub-label 'End Users' in DM Mono 11px uppercase #7A7068. Below each column's sub-label is a list of 3 questions, all hidden on load. FIRST spacebar press: reveal the 3 left-column (Stakeholder) questions one by one with 120ms stagger each — fade up (translateY 8px→0, opacity 0→1, 300ms ease-out). Questions: '1. What does success look like in 90 days?' / '2. Where are you losing the most time right now?' / '3. What would you do with 10 extra hours a week?' Each has a small #C8744A dash bullet. SECOND spacebar press: reveal the 3 right-column (End User) questions one by one with 120ms stagger — same entrance animation. Questions: '1. What part of your day feels like busywork?' / '2. What slows you down most before a task is done?' / '3. If one thing could be automated, what would it be?' Each has a small #2980B9 dash bullet. Question font: DM Sans 14px #F0EBE3 line-height 1.55. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-06-bottlenecks",
+            "type": "content",
+            "title": "Discovery — Identifying Bottlenecks",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "Every workflow has\na breaking point.",
+                "spacebar_hint": null,
+                "flowchart_layout": {
+                    "description": "Three horizontal flowcharts stacked vertically. Each represents a different business workflow. All three flowcharts are visible on load but only the first is fully opaque — the 2nd and 3rd start hidden. Each chart has 5 nodes connected by arrows left-to-right. Each node is a rounded rectangle. One node per chart is the bottleneck. Spacebar presses progressively reveal bottlenecks and new charts.",
+                    "node_style": {
+                        "default": {
+                            "fill": "#161513",
+                            "stroke": "#2A2724",
+                            "stroke_width": "1.5px",
+                            "border_radius": "6px",
+                            "width": "80px",
+                            "height": "34px",
+                            "font": "DM Mono, 10px, uppercase, +0.04em tracking",
+                            "text_color": "#7A7068"
+                        },
+                        "bottleneck": {
+                            "fill": "#2A0A08",
+                            "stroke": "#C0392B",
+                            "stroke_width": "2px",
+                            "text_color": "#F0EBE3",
+                            "glow": "drop-shadow: 0 0 8px #C0392B66",
+                            "transition": "300ms ease-out, all properties"
+                        }
+                    },
+                    "connector_style": {
+                        "stroke": "#2A2724",
+                        "stroke_width": "1.5px",
+                        "arrowhead": "small filled triangle, same color"
+                    }
+                },
+                "flowcharts": [
+                    {
+                        "id": "flow-1",
+                        "label": "Client Onboarding",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, left-aligned above chart",
+                        "visible_on_load": true,
+                        "nodes": [
+                            {
+                                "id": "f1-n1",
+                                "text": "Inquiry",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f1-n2",
+                                "text": "Intake Form",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f1-n3",
+                                "text": "Manual Review",
+                                "bottleneck": true,
+                                "bottleneck_note": "Hours spent reading forms and copy-pasting to CRM"
+                            },
+                            {
+                                "id": "f1-n4",
+                                "text": "Contract",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f1-n5",
+                                "text": "Kickoff",
+                                "bottleneck": false
+                            }
+                        ],
+                        "bottleneck_trigger": "spacebar press 1",
+                        "bottleneck_label": {
+                            "text": "Bottleneck",
+                            "position": "below bottleneck node",
+                            "style": "DM Mono, 10px, uppercase, #C0392B",
+                            "entrance": "fade-in, 250ms ease-out, after node turns red"
+                        }
+                    },
+                    {
+                        "id": "flow-2",
+                        "label": "Project Reporting",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, left-aligned above chart",
+                        "visible_on_load": false,
+                        "entrance": "fade-up (translateY 12px→0, opacity 0→1), 400ms ease-out",
+                        "nodes": [
+                            {
+                                "id": "f2-n1",
+                                "text": "Data Pull",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f2-n2",
+                                "text": "Spreadsheet",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f2-n3",
+                                "text": "Format",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f2-n4",
+                                "text": "Manual Send",
+                                "bottleneck": true,
+                                "bottleneck_note": "Sending individual reports by hand, every week"
+                            },
+                            {
+                                "id": "f2-n5",
+                                "text": "Follow-up",
+                                "bottleneck": false
+                            }
+                        ],
+                        "bottleneck_trigger": "spacebar press 2 — revealed simultaneously with chart appearing",
+                        "bottleneck_label": {
+                            "text": "Bottleneck",
+                            "position": "below bottleneck node",
+                            "style": "DM Mono, 10px, uppercase, #C0392B",
+                            "entrance": "fade-in 300ms after chart enters"
+                        }
+                    },
+                    {
+                        "id": "flow-3",
+                        "label": "Invoice & Payment",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, left-aligned above chart",
+                        "visible_on_load": false,
+                        "entrance": "fade-up (translateY 12px→0, opacity 0→1), 400ms ease-out, after flow-2",
+                        "nodes": [
+                            {
+                                "id": "f3-n1",
+                                "text": "Job Done",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f3-n2",
+                                "text": "Time Log",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f3-n3",
+                                "text": "Draft Invoice",
+                                "bottleneck": true,
+                                "bottleneck_note": "Manual invoice drafting delays cash flow by days"
+                            },
+                            {
+                                "id": "f3-n4",
+                                "text": "Approval",
+                                "bottleneck": false
+                            },
+                            {
+                                "id": "f3-n5",
+                                "text": "Payment",
+                                "bottleneck": false
+                            }
+                        ],
+                        "bottleneck_trigger": "spacebar press 3 — revealed simultaneously with chart appearing",
+                        "bottleneck_label": {
+                            "text": "Bottleneck",
+                            "position": "below bottleneck node",
+                            "style": "DM Mono, 10px, uppercase, #C0392B",
+                            "entrance": "fade-in 300ms after chart enters"
+                        }
+                    }
+                ],
+                "spacebar_sequence": [
+                    {
+                        "press": 1,
+                        "action": "Turn bottleneck node red on flow-1 (f1-n3 'Manual Review'). Node fill becomes #2A0A08, stroke becomes #C0392B, text becomes #F0EBE3, glow appears. 'Bottleneck' label fades in below it."
+                    },
+                    {
+                        "press": 2,
+                        "action": "flow-2 (Project Reporting) fades up into view. Simultaneously after 300ms, f2-n4 'Manual Send' turns red with the same bottleneck style. 'Bottleneck' label fades in below it."
+                    },
+                    {
+                        "press": 3,
+                        "action": "flow-3 (Invoice & Payment) fades up into view. Simultaneously after 300ms, f3-n3 'Draft Invoice' turns red. 'Bottleneck' label fades in below it."
+                    }
+                ]
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "node_default_fill": "#161513",
+                "node_default_stroke": "#2A2724",
+                "node_bottleneck_fill": "#2A0A08",
+                "node_bottleneck_stroke": "#C0392B",
+                "connector_color": "#2A2724",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_node": "DM Mono, 10px, uppercase, +0.04em tracking",
+                "font_flow_label": "DM Mono, 10px, uppercase, +0.06em tracking"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "56px",
+                "headline_to_charts_gap": "36px",
+                "between_charts_gap": "20px",
+                "node_horizontal_gap": "16px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Left region: (1) Thin 120px terracotta rule (#C8744A). (2) Eyebrow DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline Fraunces weight-300 40px: 'Every workflow has a breaking point.' (4) Three SVG flowcharts stacked vertically with 20px gaps. Each chart is a horizontal row of 5 rounded-rect nodes (80×34px, rx 6, fill #161513, stroke #2A2724 1.5px) connected by arrows (line + small arrowhead, stroke #2A2724). Node labels in DM Mono 10px uppercase #7A7068. A flow label in DM Mono 10px uppercase #7A7068 sits above-left of each chart. CHART 1 'CLIENT ONBOARDING' — nodes: Inquiry → Intake Form → Manual Review → Contract → Kickoff. Fully visible on load. CHART 2 'PROJECT REPORTING' — nodes: Data Pull → Spreadsheet → Format → Manual Send → Follow-up. Hidden on load (opacity 0). CHART 3 'INVOICE & PAYMENT' — nodes: Job Done → Time Log → Draft Invoice → Approval → Payment. Hidden on load (opacity 0). SPACEBAR INTERACTIONS: Press 1 — node 'Manual Review' (chart 1, index 2) transitions to bottleneck style: fill #2A0A08, stroke #C0392B 2px, text color #F0EBE3, drop-shadow 0 0 8px #C0392B66, 300ms ease-out. A label 'BOTTLENECK' in DM Mono 10px #C0392B fades in below it. Press 2 — chart 2 fades up (translateY 12px→0, opacity 0→1, 400ms ease-out). After 300ms delay, node 'Manual Send' (index 3) turns bottleneck red with same style + label. Press 3 — chart 3 fades up same way. After 300ms, node 'Draft Invoice' (index 2) turns bottleneck red + label. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-07-prioritize",
+            "type": "content",
+            "title": "Discovery — Prioritizing Bottlenecks",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "Now we put them\nin order.",
+                "spacebar_hint": null,
+                "diagram": {
+                    "description": "A two-column SVG layout side by side, filling the content width. LEFT column: 5 bottleneck nodes stacked vertically, each a different shape, all styled as bottleneck-red (fill #2A0A08, stroke #C0392B, glow). No text inside any node. They represent the raw unordered pile of problems found. RIGHT column: same 5 nodes but now arranged vertically numbered 01–05, each a clean default-style rounded rect (fill #161513, stroke #2A2724), numbered in DM Mono to the left of each node. A large single arrow spans horizontally from the left column to the right column through the center of the diagram. The right column and arrow are all hidden on load. Spacebar press 1 reveals everything — the arrow draws left-to-right, then the right column fades up with the numbered nodes staggering in top-to-bottom with 80ms delays.",
+                    "left_column": {
+                        "label": "Bottlenecks Found",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, centered above column",
+                        "nodes": [
+                            {
+                                "id": "raw-1",
+                                "shape": "rounded-rect",
+                                "width": 52,
+                                "height": 34,
+                                "rx": 6,
+                                "style": "bottleneck"
+                            },
+                            {
+                                "id": "raw-2",
+                                "shape": "diamond",
+                                "width": 44,
+                                "height": 44,
+                                "style": "bottleneck",
+                                "note": "rotated square — 45deg transform"
+                            },
+                            {
+                                "id": "raw-3",
+                                "shape": "circle",
+                                "radius": 22,
+                                "style": "bottleneck"
+                            },
+                            {
+                                "id": "raw-4",
+                                "shape": "rounded-rect-wide",
+                                "width": 64,
+                                "height": 28,
+                                "rx": 14,
+                                "style": "bottleneck",
+                                "note": "pill shape — very high border-radius"
+                            },
+                            {
+                                "id": "raw-5",
+                                "shape": "hexagon",
+                                "width": 48,
+                                "height": 42,
+                                "style": "bottleneck",
+                                "note": "flat-top hexagon drawn as polygon"
+                            }
+                        ],
+                        "node_style_bottleneck": {
+                            "fill": "#2A0A08",
+                            "stroke": "#C0392B",
+                            "stroke_width": "2px",
+                            "filter": "drop-shadow(0 0 6px #C0392B55)",
+                            "no_text": true
+                        },
+                        "gap_between_nodes": "14px",
+                        "visible_on_load": true
+                    },
+                    "center_arrow": {
+                        "description": "A single large horizontal arrow spanning the center of the diagram from left column to right column",
+                        "stroke": "#2A2724",
+                        "stroke_width": "1.5px",
+                        "arrowhead": "filled triangle, #2A2724",
+                        "animation": "draws left-to-right via stroke-dashoffset, 500ms ease-out",
+                        "visible_on_load": false,
+                        "trigger": "spacebar press 1"
+                    },
+                    "right_column": {
+                        "label": "Prioritized",
+                        "label_style": "DM Mono, 10px, uppercase, #7A7068, centered above column",
+                        "nodes": [
+                            {
+                                "id": "pri-1",
+                                "number": "01",
+                                "shape": "rounded-rect",
+                                "width": 52,
+                                "height": 34,
+                                "rx": 6,
+                                "style": "default"
+                            },
+                            {
+                                "id": "pri-2",
+                                "number": "02",
+                                "shape": "rounded-rect",
+                                "width": 52,
+                                "height": 34,
+                                "rx": 6,
+                                "style": "default"
+                            },
+                            {
+                                "id": "pri-3",
+                                "number": "03",
+                                "shape": "rounded-rect",
+                                "width": 52,
+                                "height": 34,
+                                "rx": 6,
+                                "style": "default"
+                            },
+                            {
+                                "id": "pri-4",
+                                "number": "04",
+                                "shape": "rounded-rect",
+                                "width": 52,
+                                "height": 34,
+                                "rx": 6,
+                                "style": "default"
+                            },
+                            {
+                                "id": "pri-5",
+                                "number": "05",
+                                "shape": "rounded-rect",
+                                "width": 52,
+                                "height": 34,
+                                "rx": 6,
+                                "style": "default"
+                            }
+                        ],
+                        "node_style_default": {
+                            "fill": "#161513",
+                            "stroke": "#2A2724",
+                            "stroke_width": "1.5px",
+                            "no_text_inside_node": true,
+                            "number_label": {
+                                "position": "to the left of node, outside",
+                                "font": "DM Mono, 13px, weight 500",
+                                "color": "#C8744A"
+                            }
+                        },
+                        "gap_between_nodes": "14px",
+                        "visible_on_load": false,
+                        "trigger": "spacebar press 1",
+                        "entrance": "each node fades up with 80ms stagger, 300ms ease-out, after arrow finishes drawing"
+                    }
+                },
+                "spacebar_sequence": [
+                    {
+                        "press": 1,
+                        "action": "Center arrow draws left-to-right over 500ms. Once complete, right column label fades in, then the 5 numbered nodes stagger in top-to-bottom with 80ms delays, each fading up (translateY 8px→0, opacity 0→1, 300ms ease-out). Numbers 01–05 appear in terracotta to the left of each clean node."
+                    }
+                ]
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "node_default_fill": "#161513",
+                "node_default_stroke": "#2A2724",
+                "node_bottleneck_fill": "#2A0A08",
+                "node_bottleneck_stroke": "#C0392B",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_number": "DM Mono, 13px, weight 500, #C8744A"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "56px",
+                "headline_to_diagram_gap": "40px",
+                "column_gap": "auto — arrow fills center space",
+                "between_nodes": "14px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Left region: (1) Thin 120px terracotta rule (#C8744A). (2) Eyebrow DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline Fraunces weight-300 40px: 'Now we put them in order.' with a line break after 'them'. (4) Below headline, a wide SVG diagram with two vertical columns side by side connected by a horizontal arrow. LEFT COLUMN labeled 'BOTTLENECKS FOUND' (DM Mono 10px uppercase #7A7068 centered above): 5 nodes stacked vertically with 14px gaps — no text inside any node. All styled as bottleneck: fill #2A0A08, stroke #C0392B 2px, filter drop-shadow 0 0 6px #C0392B55. Each node is a DIFFERENT SHAPE: (1) rounded rect 52×34 rx6, (2) diamond (rotated square 38×38), (3) circle r18, (4) pill/capsule 64×28 rx14, (5) hexagon polygon 48×42. CENTER: a horizontal arrow line spanning from right edge of left column to left edge of right column, stroke #2A2724 1.5px with a filled triangle arrowhead, hidden on load. RIGHT COLUMN labeled 'PRIORITIZED' (same label style, centered above): 5 identical rounded rects 52×34 rx6, fill #161513, stroke #2A2724 1.5px, no text inside. To the LEFT of each right-column node (outside, not inside), a number label in DM Mono 13px weight-500 #C8744A: 01, 02, 03, 04, 05 top to bottom. Right column and arrow all hidden on load. SPACEBAR PRESS 1: arrow draws left-to-right via stroke-dashoffset animation over 500ms ease-out. Then right column label fades in, then each of the 5 right nodes stagger in top-to-bottom (80ms apart), each fade-up translateY 8px→0 opacity 0→1 300ms ease-out. Number labels appear with their nodes. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-08-solution-roadmap",
+            "type": "content",
+            "title": "Discovery — Solution Roadmap",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "01 — Discovery",
+                "eyebrow_color": "#C0392B",
+                "headline": "Here's what we're\ngoing to build.",
+                "spacebar_hint": null,
+                "diagram": {
+                    "description": "A horizontal roadmap of 6 solution nodes connected left-to-right by connector lines with arrowheads. All nodes are visible on load in their default state — no labels, no text inside any node, just clean rounded rects. Each subsequent spacebar press stamps a green checkmark over the next node from left to right, signaling completion. The connectors between nodes are always visible.",
+                    "layout": "single horizontal row, full content width",
+                    "node_count": 6,
+                    "node_style": {
+                        "default": {
+                            "shape": "rounded-rect",
+                            "width": "68px",
+                            "height": "44px",
+                            "rx": "8px",
+                            "fill": "#161513",
+                            "stroke": "#2A2724",
+                            "stroke_width": "1.5px",
+                            "text": "none — no labels inside or outside nodes",
+                            "visible_on_load": true
+                        },
+                        "checked": {
+                            "fill": "#0D1F12",
+                            "stroke": "#27AE60",
+                            "stroke_width": "2px",
+                            "overlay": "green checkmark SVG centered over node",
+                            "transition": "fill and stroke 250ms ease-out",
+                            "checkmark": {
+                                "color": "#27AE60",
+                                "style": "thin stroke checkmark, stroke-width 2.5px, stroke-linecap round, stroke-linejoin round",
+                                "size": "18×14px, centered in node",
+                                "entrance": "draws in via stroke-dashoffset, 300ms ease-out"
+                            }
+                        }
+                    },
+                    "connector_style": {
+                        "type": "line + arrowhead",
+                        "stroke": "#2A2724",
+                        "stroke_width": "1.5px",
+                        "arrowhead": "small filled triangle, 6px, same color",
+                        "visible_on_load": true
+                    },
+                    "spacebar_sequence": {
+                        "description": "Each spacebar press checks off the next node left-to-right. 6 nodes = 6 presses.",
+                        "presses": [
+                            {
+                                "press": 1,
+                                "node_index": 0,
+                                "action": "Node 1 border turns green (#27AE60), fill shifts to #0D1F12, checkmark draws in over 300ms"
+                            },
+                            {
+                                "press": 2,
+                                "node_index": 1,
+                                "action": "Node 2 same treatment"
+                            },
+                            {
+                                "press": 3,
+                                "node_index": 2,
+                                "action": "Node 3 same treatment"
+                            },
+                            {
+                                "press": 4,
+                                "node_index": 3,
+                                "action": "Node 4 same treatment"
+                            },
+                            {
+                                "press": 5,
+                                "node_index": 4,
+                                "action": "Node 5 same treatment"
+                            },
+                            {
+                                "press": 6,
+                                "node_index": 5,
+                                "action": "Node 6 same treatment. After a 300ms delay, a subtle label fades in below the entire row: 'Your AI roadmap.' in Fraunces italic weight-300 18px #F0EBE3"
+                            }
+                        ]
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#C0392B",
+                "green": "#27AE60",
+                "node_checked_fill": "#0D1F12",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_finale_label": "Fraunces, italic, weight 300, 18px, #F0EBE3"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_diagram_gap": "52px",
+                "between_nodes": "connector lines, ~24px gap between node edges",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Left region: (1) Thin 120px terracotta rule (#C8744A). (2) Eyebrow DM Mono 11px uppercase #C0392B: '01 — DISCOVERY'. (3) Headline Fraunces weight-300 40px: 'Here's what we're going to build.' with a line break after 'we're'. (4) Below headline, a horizontal row of 6 rounded-rect nodes (68×44px, rx 8, fill #161513, stroke #2A2724 1.5px) connected left-to-right by lines with small filled triangle arrowheads (stroke #2A2724). No text inside or outside any node. All nodes and connectors visible on load. Each spacebar press (6 total) checks off the next node left-to-right: node border transitions to #27AE60, fill transitions to #0D1F12 (250ms ease-out), and a green checkmark (stroke #27AE60, stroke-width 2.5px, round caps) draws in centered over the node via stroke-dashoffset animation over 300ms ease-out. After the 6th node is checked, a label fades in below the row in Fraunces italic weight-300 18px #F0EBE3 reading 'Your AI roadmap.' Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-09-implementation-workflow",
+            "type": "content",
+            "title": "Implementation — Before & After Workflow",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "02 — Implementation",
+                "eyebrow_color": "#2980B9",
+                "headline": "The same work.\nHalf the steps.",
+                "spacebar_hint": null,
+                "layout_note": "The slide content area is divided into two equal columns side by side. Each column has a header panel and a workflow diagram below it. Both header panels visible on load. The workflow diagrams are hidden and revealed by spacebar.",
+                "columns": [
+                    {
+                        "id": "col-manual",
+                        "position": "left",
+                        "header": {
+                            "label": "Current Process",
+                            "sublabel": "Manual",
+                            "indicator_color": "#C0392B",
+                            "indicator_style": "small filled circle, 8px, left of label",
+                            "background": "subtle red-tinted surface: #1A0F0E",
+                            "border": "1px solid #3A1A18",
+                            "border_radius": "6px",
+                            "padding": "10px 14px",
+                            "label_style": "DM Mono, 11px, uppercase, +0.07em tracking, #C0392B",
+                            "sublabel_style": "DM Mono, 10px, uppercase, #7A7068",
+                            "visible_on_load": true
+                        },
+                        "workflow": {
+                            "type": "vertical flowchart",
+                            "visible_on_load": false,
+                            "trigger": "spacebar press 1",
+                            "entrance": "fade-up, translateY 12px→0, opacity 0→1, 400ms ease-out",
+                            "nodes": [
+                                {
+                                    "id": "m-trigger",
+                                    "text": "Invoice received",
+                                    "style": "trigger",
+                                    "shape": "pill",
+                                    "fill": "#1E1C1A",
+                                    "stroke": "#2A2724",
+                                    "text_color": "#7A7068"
+                                },
+                                {
+                                    "id": "m-1",
+                                    "text": "Copy fields manually",
+                                    "style": "action",
+                                    "shape": "rounded-rect",
+                                    "fill": "#1A1535",
+                                    "stroke": "#3D3580",
+                                    "text_color": "#A09AE0",
+                                    "warning": {
+                                        "text": "manual error risk",
+                                        "icon": "⚠",
+                                        "style": "small tag below node, fill #2A1010, stroke #C0392B, text #C0392B, DM Mono 9px"
+                                    }
+                                },
+                                {
+                                    "id": "m-2",
+                                    "text": "Dropbox",
+                                    "style": "tool",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                },
+                                {
+                                    "id": "m-3",
+                                    "text": "CompanyCam",
+                                    "style": "tool",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                },
+                                {
+                                    "id": "m-4",
+                                    "text": "Printavo",
+                                    "style": "tool",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                },
+                                {
+                                    "id": "m-5",
+                                    "text": "RE Grid Sheet",
+                                    "style": "tool",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                },
+                                {
+                                    "id": "m-6",
+                                    "text": "RE Expense Sheet",
+                                    "style": "tool",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                },
+                                {
+                                    "id": "m-7",
+                                    "text": "Google Calendar",
+                                    "style": "tool",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                },
+                                {
+                                    "id": "m-8",
+                                    "text": "Gmail",
+                                    "style": "tool",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                }
+                            ],
+                            "connectors": "single downward arrows between each node, stroke #2A2724, 1px",
+                            "node_style_notes": {
+                                "trigger": "pill shape, muted — represents the manual handoff starting point",
+                                "action": "purple-tinted rect — the bottleneck step where errors happen",
+                                "tool": "teal-tinted rounded rect — each system touched one at a time sequentially"
+                            }
+                        }
+                    },
+                    {
+                        "id": "col-automated",
+                        "position": "right",
+                        "header": {
+                            "label": "Automated",
+                            "sublabel": "n8n Workflow",
+                            "indicator_color": "#27AE60",
+                            "indicator_style": "small filled circle, 8px, left of label",
+                            "background": "subtle green-tinted surface: #0D1A10",
+                            "border": "1px solid #1A3D22",
+                            "border_radius": "6px",
+                            "padding": "10px 14px",
+                            "label_style": "DM Mono, 11px, uppercase, +0.07em tracking, #27AE60",
+                            "sublabel_style": "DM Mono, 10px, uppercase, #7A7068",
+                            "visible_on_load": true
+                        },
+                        "workflow": {
+                            "type": "vertical then fan-out flowchart",
+                            "visible_on_load": false,
+                            "trigger": "spacebar press 2",
+                            "entrance": "fade-up, translateY 12px→0, opacity 0→1, 400ms ease-out",
+                            "nodes": [
+                                {
+                                    "id": "a-trigger",
+                                    "text": "Monday.com item updated",
+                                    "style": "trigger",
+                                    "shape": "pill",
+                                    "fill": "#1E1C1A",
+                                    "stroke": "#2A2724",
+                                    "text_color": "#7A7068"
+                                },
+                                {
+                                    "id": "a-extract",
+                                    "text": "Extract fields",
+                                    "subtext": "Invoice ID · company · dates · email · location",
+                                    "style": "action",
+                                    "shape": "rounded-rect",
+                                    "fill": "#1A1535",
+                                    "stroke": "#3D3580",
+                                    "text_color": "#A09AE0"
+                                },
+                                {
+                                    "id": "a-fanout",
+                                    "type": "fan-out",
+                                    "label": "7 branches fire in parallel",
+                                    "label_style": "DM Mono, 9px, #7A7068, centered above fan",
+                                    "branches": [
+                                        {
+                                            "id": "a-b1",
+                                            "text": "Dropbox"
+                                        },
+                                        {
+                                            "id": "a-b2",
+                                            "text": "CompanyCam"
+                                        },
+                                        {
+                                            "id": "a-b3",
+                                            "text": "Printavo"
+                                        },
+                                        {
+                                            "id": "a-b4",
+                                            "text": "RE Grid"
+                                        },
+                                        {
+                                            "id": "a-b5",
+                                            "text": "RE Expenses"
+                                        },
+                                        {
+                                            "id": "a-b6",
+                                            "text": "Google Calendar"
+                                        },
+                                        {
+                                            "id": "a-b7",
+                                            "text": "Gmail"
+                                        }
+                                    ],
+                                    "branch_node_style": {
+                                        "fill": "#0E1A18",
+                                        "stroke": "#1F4A40",
+                                        "text_color": "#4ABBA0",
+                                        "shape": "rounded-rect",
+                                        "width": "52px",
+                                        "height": "34px",
+                                        "font": "DM Mono, 8px"
+                                    },
+                                    "fan_connector": "lines spreading from single point below extract node to each branch, stroke #2A2724 1px"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "spacebar_sequence": [
+                    {
+                        "press": 1,
+                        "action": "Left column manual workflow fades up — 9 nodes stacked vertically with downward arrows. The 'Copy fields manually' node is purple-tinted with a red error tag below it."
+                    },
+                    {
+                        "press": 2,
+                        "action": "Right column automated workflow fades up — trigger pill, then Extract Fields node, then 7 parallel branch nodes fanning out horizontally. Label 'X branches fire in parallel' appears above the fan."
+                    }
+                ]
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#2980B9",
+                "red": "#C0392B",
+                "green": "#27AE60",
+                "teal_node_fill": "#0E1A18",
+                "teal_node_stroke": "#1F4A40",
+                "teal_node_text": "#4ABBA0",
+                "purple_node_fill": "#1A1535",
+                "purple_node_stroke": "#3D3580",
+                "purple_node_text": "#A09AE0",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_node": "DM Mono, 10px, uppercase"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "56px",
+                "headline_to_columns_gap": "32px",
+                "column_gap": "24px",
+                "header_to_workflow_gap": "14px",
+                "between_nodes": "8px gap + arrow",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Content is split into two equal columns side by side with a 24px gap. Both column header panels are visible on load. COLUMN HEADERS: Left header — pill/badge with a filled red circle (8px, #C0392B) dot, label 'CURRENT PROCESS' in DM Mono 11px uppercase #C0392B, sublabel '-- MANUAL' in DM Mono 10px #7A7068. Background #1A0F0E, border 1px solid #3A1A18, border-radius 6px, padding 10px 14px. Right header — same layout with green dot (#27AE60), label 'AUTOMATED' in DM Mono 11px uppercase #27AE60, sublabel '-- N8N WORKFLOW' in DM Mono 10px #7A7068. Background #0D1A10, border 1px solid #1A3D22. ABOVE COLUMNS: eyebrow DM Mono 11px uppercase #2980B9 '02 — IMPLEMENTATION'. Headline Fraunces weight-300 40px: 'The same work. Half the steps.' Thin 120px terracotta rule above eyebrow. SPACEBAR PRESS 1 — left column workflow fades up (translateY 12px→0, opacity 0→1, 400ms): vertical flowchart with 9 nodes connected by downward arrows (stroke #2A2724 1px). Node 1 trigger pill: 'Invoice received', fill #1E1C1A stroke #2A2724 text #7A7068. Node 2 action rect: 'Copy fields manually', fill #1A1535 stroke #3D3580 text #A09AE0 — with a small error tag below it reading '⚠ manual error risk' in DM Mono 9px #C0392B, fill #2A1010 border #C0392B. Nodes 3–9 tool rects: Dropbox, CompanyCam, Printavo, RE Grid Sheet, RE Expense Sheet, Google Calendar, Gmail — all fill #0E1A18 stroke #1F4A40 text #4ABBA0. All nodes DM Mono 10px, rounded-rect rx5, width ~90% of column, height 32px. SPACEBAR PRESS 2 — right column workflow fades up same way: trigger pill 'Monday.com item updated' (same muted style), then 'Extract Fields' purple rect (fill #1A1535 stroke #3D3580 text #A09AE0) with small subtext 'Invoice ID · company · dates · email · location' in DM Mono 8px #7A7068 below the label inside the node, then a label 'X branches fire in parallel' in DM Mono 9px #7A7068 centered, then 7 small teal branch nodes (Dropbox, CompanyCam, Printavo, RE Grid, RE Expenses, Google Calendar, Gmail) fanning out horizontally side by side, each ~52×32px teal style. Fan connectors are lines from a single point above to each branch node, stroke #2A2724 1px. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-10-enable-vs-scope",
+            "type": "content",
+            "title": "Implementation — Enable vs Scope",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "02 — Implementation",
+                "eyebrow_color": "#2980B9",
+                "headline": "Two ways we work.",
+                "spacebar_hint": null,
+                "spacebar_sequence": [
+                    {
+                        "press": 1,
+                        "action": "Two column titles fade up side by side: 'Enable' on the left, 'Scope' on the right. Each title is large, Fraunces, weight 300. Below each title, a one-line description fades in with a 100ms delay. Enable description: 'Build the AI platform your whole business runs on.' Scope description: 'Solve specific problems, one workflow at a time.' Both hidden on load."
+                    },
+                    {
+                        "press": 2,
+                        "action": "The Enable diagram fades up under the Enable title. It shows a central platform node (hexagon or rounded rect labeled 'AI Platform') in the middle, with 4–5 robot/agent head icons around it connected by dotted lines radiating outward. Represents a scalable hub that multiple AI agents connect to."
+                    },
+                    {
+                        "press": 3,
+                        "action": "The Scope diagram fades up under the Scope title. It shows a horizontal workflow of 4–5 distinct nodes connected by directional arrows. Each node is a different shape/color to suggest different tools or problems. Represents solving individual business problems end-to-end."
+                    }
+                ],
+                "columns": [
+                    {
+                        "id": "col-enable",
+                        "position": "left",
+                        "title": {
+                            "text": "Enable",
+                            "font": "Fraunces, weight 300, 36px, line-height 1.1",
+                            "color": "#F0EBE3",
+                            "trigger_press": 1,
+                            "entrance": "fade-up, 400ms ease-out"
+                        },
+                        "description": {
+                            "text": "Build the AI platform your whole business runs on.",
+                            "font": "DM Sans, 14px, weight 400, line-height 1.6",
+                            "color": "#7A7068",
+                            "trigger_press": 1,
+                            "entrance": "fade-up, 300ms ease-out, 100ms delay after title"
+                        },
+                        "accent_rule": {
+                            "width": "40px",
+                            "height": "2px",
+                            "color": "#2980B9",
+                            "position": "above title",
+                            "trigger_press": 1
+                        },
+                        "diagram": {
+                            "trigger_press": 2,
+                            "entrance": "fade-up, 400ms ease-out",
+                            "description": "Hub-and-spoke SVG diagram. A central rounded-rect node labeled 'AI Platform' in the middle of the column. 5 robot/agent nodes arranged in a loose arc or circle around it. Each robot node is a simple icon: small circle head on top of a rectangular body, minimal line art, all in --color-text-muted (#7A7068) with a subtle glow on the center node. Dotted lines connect each robot to the center platform node radiating inward. The center node is styled with a blue accent: fill #0D1A2A, stroke #2980B9, text #2980B9. Robot nodes: fill #161513, stroke #2A2724.",
+                            "center_node": {
+                                "label": "AI Platform",
+                                "shape": "rounded-rect",
+                                "fill": "#0D1A2A",
+                                "stroke": "#2980B9",
+                                "stroke_width": "2px",
+                                "text_color": "#2980B9",
+                                "font": "DM Mono, 10px, uppercase, +0.06em tracking",
+                                "glow": "drop-shadow 0 0 8px #2980B944"
+                            },
+                            "agent_nodes": {
+                                "count": 5,
+                                "shape": "robot head — circle on top of rect, minimal SVG line art",
+                                "fill": "#161513",
+                                "stroke": "#2A2724",
+                                "color": "#7A7068",
+                                "arrangement": "evenly distributed in arc around center"
+                            },
+                            "connectors": {
+                                "style": "dotted line",
+                                "stroke": "#2A2724",
+                                "stroke_dasharray": "3 4",
+                                "animation": "each dotted line draws in from robot toward center, 400ms ease-out, staggered 80ms apart"
+                            }
+                        }
+                    },
+                    {
+                        "id": "col-scope",
+                        "position": "right",
+                        "title": {
+                            "text": "Scope",
+                            "font": "Fraunces, weight 300, 36px, line-height 1.1",
+                            "color": "#F0EBE3",
+                            "trigger_press": 1,
+                            "entrance": "fade-up, 400ms ease-out, 60ms delay after Enable title"
+                        },
+                        "description": {
+                            "text": "Solve specific problems, one workflow at a time.",
+                            "font": "DM Sans, 14px, weight 400, line-height 1.6",
+                            "color": "#7A7068",
+                            "trigger_press": 1,
+                            "entrance": "fade-up, 300ms ease-out, 160ms delay after title"
+                        },
+                        "accent_rule": {
+                            "width": "40px",
+                            "height": "2px",
+                            "color": "#C8744A",
+                            "position": "above title",
+                            "trigger_press": 1
+                        },
+                        "diagram": {
+                            "trigger_press": 3,
+                            "entrance": "fade-up, 400ms ease-out",
+                            "description": "Horizontal workflow SVG. 5 nodes left-to-right connected by directional arrows. Each node is a different shape to suggest different tools/problems: rounded-rect, diamond, circle, pill, rounded-rect. Each uses a different subtle tint color. Arrows between nodes are solid lines with filled arrowheads in #2A2724. The variety of shapes communicates breadth — different problems, different solutions.",
+                            "nodes": [
+                                {
+                                    "id": "s-1",
+                                    "shape": "rounded-rect",
+                                    "fill": "#1A1535",
+                                    "stroke": "#3D3580",
+                                    "text_color": "#A09AE0"
+                                },
+                                {
+                                    "id": "s-2",
+                                    "shape": "diamond",
+                                    "fill": "#0D1A2A",
+                                    "stroke": "#1E4A6A",
+                                    "text_color": "#4A90C4"
+                                },
+                                {
+                                    "id": "s-3",
+                                    "shape": "circle",
+                                    "fill": "#0E1A18",
+                                    "stroke": "#1F4A40",
+                                    "text_color": "#4ABBA0"
+                                },
+                                {
+                                    "id": "s-4",
+                                    "shape": "pill",
+                                    "fill": "#1A1A0E",
+                                    "stroke": "#3A3A1A",
+                                    "text_color": "#A0A04A"
+                                },
+                                {
+                                    "id": "s-5",
+                                    "shape": "rounded-rect",
+                                    "fill": "#1A0F0E",
+                                    "stroke": "#3A1A18",
+                                    "text_color": "#C07070"
+                                }
+                            ],
+                            "nodes_note": "No text inside nodes — shape and color speak for themselves",
+                            "connectors": {
+                                "style": "solid line + filled arrowhead",
+                                "stroke": "#2A2724",
+                                "stroke_width": "1.5px"
+                            }
+                        }
+                    }
+                ]
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#2980B9",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_col_title": "Fraunces, 36px, weight 300",
+                "font_description": "DM Sans, 14px, weight 400, line-height 1.6"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_columns_gap": "40px",
+                "column_gap": "40px",
+                "title_to_description_gap": "10px",
+                "description_to_diagram_gap": "28px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Left region: (1) Thin 120px terracotta rule (#C8744A). (2) Eyebrow DM Mono 11px uppercase #2980B9: '02 — IMPLEMENTATION'. (3) Headline Fraunces weight-300 40px: 'Two ways we work.' All hidden on load below this. SPACEBAR PRESS 1: Two column titles fade up side by side. LEFT column: a 40px 2px blue (#2980B9) rule, then 'Enable' in Fraunces weight-300 36px, then 'Build the AI platform your whole business runs on.' in DM Sans 14px #7A7068. RIGHT column: same structure with 40px 2px terracotta (#C8744A) rule, then 'Scope' in Fraunces weight-300 36px, then 'Solve specific problems, one workflow at a time.' in DM Sans 14px #7A7068. Titles stagger in with 60ms offset, descriptions 100ms after their title. SPACEBAR PRESS 2: Enable diagram fades up under left column. SVG hub-and-spoke: center rounded-rect node 'AI PLATFORM' in DM Mono 10px uppercase (fill #0D1A2A, stroke #2980B9 2px, text #2980B9, drop-shadow 0 0 8px #2980B944). 5 robot agent icons arranged around it in an arc — each robot is a minimal SVG: small circle head above a rectangular body, stroke #2A2724, fill #161513. Dotted lines (stroke #2A2724, stroke-dasharray 3 4) connect each robot to the center, drawing in from robot toward center staggered 80ms apart over 400ms each. SPACEBAR PRESS 3: Scope diagram fades up under right column. SVG horizontal workflow: 5 nodes left-to-right connected by solid arrows (#2A2724 1.5px, filled arrowheads). Each node a different shape and subtle tint, no text inside: (1) rounded-rect purple fill #1A1535 stroke #3D3580, (2) diamond blue fill #0D1A2A stroke #1E4A6A, (3) circle teal fill #0E1A18 stroke #1F4A40, (4) pill yellow fill #1A1A0E stroke #3A3A1A, (5) rounded-rect red fill #1A0F0E stroke #3A1A18. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-11-assistant-vs-agent",
+            "type": "content",
+            "title": "Implementation — Assistant vs Agent",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "02 — Implementation",
+                "eyebrow_color": "#2980B9",
+                "headline": "How solutions get run.",
+                "spacebar_hint": null,
+                "mode_label": {
+                    "description": "A large centered mode label that switches between 'Assistant' and 'Agent' as the diagram transforms. Positioned prominently above the diagram. On load shows 'Assistant'. On press 2 it crossfades to 'Agent'.",
+                    "font": "Fraunces, weight 300, 48px, line-height 1.0",
+                    "color_assistant": "#F0EBE3",
+                    "color_agent": "#2980B9",
+                    "visible_on_load": true
+                },
+                "spacebar_sequence": [
+                    {
+                        "press": 1,
+                        "label": "Reveal Assistant diagram",
+                        "action": "The assistant diagram fades up below the mode label. It shows: a stick figure person on the left, a chat bubble to their right labeled 'AI' (representing the human prompting an AI assistant), then a dotted arrow pointing right to a gears icon labeled 'Automated Workflow'. The human is in control — they initiate each action.",
+                        "mode_label": "Assistant",
+                        "mode_label_note": "Already showing on load — no change on press 1"
+                    },
+                    {
+                        "press": 2,
+                        "label": "Transform to Agent diagram",
+                        "action": "The mode label crossfades from 'Assistant' (white) to 'Agent' (blue #2980B9) over 400ms. The stick figure person morphs into a robot (robot head replaces human head: square head with antenna and dot eyes, labeled 'AI' below it). The chat bubble disappears (fades out). The dotted arrow and gears remain exactly in place — only the initiator changes. This is the key visual insight: the human steps out, the AI agent takes over.",
+                        "mode_label": "Agent",
+                        "transition_note": "Person → Robot is a CSS class swap with crossfade. Chat bubble opacity 1→0. Arrow and gears stay put."
+                    }
+                ],
+                "diagram": {
+                    "layout": "horizontal, left-to-right, centered vertically in available space",
+                    "width": "full content width",
+                    "height": "~160px SVG",
+                    "actor": {
+                        "id": "actor",
+                        "position": "left side of diagram",
+                        "assistant_state": {
+                            "shape": "stick figure",
+                            "description": "Circle head, vertical body line, two angled arms, two angled legs. All #F0EBE3, 2px stroke.",
+                            "label": null
+                        },
+                        "agent_state": {
+                            "shape": "robot",
+                            "description": "Square/rounded-rect head with small antenna on top, two dot eyes, rectangular body below. Stroked in #2980B9, 2px. Label 'AI' in DM Mono 10px #2980B9 below robot.",
+                            "label": "AI",
+                            "transition": "crossfade 350ms — stick figure fades out, robot fades in"
+                        }
+                    },
+                    "chat_bubble": {
+                        "id": "chat-bubble",
+                        "position": "immediately right of actor, slightly above center",
+                        "visible_in": "assistant state only",
+                        "description": "A simple rounded speech bubble shape pointing left toward the person. Text inside: 'AI' in DM Mono 11px #C8744A. Fill #1E1C1A, stroke #C8744A 1.5px.",
+                        "transition": "fades out over 350ms on switch to agent"
+                    },
+                    "connector": {
+                        "id": "dotted-arrow",
+                        "description": "A horizontal dotted arrow from the chat bubble (assistant) or from the robot (agent) pointing right toward the gears node. The arrow stays in place — only its origin shifts slightly.",
+                        "style": "dotted line (stroke-dasharray 4 5) + filled arrowhead at right end",
+                        "stroke": "#2A2724",
+                        "stroke_width": "1.5px",
+                        "visible_on_load": false,
+                        "appears_on": "press 1"
+                    },
+                    "gears_node": {
+                        "id": "gears",
+                        "position": "right side of diagram",
+                        "description": "A rounded-rect node containing two overlapping gear/cog shapes drawn in SVG line art, stroked in #C8744A. Label 'Automated Workflow' in DM Mono 10px uppercase #7A7068 below the node.",
+                        "node_style": {
+                            "fill": "#1E1C1A",
+                            "stroke": "#2A2724",
+                            "border_radius": "8px",
+                            "width": "80px",
+                            "height": "64px"
+                        },
+                        "visible_on_load": false,
+                        "appears_on": "press 1"
+                    }
+                }
+            },
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#2980B9",
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_mode_label": "Fraunces, 48px, weight 300",
+                "font_node_label": "DM Mono, 10px, uppercase, +0.06em tracking"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "64px",
+                "headline_to_mode_label_gap": "32px",
+                "mode_label_to_diagram_gap": "36px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Left region: (1) Thin 120px terracotta rule (#C8744A). (2) Eyebrow DM Mono 11px uppercase #2980B9: '02 — IMPLEMENTATION'. (3) Headline Fraunces weight-300 40px: 'How solutions get run.' (4) A large mode label 'Assistant' in Fraunces weight-300 48px #F0EBE3 visible on load. (5) A diagram area below the mode label, hidden on load. SPACEBAR PRESS 1: Diagram fades up (translateY 12px→0, opacity 0→1, 400ms). The diagram is a horizontal SVG ~520×160px. Left: a minimal stick figure (circle head r10, vertical body line, two angled arms, two angled legs, all #F0EBE3 2px stroke) centered at x=60. To its right: a speech bubble (rounded rect with left-pointing tail, fill #1E1C1A, stroke #C8744A 1.5px) with 'AI' in DM Mono 11px #C8744A inside it, centered around x=155. Then a horizontal dotted line (stroke #2A2724 1.5px, stroke-dasharray 4 5) with a filled arrowhead at right end, spanning from x=210 to x=360. Then a rounded-rect gears node (80×64px rx8, fill #1E1C1A stroke #2A2724) at x=360 containing two overlapping SVG cog shapes stroked in #C8744A. Below the gears node a label 'AUTOMATED WORKFLOW' in DM Mono 10px uppercase #7A7068. SPACEBAR PRESS 2: Mode label crossfades from 'Assistant' in #F0EBE3 to 'Agent' in #2980B9 over 400ms. Stick figure fades out (opacity 1→0, 350ms) and a robot icon fades in (opacity 0→1, 350ms) in its place at the same position x=60: robot has a rounded-square head (28×24px rx4, fill #0D1A2A stroke #2980B9 2px) with a small antenna line on top and two dot eyes, plus a rectangular body (22×18px rx3, fill #0D1A2A stroke #2980B9) below it. Label 'AI' in DM Mono 10px #2980B9 below robot. Chat bubble fades out (opacity 1→0, 350ms). Dotted arrow and gears node stay exactly in place, unchanged. Background #0E0D0C. All DESIGN.md tokens apply."
+        },
+        {
+            "id": "slide-12-claude-features",
+            "type": "content",
+            "title": "What Does This Look Like in Claude?",
+            "layout": {
+                "content_columns": "8/12",
+                "reserved_columns": "4/12",
+                "reserved_side": "right",
+                "reserved_note": "Presenter video overlay — completely empty"
+            },
+            "content": {
+                "eyebrow": "02 — Implementation",
+                "eyebrow_color": "#2980B9",
+                "headline": "What does this look like\nin Claude?",
+                "spacebar_hint": null,
+                "layout_description": "Four feature cards arranged in a 2×2 grid below the headline. All cards are hidden on load. Each spacebar press reveals the next card in reading order (left-to-right, top-to-bottom). Each card has a feature title at the top and a screenshot/image below it showing that feature in Claude's interface. Cards fade up one at a time.",
+                "grid": {
+                    "columns": 2,
+                    "rows": 2,
+                    "gap": "20px",
+                    "card_style": {
+                        "background": "#161513",
+                        "border": "1px solid #2A2724",
+                        "border_radius": "6px",
+                        "padding": "16px",
+                        "visible_on_load": false,
+                        "entrance": "fade-up, translateY 10px→0, opacity 0→1, 350ms ease-out"
+                    }
+                },
+                "features": [
+                    {
+                        "id": "skills",
+                        "press": 1,
+                        "grid_position": "top-left",
+                        "title": "Skills",
+                        "title_style": "DM Mono, 11px, weight 500, uppercase, +0.07em tracking, #C8744A",
+                        "description": "Reusable instruction sets that give Claude domain expertise — your workflows, your tone, your tools.",
+                        "description_style": "DM Sans, 13px, #7A7068, line-height 1.5",
+                        "image": {
+                            "source": "web_search",
+                            "query": "Claude AI skills feature screenshot interface",
+                            "alt": "Claude Skills interface screenshot",
+                            "style": "rounded corners 4px, border 1px solid #2A2724, full width of card, aspect-ratio 16/9, object-fit cover",
+                            "position": "below title and description",
+                            "placeholder_note": "If no real screenshot available, render a dark mockup rectangle with 'Skills' label centered in DM Mono muted text"
+                        },
+                        "accent_color": "#C8744A"
+                    },
+                    {
+                        "id": "connectors",
+                        "press": 2,
+                        "grid_position": "top-right",
+                        "title": "Connectors",
+                        "title_style": "DM Mono, 11px, weight 500, uppercase, +0.07em tracking, #2980B9",
+                        "description": "Native integrations that let Claude read and act inside your existing tools — Google Drive, Gmail, Notion, and more.",
+                        "description_style": "DM Sans, 13px, #7A7068, line-height 1.5",
+                        "image": {
+                            "source": "web_search",
+                            "query": "Claude AI connectors integrations screenshot interface",
+                            "alt": "Claude Connectors interface screenshot",
+                            "style": "same as skills image",
+                            "position": "below title and description",
+                            "placeholder_note": "Dark mockup rectangle with 'Connectors' label if no screenshot available"
+                        },
+                        "accent_color": "#2980B9"
+                    },
+                    {
+                        "id": "projects",
+                        "press": 3,
+                        "grid_position": "bottom-left",
+                        "title": "Projects",
+                        "title_style": "DM Mono, 11px, weight 500, uppercase, +0.07em tracking, #27AE60",
+                        "description": "Persistent workspaces that keep Claude in context — your files, your history, your instructions, always loaded.",
+                        "description_style": "DM Sans, 13px, #7A7068, line-height 1.5",
+                        "image": {
+                            "source": "web_search",
+                            "query": "Claude AI projects feature screenshot workspace",
+                            "alt": "Claude Projects interface screenshot",
+                            "style": "same as skills image",
+                            "position": "below title and description",
+                            "placeholder_note": "Dark mockup rectangle with 'Projects' label if no screenshot available"
+                        },
+                        "accent_color": "#27AE60"
+                    },
+                    {
+                        "id": "agents",
+                        "press": 4,
+                        "grid_position": "bottom-right",
+                        "title": "Agents",
+                        "title_style": "DM Mono, 11px, weight 500, uppercase, +0.07em tracking, #9B59B6",
+                        "description": "Autonomous Claude workflows that run multi-step tasks on their own — no human in the loop required.",
+                        "description_style": "DM Sans, 13px, #7A7068, line-height 1.5",
+                        "image": {
+                            "source": "web_search",
+                            "query": "Claude AI agents autonomous workflow screenshot",
+                            "alt": "Claude Agents interface screenshot",
+                            "style": "same as skills image",
+                            "position": "below title and description",
+                            "placeholder_note": "Dark mockup rectangle with 'Agents' label if no screenshot available"
+                        },
+                        "accent_color": "#9B59B6"
+                    }
+                ],
+                "spacebar_sequence": [
+                    {
+                        "press": 1,
+                        "action": "Skills card fades up in top-left position"
+                    },
+                    {
+                        "press": 2,
+                        "action": "Connectors card fades up in top-right position"
+                    },
+                    {
+                        "press": 3,
+                        "action": "Projects card fades up in bottom-left position"
+                    },
+                    {
+                        "press": 4,
+                        "action": "Agents card fades up in bottom-right position"
+                    }
+                ]
+            },
+            "image_sourcing_note": "Images for each feature should be real screenshots of Claude's interface where possible. Use web search queries provided per feature. If screenshots are unavailable, render stylized dark placeholder boxes with the feature name in DM Mono centered. All images should feel native to the dark design system — add a dark overlay or border treatment if needed to blend light screenshots into the dark slide background.",
+            "design_tokens": {
+                "background": "#0E0D0C",
+                "text_primary": "#F0EBE3",
+                "text_muted": "#7A7068",
+                "accent": "#C8744A",
+                "step_color": "#2980B9",
+                "card_bg": "#161513",
+                "card_border": "#2A2724",
+                "colors": {
+                    "skills": "#C8744A",
+                    "connectors": "#2980B9",
+                    "projects": "#27AE60",
+                    "agents": "#9B59B6"
+                },
+                "font_eyebrow": "DM Mono, 11px, weight 500, uppercase, +0.08em tracking",
+                "font_headline": "Fraunces, 40px, weight 300, line-height 1.15",
+                "font_card_title": "DM Mono, 11px, weight 500, uppercase, +0.07em tracking",
+                "font_card_desc": "DM Sans, 13px, weight 400, line-height 1.5"
+            },
+            "spacing": {
+                "slide_padding_horizontal": "80px",
+                "slide_padding_vertical": "56px",
+                "headline_to_grid_gap": "36px",
+                "card_padding": "16px",
+                "card_gap": "20px",
+                "title_to_desc_gap": "6px",
+                "desc_to_image_gap": "12px",
+                "accent_rule": {
+                    "width": "120px",
+                    "height": "1px",
+                    "color": "#C8744A",
+                    "position": "above eyebrow"
+                }
+            },
+            "prompt": "Build a single full-viewport HTML slide following DESIGN.md. LEFT 8/12 holds all content; RIGHT 4/12 completely empty (presenter video). No spacebar hint. Left region: (1) Thin 120px terracotta rule (#C8744A). (2) Eyebrow DM Mono 11px uppercase #2980B9: '02 — IMPLEMENTATION'. (3) Headline Fraunces weight-300 40px: 'What does this look like in Claude?' with a line break after 'look like'. (4) Below headline, a 2×2 grid of feature cards (gap 20px). All 4 cards hidden on load. Each card: background #161513, border 1px solid #2A2724, border-radius 6px, padding 16px. Each card contains: a colored feature title in DM Mono 11px uppercase weight-500, then a short description in DM Sans 13px #7A7068, then a placeholder image area (full card width, aspect-ratio 16/9, background #1E1C1A, border-radius 4px, border 1px solid #2A2724, centered feature name in DM Mono 11px muted as placeholder). Card 1 'SKILLS' accent #C8744A — top-left. Card 2 'CONNECTORS' accent #2980B9 — top-right. Card 3 'PROJECTS' accent #27AE60 — bottom-left. Card 4 'AGENTS' accent #9B59B6 — bottom-right. Each spacebar press reveals the next card in order: fade-up (translateY 10px→0, opacity 0→1, 350ms ease-out). Press 1: Skills. Press 2: Connectors. Press 3: Projects. Press 4: Agents. The card title uses its accent color. Background #0E0D0C. All DESIGN.md tokens apply. NOTE: Image placeholders should look intentional — dark background with the feature name subtly centered. In production these will be replaced with real Claude screenshots."
+        }
+    ]
+}
