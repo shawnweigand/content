@@ -131,6 +131,30 @@
         .ah { fill: #2A2724; }
 
         .video-region { /* intentionally empty */ }
+
+        /* Total bottleneck state for the whole chart */
+        .chart-block.total-bottleneck {
+            transition: all 450ms ease-out;
+        }
+        .chart-block.total-bottleneck .sf {
+            fill: var(--color-red-fill) !important;
+            stroke: var(--color-red) !important;
+            stroke-width: 2 !important;
+        }
+        .chart-block.total-bottleneck .cl {
+            stroke: var(--color-red) !important;
+        }
+        .chart-block.total-bottleneck .ah {
+            fill: var(--color-red) !important;
+        }
+        .chart-block.total-bottleneck .flow-label {
+            color: var(--color-red);
+            transition: color 300ms ease-out;
+        }
+        .chart-block.total-bottleneck .flow-svg {
+            filter: drop-shadow(0 0 15px #C0392B88);
+            transition: filter 450ms ease-out;
+        }
     </style>
 </head>
 <body>
@@ -337,6 +361,9 @@
             document.getElementById('chart-3').classList.add('visible');
             activateBottleneck('hot-2', 'bn-2', 550);
             activateBottleneck('hot-3', 'bn-3', 750);
+        } else if (step === 3) {
+            // Third spacebar: light up the whole project reporting workflow as red
+            document.getElementById('chart-2').classList.add('total-bottleneck');
         }
     });
 </script>

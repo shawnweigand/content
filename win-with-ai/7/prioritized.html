@@ -233,6 +233,29 @@
             flex-shrink: 0;
         }
 
+        .row-stats {
+            display: flex;
+            gap: 16px;
+            margin-left: 12px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            color: var(--color-muted);
+            opacity: 0.8;
+        }
+
+        .stat-item {
+            display: flex;
+            gap: 4px;
+            align-items: baseline;
+        }
+
+        .stat-val {
+            color: var(--color-text);
+            font-weight: 500;
+            font-size: 13px;
+        }
+
         /* ── NODE SHAPES (SVG-based, inline) ── */
         .node-svg {
             display: block;
@@ -326,41 +349,71 @@
                             <!-- 01: circle (was #3 in bottleneck) -->
                             <div class="numbered-row" id="pri-row-1">
                                 <span class="pri-number">01</span>
-                                <svg class="node-svg" width="44" height="44" viewBox="0 0 44 44">
-                                    <circle class="clean-rect" cx="22" cy="22" r="20" />
-                                </svg>
+                                <div style="width: 70px; display: flex; justify-content: center;">
+                                    <svg class="node-svg" width="44" height="44" viewBox="0 0 44 44">
+                                        <circle class="clean-rect" cx="22" cy="22" r="20" />
+                                    </svg>
+                                </div>
+                                <div class="row-stats">
+                                    <span class="stat-item"><span class="stat-val">22</span>h/wk</span>
+                                    <span class="stat-item"><span class="stat-val">$140</span>k/yr</span>
+                                </div>
                             </div>
 
                             <!-- 02: rounded rect (was #1 in bottleneck) -->
                             <div class="numbered-row" id="pri-row-2">
                                 <span class="pri-number">02</span>
-                                <svg class="node-svg" width="56" height="36" viewBox="0 0 56 36">
-                                    <rect class="clean-rect" x="2" y="2" width="52" height="32" rx="6" />
-                                </svg>
+                                <div style="width: 70px; display: flex; justify-content: center;">
+                                    <svg class="node-svg" width="56" height="36" viewBox="0 0 56 36">
+                                        <rect class="clean-rect" x="2" y="2" width="52" height="32" rx="6" />
+                                    </svg>
+                                </div>
+                                <div class="row-stats">
+                                    <span class="stat-item"><span class="stat-val">18</span>h/wk</span>
+                                    <span class="stat-item"><span class="stat-val">$110</span>k/yr</span>
+                                </div>
                             </div>
 
                             <!-- 03: hexagon (was #5 in bottleneck) -->
                             <div class="numbered-row" id="pri-row-3">
                                 <span class="pri-number">03</span>
-                                <svg class="node-svg" width="52" height="46" viewBox="0 0 52 46">
-                                    <polygon class="clean-rect" points="26,2 50,14 50,32 26,44 2,32 2,14" />
-                                </svg>
+                                <div style="width: 70px; display: flex; justify-content: center;">
+                                    <svg class="node-svg" width="52" height="46" viewBox="0 0 52 46">
+                                        <polygon class="clean-rect" points="26,2 50,14 50,32 26,44 2,32 2,14" />
+                                    </svg>
+                                </div>
+                                <div class="row-stats">
+                                    <span class="stat-item"><span class="stat-val">14</span>h/wk</span>
+                                    <span class="stat-item"><span class="stat-val">$85</span>k/yr</span>
+                                </div>
                             </div>
 
                             <!-- 04: diamond (was #2 in bottleneck) -->
                             <div class="numbered-row" id="pri-row-4">
                                 <span class="pri-number">04</span>
-                                <svg class="node-svg" width="48" height="48" viewBox="0 0 48 48">
-                                    <polygon class="clean-rect" points="24,3 45,24 24,45 3,24" />
-                                </svg>
+                                <div style="width: 70px; display: flex; justify-content: center;">
+                                    <svg class="node-svg" width="48" height="48" viewBox="0 0 48 48">
+                                        <polygon class="clean-rect" points="24,3 45,24 24,45 3,24" />
+                                    </svg>
+                                </div>
+                                <div class="row-stats">
+                                    <span class="stat-item"><span class="stat-val">10</span>h/wk</span>
+                                    <span class="stat-item"><span class="stat-val">$60</span>k/yr</span>
+                                </div>
                             </div>
 
                             <!-- 05: pill (was #4 in bottleneck) -->
                             <div class="numbered-row" id="pri-row-5">
                                 <span class="pri-number">05</span>
-                                <svg class="node-svg" width="68" height="32" viewBox="0 0 68 32">
-                                    <rect class="clean-rect" x="2" y="2" width="64" height="28" rx="14" />
-                                </svg>
+                                <div style="width: 70px; display: flex; justify-content: center;">
+                                    <svg class="node-svg" width="68" height="32" viewBox="0 0 68 32">
+                                        <rect class="clean-rect" x="2" y="2" width="64" height="28" rx="14" />
+                                    </svg>
+                                </div>
+                                <div class="row-stats">
+                                    <span class="stat-item"><span class="stat-val">6</span>h/wk</span>
+                                    <span class="stat-item"><span class="stat-val">$35</span>k/yr</span>
+                                </div>
                             </div>
 
                         </div>
