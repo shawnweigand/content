@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adoption — Education</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --color-bg: #0E0D0C;
+            --color-surface: #161513;
+            --color-surface2: #1E1C1A;
+            --color-border: #2A2724;
+            --color-text: #F0EBE3;
+            --color-muted: #7A7068;
+            --color-accent: #C8744A;
+            --color-green: #27AE60;
+            --color-blue: #2980B9;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'DM Sans', sans-serif;
+            overflow: hidden;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+        }
+
+        /* ── LEFT CONTENT ── */
+        .content {
+            padding: 52px 72px 52px 80px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* meta */
+        .meta {
+            flex-shrink: 0;
+            margin-bottom: 24px;
+        }
+
+        .accent-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            margin-bottom: 16px;
+            animation: ruleGrow 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms forwards;
+        }
+
+        @keyframes ruleGrow {
+            to {
+                width: 120px;
+            }
+        }
+
+        .eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-green);
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeUp 500ms ease-out 400ms forwards;
+        }
+
+        .headline {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(22px, 2.6vw, 34px);
+            font-weight: 300;
+            line-height: 1.18;
+            letter-spacing: -0.02em;
+            color: var(--color-text);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 550ms forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── EDUCATION TITLE ── */
+        .education-wrap {
+            margin-bottom: 24px;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 400ms ease-out, transform 400ms ease-out;
+        }
+
+        .education-wrap.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .education-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-style: italic;
+            font-size: clamp(40px, 5vw, 60px);
+            font-weight: 300;
+            line-height: 1.0;
+            letter-spacing: -0.025em;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+
+        .education-rule {
+            width: 0;
+            height: 1px;
+            background: var(--color-green);
+            transition: width 350ms ease-out 100ms;
+        }
+
+        .education-wrap.visible .education-rule {
+            width: 80px;
+        }
+
+        /* ── THREE CARDS ROW ── */
+        .cards-row {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+            min-height: 0;
+        }
+
+        /* ── CARD ── */
+        .feat-card {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 350ms ease-out, transform 350ms ease-out;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .feat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-title {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .card-results .card-title {
+            color: var(--color-green);
+        }
+
+        .card-example .card-title {
+            color: var(--color-accent);
+        }
+
+        .card-simplify .card-title {
+            color: var(--color-blue);
+        }
+
+        /* ── RESULTS CHART ── */
+        .chart-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 0;
+        }
+
+        .bars-wrap {
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            min-height: 0;
+        }
+
+        .bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            height: 100%;
+            justify-content: flex-end;
+        }
+
+        .bar-track {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            min-height: 0;
+        }
+
+        .bar-fill {
+            width: 100%;
+            border-radius: 3px 3px 0 0;
+            height: 0;
+            transition: height 600ms ease-out;
+        }
+
+        .bar-fill.time {
+            background: var(--color-accent);
+        }
+
+        .bar-fill.roi {
+            background: var(--color-green);
+            transition-delay: 150ms;
+        }
+
+        .bar-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 8.5px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+            text-align: center;
+        }
+
+        .chart-stats {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            border-top: 1px solid var(--color-border);
+            padding-top: 8px;
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'DM Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 500;
+            color: var(--color-text);
+            letter-spacing: 0.03em;
+        }
+
+        .stat-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── EXAMPLE STEPS ── */
+        .steps-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-height: 0;
+        }
+
+        .step-row {
+            border-radius: 4px;
+            border: 1px solid var(--color-border);
+            background: var(--color-surface2);
+            padding: 7px 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .step-row.highlighted {
+            background: #0D1F12;
+            border-color: var(--color-green);
+            border-left-width: 2px;
+        }
+
+        .step-num {
+            font-family: 'DM Mono', monospace;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: var(--color-muted);
+            flex-shrink: 0;
+        }
+
+        .step-row.highlighted .step-num {
+            color: var(--color-green);
+        }
+
+        .step-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11.5px;
+            font-weight: 400;
+            color: var(--color-muted);
+            line-height: 1.3;
+        }
+
+        .step-row.highlighted .step-label {
+            color: var(--color-text);
+        }
+
+        /* ── SIMPLIFY SVG ── */
+        .simplify-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .hub-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
+        }
+
+        .spoke-line {
+            stroke: var(--color-border);
+            stroke-width: 1.2;
+            stroke-dasharray: 2 3;
+            fill: none;
+            stroke-dashoffset: 60;
+            transition: stroke-dashoffset 350ms ease-out;
+        }
+
+        .spoke-line.drawn {
+            stroke-dashoffset: 0;
+        }
+
+        /* ── RIGHT (empty) ── */
+        .video-region {
+            /* intentionally empty */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slide">
+        <div class="content">
+
+            <!-- Meta -->
+            <div class="meta">
+                <div class="accent-rule"></div>
+                <div class="eyebrow">03 — Adoption</div>
+                <h1 class="headline">How do we get teams to<br>actually see the benefits of AI?</h1>
+            </div>
+
+            <!-- Education title -->
+            <div class="education-wrap" id="education-wrap">
+                <div class="education-title">Education</div>
+                <div class="education-rule"></div>
+            </div>
+
+            <!-- Three cards -->
+            <div class="cards-row">
+
+                <!-- ══ RESULTS ══ -->
+                <div class="feat-card card-results" id="card-results">
+                    <div class="card-title">Results</div>
+                    <div class="chart-area">
+                        <div class="bars-wrap" id="bars-wrap">
+                            <div class="bar-col">
+                                <div class="bar-track">
+                                    <div class="bar-fill time" id="bar-time"></div>
+                                </div>
+                                <div class="bar-label">Time Saved</div>
+                            </div>
+                            <div class="bar-col">
+                                <div class="bar-track">
+                                    <div class="bar-fill roi" id="bar-roi"></div>
+                                </div>
+                                <div class="bar-label">ROI</div>
+                            </div>
+                        </div>
+                        <div class="chart-stats">
+                            <div class="stat-row">
+                                <div class="stat-dot" style="background:var(--color-accent)"></div>
+                                ~15 hrs/week recovered
+                            </div>
+                            <div class="stat-row">
+                                <div class="stat-dot" style="background:var(--color-green)"></div>
+                                3–5× ROI in 90 days
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══ EXAMPLE ══ -->
+                <div class="feat-card card-example" id="card-example">
+                    <div class="card-title">Example</div>
+                    <div class="steps-list">
+                        <div class="step-row">
+                            <div class="step-num">01</div>
+                            <div class="step-label">Receive request</div>
+                        </div>
+                        <div class="step-row">
+                            <div class="step-num">02</div>
+                            <div class="step-label">Gather context</div>
+                        </div>
+                        <div class="step-row highlighted">
+                            <div class="step-num">03</div>
+                            <div class="step-label">AI drafts response</div>
+                        </div>
+                        <div class="step-row">
+                            <div class="step-num">04</div>
+                            <div class="step-label">Human reviews</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ══ SIMPLIFY ══ -->
+                <div class="feat-card card-simplify" id="card-simplify">
+                    <div class="card-title">Simplify</div>
+                    <div class="simplify-area">
+                        <!--
+            SVG 160×160
+            Robot center: cx=80, cy=80
+            Outer nodes N(80,18) E(142,80) S(80,142) W(18,80)
+          -->
+                        <svg class="hub-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+
+                            <!-- Spokes -->
+                            <line class="spoke-line" id="sp-n" x1="80" y1="30" x2="80" y2="56" />
+                            <line class="spoke-line" id="sp-e" x1="130" y1="80" x2="104" y2="80" />
+                            <line class="spoke-line" id="sp-s" x1="80" y1="130" x2="80" y2="104" />
+                            <line class="spoke-line" id="sp-w" x1="30" y1="80" x2="56" y2="80" />
+
+                            <!-- Outer nodes -->
+                            <rect x="64" y="8" width="32" height="22" rx="4" fill="#161513" stroke="#2A2724"
+                                stroke-width="1.2" />
+                            <rect x="130" y="69" width="22" height="22" rx="4" fill="#161513" stroke="#2A2724"
+                                stroke-width="1.2" />
+                            <rect x="64" y="130" width="32" height="22" rx="4" fill="#161513" stroke="#2A2724"
+                                stroke-width="1.2" />
+                            <rect x="8" y="69" width="22" height="22" rx="4" fill="#161513" stroke="#2A2724"
+                                stroke-width="1.2" />
+
+                            <!-- Robot center: head -->
+                            <rect x="62" y="56" width="36" height="28" rx="5" fill="#0D1A2A" stroke="#2980B9"
+                                stroke-width="1.8" />
+                            <!-- antenna -->
+                            <line x1="80" y1="56" x2="80" y2="49" stroke="#2980B9" stroke-width="1.5"
+                                stroke-linecap="round" />
+                            <circle cx="80" cy="47" r="2.5" fill="#2980B9" />
+                            <!-- eyes -->
+                            <circle cx="73" cy="70" r="3" fill="#2980B9" />
+                            <circle cx="87" cy="70" r="3" fill="#2980B9" />
+                            <!-- mouth -->
+                            <line x1="73" y1="78" x2="87" y2="78" stroke="#2980B9" stroke-width="1.5"
+                                stroke-linecap="round" />
+                            <!-- robot body -->
+                            <rect x="67" y="86" width="26" height="18" rx="3" fill="#0D1A2A" stroke="#2980B9"
+                                stroke-width="1.5" />
+
+                            <!-- MCP label -->
+                            <text x="80" y="114" text-anchor="middle" font-family="'DM Mono', monospace" font-size="8"
+                                font-weight="500" letter-spacing="0.06em" fill="#2980B9">MCP</text>
+
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="video-region"></div>
+    </div>
+
+    <script>
+        let step = 0;
+
+        function animateBars() {
+            const wrap = document.getElementById('bars-wrap');
+            const h = wrap.clientHeight;
+            document.getElementById('bar-time').style.height = Math.round(h * 0.62) + 'px';
+            document.getElementById('bar-roi').style.height = Math.round(h * 0.76) + 'px';
+        }
+
+        function drawSpokes() {
+            const ids = ['sp-n', 'sp-e', 'sp-s', 'sp-w'];
+            ids.forEach((id, i) => {
+                setTimeout(() => {
+                    document.getElementById(id).classList.add('drawn');
+                }, 250 + i * 80);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code !== 'Space') return;
+            e.preventDefault();
+            step++;
+
+            if (step === 1) {
+                document.getElementById('education-wrap').classList.add('visible');
+            } else if (step === 2) {
+                document.getElementById('card-results').classList.add('visible');
+                setTimeout(animateBars, 200);
+            } else if (step === 3) {
+                document.getElementById('card-example').classList.add('visible');
+            } else if (step === 4) {
+                document.getElementById('card-simplify').classList.add('visible');
+                setTimeout(drawSpokes, 300);
+            }
+        });
+    </script>
+</body>
+
+</html>
